@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Email Hub Overview</title>
+<style>
+  :root {
+    --bg:#f5f6f8; --card:#ffffff; --fg:#1b1b1f; --muted:#64666e; --line:#e6e7eb; --soft:#f0f2f5;
+    --accent:#0f6cbd; --accent-soft:#e8f1fb;
+    --ok:#1a7f4b; --ok-soft:#e5f4ec; --bad:#c4314b; --bad-soft:#fbe9ec; --warn:#b2570b; --warn-soft:#fdf1e3;
+    --info:#5b5fc7; --info-soft:#eeeefb; --gray:#8a8d96; --gray-soft:#eff0f2;
+    --shadow:0 1px 2px rgba(16,24,40,.06),0 1px 3px rgba(16,24,40,.08);
+    --radius:12px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg:#141518; --card:#1d1f23; --fg:#ececf0; --muted:#a0a3ab; --line:#2e3036; --soft:#25272c;
+      --accent:#4ea1f0; --accent-soft:#1c2b3c; --ok:#3fbf7f; --ok-soft:#173026; --bad:#f06a80; --bad-soft:#3a1c22;
+      --warn:#f0a050; --warn-soft:#3a2a17; --info:#9a9df0; --info-soft:#24253d; --gray:#8b8e97; --gray-soft:#2a2c31;
+      --shadow:0 1px 2px rgba(0,0,0,.4);
+    }
+  }
+  * { box-sizing:border-box; }
+  html, body { margin:0; background:var(--bg); color:var(--fg); font:14px/1.45 "Segoe UI",system-ui,-apple-system,sans-serif; }
+  .wrap { max-width:1480px; margin:0 auto; padding:20px 24px 40px; }
+  svg.i { width:18px; height:18px; flex:none; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+
+  header { display:flex; align-items:center; gap:16px; flex-wrap:wrap; margin-bottom:16px; }
+  .brand { display:flex; align-items:center; gap:12px; margin-right:auto; }
+  .logo { width:40px; height:40px; border-radius:10px; display:grid; place-items:center; color:#fff;
+          background:linear-gradient(135deg,#0f6cbd,#5b5fc7); box-shadow:var(--shadow); }
+  .logo svg.i { width:22px; height:22px; }
+  h1 { font-size:20px; font-weight:600; margin:0; }
+  .sub { color:var(--muted); font-size:12.5px; }
+  .seg { display:inline-flex; background:var(--card); border:1px solid var(--line); border-radius:8px; padding:2px; }
+  .seg button { border:0; background:none; color:var(--muted); padding:5px 12px; border-radius:6px; cursor:pointer; font:inherit; }
+  .seg button.on { background:var(--accent-soft); color:var(--accent); font-weight:600; }
+  .btn { display:inline-flex; align-items:center; gap:6px; border:1px solid var(--line); background:var(--card); color:var(--fg);
+         padding:6px 12px; border-radius:8px; cursor:pointer; font:inherit; }
+  .btn:hover { border-color:var(--accent); color:var(--accent); }
+  .btn.primary { background:var(--accent); border-color:var(--accent); color:#fff; }
+  .btn.primary:hover { filter:brightness(1.08); color:#fff; }
+
+  .banner { display:flex; align-items:center; gap:10px; padding:10px 14px; border-radius:10px; margin-bottom:16px; font-size:13.5px; }
+  .banner.warn { background:var(--warn-soft); color:var(--warn); }
+  .banner.bad { background:var(--bad-soft); color:var(--bad); }
+  .banner b { font-weight:600; }
+
+  .grid { display:grid; gap:16px; grid-template-columns:repeat(12,1fr); }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow); padding:16px 18px; min-width:0; }
+  .card h2 { font-size:14.5px; font-weight:600; margin:0; display:flex; align-items:center; gap:8px; }
+  .card h2 .i { color:var(--muted); }
+  .card .head { display:flex; align-items:center; gap:8px; margin-bottom:12px; }
+  .card .head .more { margin-left:auto; font-size:12.5px; color:var(--accent); cursor:pointer; background:none; border:0; font-family:inherit; }
+  .s3 { grid-column:span 3; } .s4 { grid-column:span 4; } .s5 { grid-column:span 5; } .s6 { grid-column:span 6; }
+  .s7 { grid-column:span 7; } .s8 { grid-column:span 8; } .s12 { grid-column:span 12; }
+  @media (max-width:1180px) { .s3 { grid-column:span 6; } .s4,.s5,.s7,.s8 { grid-column:span 12; } .s6 { grid-column:span 12; } }
+  @media (max-width:640px) { .wrap { padding:16px; } .s3 { grid-column:span 12; } }
+
+  .kpis { display:grid; gap:12px; grid-template-columns:repeat(4,1fr); grid-column:span 12; }
+  @media (min-width:1360px) { .kpis { grid-template-columns:repeat(8,1fr); } }
+  @media (max-width:640px) { .kpis { grid-template-columns:repeat(2,1fr); } }
+  .kpi { display:flex; gap:12px; align-items:flex-start; padding:14px 16px; }
+  .kpi .ic { width:38px; height:38px; border-radius:10px; display:grid; place-items:center; flex:none; }
+  .kpi .v { font-size:24px; font-weight:650; letter-spacing:-.02em; line-height:1.1; }
+  .kpi .l { color:var(--muted); font-size:12.5px; }
+  .kpi .d { font-size:11.5px; color:var(--muted); margin-top:2px; }
+  .t-accent { background:var(--accent-soft); color:var(--accent); } .t-ok { background:var(--ok-soft); color:var(--ok); }
+  .t-bad { background:var(--bad-soft); color:var(--bad); } .t-warn { background:var(--warn-soft); color:var(--warn); }
+  .t-info { background:var(--info-soft); color:var(--info); } .t-gray { background:var(--gray-soft); color:var(--gray); }
+
+  .chart { width:100%; display:block; }
+  .chart text { fill:var(--muted); font-size:11px; }
+  .chart .grid-line { stroke:var(--line); stroke-width:1; }
+  .legend { display:flex; flex-wrap:wrap; gap:6px 14px; font-size:12.5px; color:var(--muted); margin-top:8px; }
+  .legend span { display:inline-flex; align-items:center; gap:6px; }
+  .legend i { width:10px; height:10px; border-radius:3px; display:inline-block; }
+  .donut-wrap { display:flex; align-items:center; gap:18px; flex-wrap:wrap; }
+  .donut-wrap .legend { flex-direction:column; gap:8px; margin:0; flex:1; min-width:140px; }
+  .donut-wrap .legend span { display:grid; grid-template-columns:10px 1fr auto; gap:8px; width:100%; }
+  .donut-wrap .legend b { color:var(--fg); font-weight:600; }
+  .tip { position:fixed; pointer-events:none; background:var(--fg); color:var(--bg); padding:6px 9px; border-radius:6px; font-size:12px;
+         opacity:0; transition:opacity .12s; z-index:10; white-space:nowrap; }
+
+  .bars .row { display:grid; grid-template-columns:minmax(90px,38%) 1fr 44px; gap:10px; align-items:center; padding:5px 0; font-size:13px; }
+  .bars .name { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .bars .track { height:8px; background:var(--soft); border-radius:99px; overflow:hidden; }
+  .bars .fill { height:100%; border-radius:99px; background:linear-gradient(90deg,var(--accent),var(--info)); }
+  .bars .n { text-align:right; color:var(--muted); font-variant-numeric:tabular-nums; }
+
+  table { width:100%; border-collapse:collapse; font-size:13px; }
+  th { text-align:left; color:var(--muted); font-weight:600; font-size:12px; padding:6px 8px; border-bottom:1px solid var(--line); white-space:nowrap; }
+  td { padding:8px; border-bottom:1px solid var(--line); vertical-align:middle; }
+  tr:last-child td { border-bottom:0; }
+  tr.click { cursor:pointer; } tr.click:hover td { background:var(--soft); }
+  .ell { max-width:280px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .pill { display:inline-flex; align-items:center; gap:5px; padding:2px 9px; border-radius:99px; font-size:12px; font-weight:600; white-space:nowrap; }
+  .pill::before { content:""; width:6px; height:6px; border-radius:50%; background:currentColor; }
+  .muted { color:var(--muted); }
+  .scroll { overflow-x:auto; }
+
+  .cfg { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:10px; }
+  .cfg .item { display:flex; gap:10px; align-items:flex-start; padding:10px 12px; background:var(--soft); border-radius:10px; min-width:0; }
+  .cfg .item .i { color:var(--muted); margin-top:2px; }
+  .cfg .k { font-size:12px; color:var(--muted); }
+  .cfg .val { font-weight:600; overflow-wrap:anywhere; }
+  .checks { display:flex; flex-direction:column; gap:8px; }
+  .check { display:flex; gap:10px; align-items:flex-start; font-size:13px; }
+  .check .dot { width:22px; height:22px; border-radius:50%; display:grid; place-items:center; flex:none; }
+  .check .dot svg.i { width:14px; height:14px; stroke-width:2.4; }
+  .check .t { font-weight:600; } .check .x { color:var(--muted); font-size:12.5px; }
+
+  .actions { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px; }
+  .action { display:flex; flex-direction:column; gap:8px; padding:14px; border:1px solid var(--line); border-radius:10px; background:var(--card);
+            cursor:pointer; text-align:left; font:inherit; color:var(--fg); }
+  .action:hover { border-color:var(--accent); box-shadow:var(--shadow); }
+  .action .ic { width:34px; height:34px; border-radius:9px; display:grid; place-items:center; }
+  .action .t { font-weight:600; font-size:13.5px; } .action .x { color:var(--muted); font-size:12px; }
+
+  .empty { color:var(--muted); text-align:center; padding:22px 8px; font-size:13px; }
+  .skeleton { background:linear-gradient(90deg,var(--soft),var(--line),var(--soft)); background-size:200% 100%; animation:sh 1.2s infinite; border-radius:8px; height:120px; }
+  @keyframes sh { to { background-position:-200% 0; } }
+
+  .panel { position:fixed; top:0; right:0; bottom:0; width:320px; max-width:100%; background:var(--card); border-left:1px solid var(--line);
+           box-shadow:-8px 0 24px rgba(0,0,0,.12); padding:18px; transform:translateX(100%); transition:transform .2s; z-index:20; overflow:auto; }
+  .panel.open { transform:none; }
+  .panel h3 { margin:0 0 4px; font-size:16px; }
+  .panel label { display:flex; align-items:center; gap:10px; padding:8px 0; border-bottom:1px solid var(--line); cursor:pointer; }
+  .panel input { accent-color:var(--accent); width:16px; height:16px; }
+  .hidden { display:none !important; }
+  .err { color:var(--bad); font-size:12.5px; }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24"><path d="M21 3 10 14"/><path d="m21 3-7 18-4-7-7-4z"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 5 5 9-10"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3 2 20h20z"/><path d="M12 10v4M12 17.5v.01"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14a6.5 6.5 0 0 1 3.5 6"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 16V11a6 6 0 1 1 12 0v5l2 2H4z"/><path d="M10 20a2 2 0 0 0 4 0"/></symbol>
+    <symbol id="i-doc" viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 12h6M9 16h6"/></symbol>
+    <symbol id="i-list" viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1"/><circle cx="4.5" cy="12" r="1"/><circle cx="4.5" cy="18" r="1"/></symbol>
+    <symbol id="i-pen" viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="m13.5 6.5 4 4"/></symbol>
+    <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 11a8 8 0 0 0-14.6-4.5L4 8"/><path d="M4 3v5h5M4 13a8 8 0 0 0 14.6 4.5L20 16"/><path d="M20 21v-5h-5"/></symbol>
+    <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V4M4 20h16"/><path d="M8 16v-5M12 16V8M16 16v-3"/></symbol>
+    <symbol id="i-pie" viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 9 9h-9z"/><path d="M15 3.5A9 9 0 0 1 20.5 9H15z"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/><path d="m9 12 2 2 4-4"/></symbol>
+    <symbol id="i-flask" viewBox="0 0 24 24"><path d="M9 3h6M10 3v6L4.5 18.5A2 2 0 0 0 6.2 21.5h11.6a2 2 0 0 0 1.7-3L14 9V3"/><path d="M7 15h10"/></symbol>
+    <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></symbol>
+    <symbol id="i-inbox" viewBox="0 0 24 24"><path d="M3 13h5l1.5 3h5L16 13h5"/><path d="M5 5h14l2 8v6H3v-6z"/></symbol>
+    <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-table" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M9 10v10"/></symbol>
+    <symbol id="i-flow" viewBox="0 0 24 24"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="M8.5 6H14a4 4 0 0 1 4 4v5.5M6 8.5V14a4 4 0 0 0 4 4h5.5"/></symbol>
+  </defs>
+</svg>
+
+<div class="wrap">
+  <header>
+    <div class="brand">
+      <div class="logo"><svg class="i"><use href="#i-mail"/></svg></div>
+      <div>
+        <h1>Email Notification Hub</h1>
+        <div class="sub" id="subtitle">Loading…</div>
+      </div>
+    </div>
+    <div class="seg" id="range" role="tablist" aria-label="Time range">
+      <button data-days="7">7 days</button><button data-days="30">30 days</button><button data-days="90">90 days</button><button data-days="365">1 year</button>
+    </div>
+    <button class="btn" id="refresh" title="Refresh"><svg class="i"><use href="#i-refresh"/></svg>Refresh</button>
+    <button class="btn" id="customize"><svg class="i"><use href="#i-sliders"/></svg>Customize</button>
+    <button class="btn primary" id="newmsg"><svg class="i"><use href="#i-plus"/></svg>New email</button>
+  </header>
+
+  <div id="banners"></div>
+
+  <div class="grid" id="grid">
+    <section class="kpis" data-section="kpis" id="kpis"></section>
+
+    <section class="card s8" data-section="trend">
+      <div class="head"><h2><svg class="i"><use href="#i-chart"/></svg>Delivery activity</h2><span class="sub" id="trend-sub"></span></div>
+      <div id="trend"><div class="skeleton"></div></div>
+    </section>
+
+    <section class="card s4" data-section="status">
+      <div class="head"><h2><svg class="i"><use href="#i-pie"/></svg>Deliveries by status</h2></div>
+      <div id="status"><div class="skeleton"></div></div>
+    </section>
+
+    <section class="card s4" data-section="types">
+      <div class="head"><h2><svg class="i"><use href="#i-users"/></svg>Messages by recipient type</h2></div>
+      <div id="types"><div class="skeleton"></div></div>
+    </section>
+
+    <section class="card s4" data-section="templates">
+      <div class="head"><h2><svg class="i"><use href="#i-doc"/></svg>Most used templates</h2><button class="more" data-list="mb_emailtemplate">All templates</button></div>
+      <div id="templates"><div class="skeleton"></div></div>
+    </section>
+
+    <section class="card s4" data-section="channels">
+      <div class="head"><h2><svg class="i"><use href="#i-send"/></svg>Channels and sources</h2></div>
+      <div id="channels"><div class="skeleton"></div></div>
+    </section>
+
+    <section class="card s7" data-section="recent">
+      <div class="head"><h2><svg class="i"><use href="#i-inbox"/></svg>Recent messages</h2><button class="more" data-list="mb_emailmessage">All messages</button></div>
+      <div id="recent" class="scroll"><div class="skeleton"></div></div>
+    </section>
+
+    <section class="card s5" data-section="failures">
+      <div class="head"><h2><svg class="i"><use href="#i-alert"/></svg>Recent failures</h2><button class="more" data-list="mb_emaildelivery">Delivery log</button></div>
+      <div id="failures" class="scroll"><div class="skeleton"></div></div>
+    </section>
+
+    <section class="card s12" data-section="rules">
+      <div class="head"><h2><svg class="i"><use href="#i-bell"/></svg>Notification rules</h2><button class="more" data-list="mb_notificationrule">Manage rules</button></div>
+      <div id="rules" class="scroll"><div class="skeleton"></div></div>
+    </section>
+
+    <section class="card s8" data-section="config">
+      <div class="head"><h2><svg class="i"><use href="#i-gear"/></svg>Configuration</h2><button class="more" data-list="mb_emailsetting">Open settings</button></div>
+      <div id="config"><div class="skeleton"></div></div>
+    </section>
+
+    <section class="card s4" data-section="health">
+      <div class="head"><h2><svg class="i"><use href="#i-shield"/></svg>Health checks</h2></div>
+      <div id="health"><div class="skeleton"></div></div>
+    </section>
+
+    <section class="card s12" data-section="actions">
+      <div class="head"><h2><svg class="i"><use href="#i-bolt"/></svg>Quick actions</h2></div>
+      <div class="actions" id="actions"></div>
+    </section>
+  </div>
+</div>
+
+<aside class="panel" id="panel" aria-label="Customize overview">
+  <div style="display:flex;align-items:center;margin-bottom:8px">
+    <h3>Customize</h3>
+    <button class="btn" id="closepanel" style="margin-left:auto" aria-label="Close"><svg class="i"><use href="#i-x"/></svg></button>
+  </div>
+  <div class="sub" style="margin-bottom:10px">Choose what you see. Saved for you in this browser.</div>
+  <div id="toggles"></div>
+</aside>
+<div class="tip" id="tip"></div>
+
+<script>
+(function () {
+  "use strict";
+
+  // ---------- environment ----------
+  var Xrm = (function () { try { return window.parent && window.parent.Xrm ? window.parent.Xrm : (window.Xrm || null); } catch (e) { return null; } })();
+  var API = (function () {
+    try { if (Xrm && Xrm.Utility) { return Xrm.Utility.getGlobalContext().getClientUrl() + "/api/data/v9.2/"; } } catch (e) { /* fall through */ }
+    return location.origin + "/api/data/v9.2/";
+  })();
+
+  var SECTIONS = [
+    ["kpis", "Key figures"], ["trend", "Delivery activity"], ["status", "Deliveries by status"], ["types", "Messages by recipient type"],
+    ["templates", "Most used templates"], ["channels", "Channels and sources"], ["recent", "Recent messages"], ["failures", "Recent failures"],
+    ["rules", "Notification rules"], ["config", "Configuration"], ["health", "Health checks"], ["actions", "Quick actions"]
+  ];
+  var PREFS_KEY = "mb_overview_prefs";
+  var prefs = load();
+  function load() {
+    try { var p = JSON.parse(localStorage.getItem(PREFS_KEY) || "{}"); return { days: p.days || 30, hidden: p.hidden || [] }; }
+    catch (e) { return { days: 30, hidden: [] }; }
+  }
+  function save() { try { localStorage.setItem(PREFS_KEY, JSON.stringify(prefs)); } catch (e) { /* storage unavailable */ } }
+
+  // Choice values (fixed, see flows/choice-values.json)
+  var MSG = { 100000000: ["Draft", "gray"], 100000001: ["Queued", "info"], 100000002: ["Sending", "info"], 100000003: ["Sent", "ok"],
+              100000004: ["Partially sent", "warn"], 100000005: ["Failed", "bad"], 100000006: ["Scheduled", "accent"], 100000007: ["Awaiting Outlook", "info"] };
+  var DEL = { 100000000: ["Sent", "ok"], 100000001: ["Failed", "bad"], 100000002: ["Skipped", "warn"], 100000003: ["Pending", "info"] };
+  var SENDTO = { 100000000: "Single user", 100000001: "Single contact", 100000002: "Recipient list", 100000003: "Email addresses", 100000004: "Notification rule" };
+  var CHANNEL = { 100000000: "Office 365 Outlook", 100000001: "Dataverse Email" };
+  var EVENT = { 100000000: "Created", 100000001: "Updated", 100000002: "Created or updated" };
+  var PALETTE = ["#0f6cbd", "#5b5fc7", "#1a7f4b", "#b2570b", "#c4314b", "#038387", "#8764b8", "#986f0b"];
+
+  // ---------- helpers ----------
+  function $(id) { return document.getElementById(id); }
+  function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+  function icon(name) { return '<svg class="i"><use href="#i-' + name + '"/></svg>'; }
+  function css(v) { return getComputedStyle(document.documentElement).getPropertyValue("--" + v).trim(); }
+  function num(n) { return (n || 0).toLocaleString(); }
+  function pill(map, v) { var m = map[v] || ["Unknown", "gray"]; return '<span class="pill t-' + m[1] + '">' + esc(m[0]) + "</span>"; }
+  function ago(d) {
+    if (!d) { return "—"; }
+    var s = (Date.now() - new Date(d).getTime()) / 1000;
+    if (s < 60) { return "just now"; } if (s < 3600) { return Math.floor(s / 60) + " min ago"; }
+    if (s < 86400) { return Math.floor(s / 3600) + " h ago"; } if (s < 86400 * 30) { return Math.floor(s / 86400) + " d ago"; }
+    return new Date(d).toLocaleDateString();
+  }
+  function since() { var d = new Date(); d.setHours(0, 0, 0, 0); d.setDate(d.getDate() - (prefs.days - 1)); return d; }
+  function fv(row, col) { return row[col + "@OData.Community.Display.V1.FormattedValue"]; }
+
+  function get(path) {
+    return fetch(API + path, {
+      credentials: "same-origin",
+      headers: { Accept: "application/json", "OData-Version": "4.0", "OData-MaxVersion": "4.0", Prefer: 'odata.include-annotations="*",odata.maxpagesize=500' }
+    }).then(function (r) {
+      if (!r.ok) { return r.json().catch(function () { return {}; }).then(function (b) { throw new Error((b.error && b.error.message) || ("HTTP " + r.status)); }); }
+      return r.json();
+    }).then(function (j) { return j.value || j; });
+  }
+  function fetchXml(set, xml) { return get(set + "?fetchXml=" + encodeURIComponent(xml.replace(/\s+/g, " "))); }
+  function safe(p) { return p.then(function (v) { return { ok: true, v: v }; }, function (e) { return { ok: false, e: e }; }); }
+
+  // ---------- navigation ----------
+  function openRecord(table, id) {
+    if (Xrm && Xrm.Navigation) { Xrm.Navigation.openForm({ entityName: table, entityId: id }); return; }
+    window.open("/main.aspx?pagetype=entityrecord&etn=" + table + "&id=" + id, "_blank");
+  }
+  function openList(table) {
+    if (Xrm && Xrm.Navigation && Xrm.Navigation.navigateTo) { Xrm.Navigation.navigateTo({ pageType: "entitylist", entityName: table }); return; }
+    window.open("/main.aspx?pagetype=entitylist&etn=" + table, "_blank");
+  }
+  function newRecord(table) {
+    if (Xrm && Xrm.Navigation) { Xrm.Navigation.openForm({ entityName: table }); return; }
+    window.open("/main.aspx?pagetype=entityrecord&etn=" + table, "_blank");
+  }
+
+  // ---------- tooltip ----------
+  var tip = $("tip");
+  document.addEventListener("mousemove", function (e) {
+    var t = e.target.closest ? e.target.closest("[data-tip]") : null;
+    if (!t) { tip.style.opacity = 0; return; }
+    tip.textContent = t.getAttribute("data-tip");
+    var x = Math.min(e.clientX + 12, window.innerWidth - tip.offsetWidth - 8);
+    tip.style.left = x + "px"; tip.style.top = (e.clientY + 14) + "px"; tip.style.opacity = 1;
+  });
+
+  // ---------- charts (plain SVG) ----------
+  function donut(items, center) {
+    var total = items.reduce(function (a, b) { return a + b.value; }, 0);
+    if (!total) { return '<div class="empty">No data in this period</div>'; }
+    var r = 54, c = 2 * Math.PI * r, off = 0, arcs = "";
+    items.forEach(function (it) {
+      var len = it.value / total * c;
+      arcs += '<circle r="' + r + '" cx="70" cy="70" fill="none" stroke="' + it.color + '" stroke-width="18" stroke-dasharray="' + len + " " + (c - len) +
+              '" stroke-dashoffset="' + (-off) + '" transform="rotate(-90 70 70)" data-tip="' + esc(it.label + ": " + num(it.value) + " (" + Math.round(it.value / total * 100) + "%)") + '"/>';
+      off += len;
+    });
+    var svg = '<svg viewBox="0 0 140 140" width="150" height="150" role="img" aria-label="Donut chart">' +
+      '<circle r="' + r + '" cx="70" cy="70" fill="none" stroke="' + css("soft") + '" stroke-width="18"/>' + arcs +
+      '<text x="70" y="68" text-anchor="middle" style="font-size:22px;font-weight:650;fill:' + css("fg") + '">' + esc(center ? center.value : num(total)) + "</text>" +
+      '<text x="70" y="86" text-anchor="middle" style="font-size:10.5px;fill:' + css("muted") + '">' + esc(center ? center.label : "total") + "</text></svg>";
+    var legend = items.map(function (it) {
+      return '<span><i style="background:' + it.color + '"></i><em style="font-style:normal">' + esc(it.label) + "</em><b>" + num(it.value) + "</b></span>";
+    }).join("");
+    return '<div class="donut-wrap">' + svg + '<div class="legend">' + legend + "</div></div>";
+  }
+
+  function stackedBars(days, series) {
+    var W = 760, H = 220, L = 34, B = 24, T = 10, R = 8;
+    var max = 1;
+    days.forEach(function (d) { var s = series.reduce(function (a, se) { return a + (d[se.key] || 0); }, 0); if (s > max) { max = s; } });
+    var step = Math.pow(10, Math.floor(Math.log10(max))); var top = Math.ceil(max / step) * step; if (top / step <= 2) { step = step / 2; top = Math.ceil(max / step) * step; }
+    var bw = (W - L - R) / days.length, gap = Math.max(1, Math.min(6, bw * 0.25)), out = "";
+    for (var g = 0; g <= top; g += step) {
+      var gy = T + (H - T - B) * (1 - g / top);
+      out += '<line class="grid-line" x1="' + L + '" x2="' + (W - R) + '" y1="' + gy + '" y2="' + gy + '"/><text x="' + (L - 6) + '" y="' + (gy + 4) + '" text-anchor="end">' + g + "</text>";
+    }
+    var labelEvery = Math.ceil(days.length / 10);
+    days.forEach(function (d, i) {
+      var x = L + i * bw + gap / 2, y = H - B, tipText = d.label + " — " + series.map(function (s) { return s.label + " " + (d[s.key] || 0); }).join(", ");
+      series.forEach(function (s) {
+        var v = d[s.key] || 0; if (!v) { return; }
+        var h = (H - T - B) * v / top; y -= h;
+        out += '<rect x="' + x + '" y="' + y + '" width="' + Math.max(1, bw - gap) + '" height="' + h + '" rx="2" fill="' + s.color + '"/>';
+      });
+      out += '<rect x="' + (L + i * bw) + '" y="' + T + '" width="' + bw + '" height="' + (H - T - B) + '" fill="transparent" data-tip="' + esc(tipText) + '"/>';
+      if (i % labelEvery === 0) { out += '<text x="' + (L + i * bw + bw / 2) + '" y="' + (H - 6) + '" text-anchor="middle">' + esc(d.short) + "</text>"; }
+    });
+    var legend = series.map(function (s) { return '<span><i style="background:' + s.color + '"></i>' + esc(s.label) + "</span>"; }).join("");
+    return '<svg class="chart" viewBox="0 0 ' + W + " " + H + '" preserveAspectRatio="none" style="height:240px" role="img" aria-label="Delivery activity chart">' + out + '</svg><div class="legend">' + legend + "</div>";
+  }
+
+  function hbars(items) {
+    if (!items.length) { return '<div class="empty">No data in this period</div>'; }
+    var max = Math.max.apply(null, items.map(function (i) { return i.value; })) || 1;
+    return '<div class="bars">' + items.map(function (i) {
+      return '<div class="row"' + (i.onclick ? ' style="cursor:pointer" data-open="' + esc(i.onclick) + '"' : "") + '><span class="name" title="' + esc(i.label) + '">' + esc(i.label) +
+             '</span><span class="track"><span class="fill" style="width:' + Math.max(3, i.value / max * 100) + '%"></span></span><span class="n">' + num(i.value) + "</span></div>";
+    }).join("") + "</div>";
+  }
+
+  // ---------- data ----------
+  function loadAll() {
+    var from = since().toISOString();
+    var ge = '<condition attribute="createdon" operator="on-or-after" value="' + from + '"/>';
+    return Promise.all([
+      safe(fetchXml("mb_emaildeliveries", '<fetch aggregate="true"><entity name="mb_emaildelivery"><attribute name="mb_emaildeliveryid" alias="n" aggregate="count"/>' +
+        '<attribute name="mb_deliverystatus" alias="s" groupby="true"/><attribute name="createdon" alias="y" groupby="true" dategrouping="year"/>' +
+        '<attribute name="createdon" alias="m" groupby="true" dategrouping="month"/><attribute name="createdon" alias="d" groupby="true" dategrouping="day"/>' +
+        '<filter>' + ge + "</filter></entity></fetch>")),
+      safe(fetchXml("mb_emailmessages", '<fetch aggregate="true"><entity name="mb_emailmessage"><attribute name="mb_emailmessageid" alias="n" aggregate="count"/>' +
+        '<attribute name="mb_status" alias="s" groupby="true"/><attribute name="mb_recipienttype" alias="t" groupby="true"/><filter>' + ge + "</filter></entity></fetch>")),
+      safe(fetchXml("mb_emailmessages", '<fetch aggregate="true"><entity name="mb_emailmessage"><attribute name="mb_emailmessageid" alias="n" aggregate="count"/>' +
+        '<attribute name="mb_templateid" alias="tpl" groupby="true"/><filter>' + ge + '<condition attribute="mb_templateid" operator="not-null"/></filter></entity></fetch>')),
+      safe(fetchXml("mb_emaildeliveries", '<fetch aggregate="true"><entity name="mb_emaildelivery"><attribute name="mb_emaildeliveryid" alias="n" aggregate="count"/>' +
+        '<attribute name="mb_channel" alias="c" groupby="true"/><filter>' + ge + "</filter></entity></fetch>")),
+      safe(get("mb_emailmessages?$select=mb_name,mb_status,mb_recipienttype,mb_totalrecipients,mb_sentcount,mb_failedcount,createdon,mb_senton,_ownerid_value&$orderby=createdon desc&$top=8")),
+      safe(get("mb_emaildeliveries?$select=mb_name,mb_recipientname,mb_errordetail,createdon,_mb_emailmessageid_value&$filter=mb_deliverystatus eq 100000001&$orderby=createdon desc&$top=6")),
+      safe(get("mb_notificationrules?$select=mb_name,mb_isactive,mb_tablename,mb_triggerevent,mb_triggercount,mb_lasttriggeredon,mb_sendtoowner,mb_sendtocreator,mb_emailcolumns,mb_lookupcolumns,mb_additionaladdresses,_mb_templateid_value,_mb_recipientlistid_value,statecode&$orderby=mb_triggercount desc")),
+      safe(get("mb_emailsettings?$filter=statecode eq 0 and mb_isactive eq true")),
+      safe(Promise.all(["mb_emailtemplates", "mb_recipientlists", "mb_recipientlistmembers", "mb_emailsignatures"].map(function (s) {
+        return fetchXml(s, '<fetch aggregate="true"><entity name="' + s.replace(/s$/, "").replace(/ies$/, "y") + '"><attribute name="' + s.replace(/s$/, "") + 'id" alias="n" aggregate="count"/><filter><condition attribute="statecode" operator="eq" value="0"/></filter></entity></fetch>')
+          .then(function (r) { return r[0] ? r[0].n : 0; }, function () { return null; });
+      }))),
+      safe(get("workflows?$select=name,statecode,category&$filter=category eq 5 and startswith(name,'Email Hub')")),
+      safe(get("sdkmessageprocessingsteps?$select=name,statecode&$filter=startswith(name,'Email Hub')")),
+      safe(fetchXml("mb_emailmessages", '<fetch aggregate="true"><entity name="mb_emailmessage"><attribute name="mb_sentcount" alias="sent" aggregate="sum"/>' +
+        '<attribute name="mb_failedcount" alias="failed" aggregate="sum"/><filter>' + ge + "</filter></entity></fetch>"))
+    ]);
+  }
+
+  // ---------- render ----------
+  function render(res) {
+    var del = res[0], msg = res[1], tpl = res[2], chn = res[3], recent = res[4], fails = res[5], rules = res[6], settings = res[7], lib = res[8],
+        flows = res[9], steps = res[10], sums = res[11];
+    var setting = settings.ok ? settings.v[0] : null;
+
+    // banners
+    var b = "";
+    if (setting && setting.mb_testmode) {
+      b += '<div class="banner warn">' + icon("flask") + "<div><b>Test Mode is on.</b> Every email is redirected to " +
+           esc(setting.mb_testrecipient || "(no test recipient set)") + ". Turn it off in Settings when you are ready to go live.</div></div>";
+    }
+    if (settings.ok && !setting) { b += '<div class="banner bad">' + icon("alert") + "<div><b>No active Settings record.</b> Create one under Administration &rarr; Settings before sending.</div></div>"; }
+    $("banners").innerHTML = b;
+
+    // message stats
+    var byStatus = {}, byType = {}, totalMsgs = 0;
+    if (msg.ok) { msg.v.forEach(function (r) { totalMsgs += r.n; byStatus[r.s] = (byStatus[r.s] || 0) + r.n; byType[r.t] = (byType[r.t] || 0) + r.n; }); }
+    var delBy = {}, totalDel = 0, days = [];
+    var dayMap = {};
+    var start = since();
+    for (var i = 0; i < prefs.days; i++) {
+      var dt = new Date(start); dt.setDate(start.getDate() + i);
+      var key = dt.getFullYear() + "-" + (dt.getMonth() + 1) + "-" + dt.getDate();
+      dayMap[key] = { label: dt.toLocaleDateString(undefined, { weekday: "short", month: "short", day: "numeric" }), short: dt.toLocaleDateString(undefined, { month: "short", day: "numeric" }) };
+      days.push(dayMap[key]);
+    }
+    if (del.ok) {
+      del.v.forEach(function (r) {
+        totalDel += r.n; delBy[r.s] = (delBy[r.s] || 0) + r.n;
+        var d = dayMap[r.y + "-" + r.m + "-" + r.d]; if (d) { d[r.s] = (d[r.s] || 0) + r.n; }
+      });
+    }
+    var sent = delBy[100000000] || 0, failed = delBy[100000001] || 0, skipped = delBy[100000002] || 0, pending = delBy[100000003] || 0;
+    var rate = sent + failed ? Math.round(sent / (sent + failed) * 1000) / 10 : null;
+    var activeRules = rules.ok ? rules.v.filter(function (r) { return r.mb_isactive && r.statecode === 0; }).length : 0;
+    var inflight = (byStatus[100000001] || 0) + (byStatus[100000002] || 0) + (byStatus[100000007] || 0) + (byStatus[100000006] || 0);
+    var libv = lib.ok ? lib.v : [null, null, null, null];
+
+    // KPIs
+    var k = [
+      ["mail", "accent", num(totalMsgs), "Email messages", "in the last " + prefs.days + " days"],
+      ["check", "ok", num(sent), "Emails delivered", skipped ? num(skipped) + " skipped" : "per recipient"],
+      ["x", "bad", num(failed), "Failed", failed ? "see Recent failures" : "nothing failed"],
+      ["clock", "info", num(inflight + pending), "In progress", "queued, sending or scheduled"],
+      ["shield", rate == null ? "gray" : rate >= 95 ? "ok" : rate >= 80 ? "warn" : "bad", rate == null ? "—" : rate + "%", "Success rate", "sent ÷ (sent + failed)"],
+      ["bell", "warn", num(activeRules), "Active rules", rules.ok ? rules.v.length + " defined" : ""],
+      ["doc", "info", libv[0] == null ? "—" : num(libv[0]), "Templates", (libv[3] == null ? "" : num(libv[3]) + " signatures")],
+      ["list", "accent", libv[1] == null ? "—" : num(libv[1]), "Recipient lists", (libv[2] == null ? "" : num(libv[2]) + " members")]
+    ];
+    $("kpis").innerHTML = k.map(function (x) {
+      return '<div class="card kpi"><div class="ic t-' + x[1] + '">' + icon(x[0]) + '</div><div><div class="v">' + x[2] + '</div><div class="l">' + esc(x[3]) + '</div><div class="d">' + esc(x[4]) + "</div></div></div>";
+    }).join("");
+
+    // trend
+    $("trend-sub").textContent = num(totalDel) + " deliveries";
+    $("trend").innerHTML = del.ok
+      ? stackedBars(days, [{ key: 100000000, label: "Sent", color: css("ok") }, { key: 100000001, label: "Failed", color: css("bad") },
+                           { key: 100000002, label: "Skipped", color: css("warn") }, { key: 100000003, label: "Pending", color: css("info") }])
+      : '<div class="err">' + esc(del.e.message) + "</div>";
+
+    // deliveries by status
+    $("status").innerHTML = del.ok ? donut(Object.keys(DEL).map(function (v) { return { label: DEL[v][0], value: delBy[v] || 0, color: css(DEL[v][1]) }; }).filter(function (x) { return x.value; }),
+      rate == null ? null : { value: rate + "%", label: "success" }) : '<div class="err">' + esc(del.e.message) + "</div>";
+
+    // messages by recipient type
+    $("types").innerHTML = msg.ok ? donut(Object.keys(SENDTO).map(function (v, i) { return { label: SENDTO[v], value: byType[v] || 0, color: PALETTE[i] }; }).filter(function (x) { return x.value; }),
+      { value: num(totalMsgs), label: "messages" }) : '<div class="err">' + esc(msg.e.message) + "</div>";
+
+    // templates
+    $("templates").innerHTML = tpl.ok ? hbars(tpl.v.map(function (r) { return { label: fv(r, "tpl") || "Template", value: r.n, onclick: "mb_emailtemplate:" + r.tpl }; })
+      .sort(function (a, b) { return b.value - a.value; }).slice(0, 7)) : '<div class="err">' + esc(tpl.e.message) + "</div>";
+
+    // channels & sources
+    var ch = chn.ok ? chn.v.map(function (r) { return { label: CHANNEL[r.c] || "Unknown", value: r.n }; }) : [];
+    var ruleMsgs = byType[100000004] || 0, manual = totalMsgs - ruleMsgs;
+    var totals = sums.ok && sums.v[0] ? sums.v[0] : {};
+    $("channels").innerHTML = hbars(ch.concat([{ label: "Sent manually", value: manual }, { label: "Sent by rules", value: ruleMsgs }])) +
+      '<div class="legend" style="margin-top:12px">' + '<span>' + icon("users") + "Recipients reached: <b style='color:var(--fg)'>&nbsp;" + num(totals.sent) + "</b></span></div>";
+
+    // recent messages
+    $("recent").innerHTML = recent.ok ? (recent.v.length ? "<table><thead><tr><th>Subject</th><th>Status</th><th>Recipients</th><th>Sent to</th><th>Created</th></tr></thead><tbody>" +
+      recent.v.map(function (r) {
+        var counts = r.mb_totalrecipients != null ? num(r.mb_sentcount) + " / " + num(r.mb_totalrecipients) + (r.mb_failedcount ? ' <span style="color:var(--bad)">(' + r.mb_failedcount + " failed)</span>" : "") : "—";
+        return '<tr class="click" data-open="mb_emailmessage:' + r.mb_emailmessageid + '"><td class="ell" title="' + esc(r.mb_name) + '">' + esc(r.mb_name || "(no subject)") + "</td><td>" + pill(MSG, r.mb_status) +
+               "</td><td>" + counts + '</td><td class="muted">' + esc(SENDTO[r.mb_recipienttype] || "") + '</td><td class="muted" title="' + esc(new Date(r.createdon).toLocaleString()) + '">' + ago(r.createdon) + "</td></tr>";
+      }).join("") + "</tbody></table>" : '<div class="empty">' + icon("inbox") + "<br>No messages yet</div>") : '<div class="err">' + esc(recent.e.message) + "</div>";
+
+    // failures
+    $("failures").innerHTML = fails.ok ? (fails.v.length ? "<table><thead><tr><th>Recipient</th><th>Error</th><th>When</th></tr></thead><tbody>" +
+      fails.v.map(function (r) {
+        return '<tr class="click" data-open="mb_emaildelivery:' + r.mb_emaildeliveryid + '"><td class="ell" style="max-width:150px" title="' + esc(r.mb_name) + '">' + esc(r.mb_recipientname || r.mb_name) +
+               '</td><td class="ell" style="max-width:220px;color:var(--bad)" title="' + esc(r.mb_errordetail) + '">' + esc(r.mb_errordetail || "—") + '</td><td class="muted">' + ago(r.createdon) + "</td></tr>";
+      }).join("") + "</tbody></table>" : '<div class="empty" style="color:var(--ok)">' + icon("check") + "<br>No failed deliveries</div>") : '<div class="err">' + esc(fails.e.message) + "</div>";
+
+    // rules
+    if (rules.ok) {
+      var maxT = Math.max.apply(null, [1].concat(rules.v.map(function (r) { return r.mb_triggercount || 0; })));
+      $("rules").innerHTML = rules.v.length ? "<table><thead><tr><th>Rule</th><th>State</th><th>Table</th><th>When</th><th>Recipients</th><th>Template</th><th style='min-width:140px'>Triggered</th><th>Last run</th></tr></thead><tbody>" +
+        rules.v.map(function (r) {
+          var on = r.mb_isactive && r.statecode === 0;
+          var who = [];
+          if (r.mb_sendtoowner) { who.push("Owner"); } if (r.mb_sendtocreator) { who.push("Creator"); }
+          if (r.mb_emailcolumns) { who.push(r.mb_emailcolumns); } if (r.mb_lookupcolumns) { who.push(r.mb_lookupcolumns); }
+          if (r._mb_recipientlistid_value) { who.push(fv(r, "_mb_recipientlistid_value") || "List"); } if (r.mb_additionaladdresses) { who.push("Fixed addresses"); }
+          var t = r.mb_triggercount || 0;
+          return '<tr class="click" data-open="mb_notificationrule:' + r.mb_notificationruleid + '"><td><b>' + esc(r.mb_name) + "</b></td><td>" +
+                 (on ? '<span class="pill t-ok">Active</span>' : '<span class="pill t-gray">Off</span>') + "</td><td><code>" + esc(r.mb_tablename) + "</code></td><td>" +
+                 esc(EVENT[r.mb_triggerevent] || "") + '</td><td class="ell" style="max-width:220px" title="' + esc(who.join(", ")) + '">' + esc(who.join(", ") || "—") + '</td><td class="ell" style="max-width:180px">' +
+                 esc(fv(r, "_mb_templateid_value") || "—") + '</td><td><div style="display:flex;align-items:center;gap:8px"><span class="bars" style="flex:1"><span class="track" style="display:block"><span class="fill" style="display:block;width:' +
+                 Math.max(t ? 4 : 0, t / maxT * 100) + '%"></span></span></span><span class="muted" style="min-width:24px;text-align:right">' + num(t) + '</span></div></td><td class="muted">' + ago(r.mb_lasttriggeredon) + "</td></tr>";
+        }).join("") + "</tbody></table>"
+        : '<div class="empty">' + icon("bell") + '<br>No notification rules yet. <a href="#" data-new="mb_notificationrule">Create one</a> to email people automatically when rows are created or updated.</div>';
+    } else { $("rules").innerHTML = '<div class="err">' + esc(rules.e.message) + "</div>"; }
+
+    // configuration
+    if (setting) {
+      var yes = function (v) { return v ? "Yes" : "No"; };
+      var items = [
+        ["send", "Delivery channel", CHANNEL[setting.mb_deliverychannel] || "Office 365 Outlook (default)"],
+        ["inbox", "Send from", setting["_mb_fromqueueid_value"] ? "Queue: " + (fv(setting, "_mb_fromqueueid_value") || "") : (setting.mb_sendmode === 100000001 ? "Shared mailbox: " + (setting.mb_sharedmailbox || "—") : "Flow owner / message owner mailbox")],
+        ["flask", "Test Mode", setting.mb_testmode ? "On → " + (setting.mb_testrecipient || "no recipient") : "Off (live)"],
+        ["table", "Create Email activities", setting.mb_createactivities === false ? "No" : "Yes"],
+        ["users", "Max recipients per send", num(setting.mb_maxrecipients)],
+        ["globe", "External recipients", yes(setting.mb_allowexternal) + (setting.mb_alloweddomains ? " — only " + setting.mb_alloweddomains : "")],
+        ["mail", "Reply-to", setting.mb_replyto || "—"],
+        ["shield", "Archive BCC", setting.mb_archivebcc || "—"],
+        ["doc", "Organization name", setting.mb_organizationname || "—"],
+        ["pen", "Global footer", setting.mb_globalfooter ? "Configured" : "None"]
+      ];
+      $("config").innerHTML = '<div class="cfg">' + items.map(function (x) {
+        return '<div class="item">' + icon(x[0]) + '<div style="min-width:0"><div class="k">' + esc(x[1]) + '</div><div class="val">' + esc(x[2]) + "</div></div></div>";
+      }).join("") + '</div><div style="margin-top:10px"><button class="btn" data-open="mb_emailsetting:' + setting.mb_emailsettingid + '">' + icon("gear") + "Edit settings</button></div>";
+    } else {
+      $("config").innerHTML = settings.ok ? '<div class="empty">No active Settings record. <a href="#" data-new="mb_emailsetting">Create settings</a></div>' : '<div class="err">' + esc(settings.e.message) + "</div>";
+    }
+
+    // health checks
+    var checks = [];
+    checks.push(setting ? ["ok", "Settings", "Active configuration found"] : ["bad", "Settings", "No active Settings record"]);
+    checks.push(setting && setting.mb_testmode ? ["warn", "Test Mode", "Emails go to the test recipient only"] : ["ok", "Test Mode", "Off — emails reach real recipients"]);
+    if (steps.ok) {
+      var core = steps.v.filter(function (s) { return s.name.indexOf("Email Hub:") === 0; }), off = core.filter(function (s) { return s.statecode !== 0; }).length;
+      checks.push(core.length >= 7 && !off ? ["ok", "Email engine", core.length + " plug-in steps enabled"] : ["bad", "Email engine", core.length + " steps found, " + off + " disabled"]);
+      var ruleSteps = steps.v.length - core.length;
+      checks.push(["ok", "Rule triggers", ruleSteps + " registered for " + activeRules + " active rule(s)"]);
+      if (ruleSteps < activeRules) { checks[checks.length - 1] = ["warn", "Rule triggers", "Some active rules have no trigger — open and save them"]; }
+    } else { checks.push(["gray", "Email engine", "Not visible with your security role"]); }
+    if (flows.ok) {
+      var needOutlook = !setting || setting.mb_deliverychannel !== 100000001;
+      flows.v.forEach(function (f) {
+        var on = f.statecode === 1, critical = /Outlook/.test(f.name) ? needOutlook : true;
+        checks.push(on ? ["ok", f.name, "On"] : [critical ? "bad" : "warn", f.name, "Off — turn it on in Power Automate"]);
+      });
+      if (!flows.v.length) { checks.push(["warn", "Cloud flows", "Not found or not shared with you"]); }
+    } else { checks.push(["gray", "Cloud flows", "Not visible with your security role"]); }
+    checks.push(failed ? ["warn", "Recent failures", num(failed) + " failed deliveries in this period"] : ["ok", "Recent failures", "None in this period"]);
+    var ic = { ok: "check", warn: "alert", bad: "x", gray: "clock" };
+    $("health").innerHTML = '<div class="checks">' + checks.map(function (c) {
+      return '<div class="check"><span class="dot t-' + c[0] + '">' + icon(ic[c[0]]) + '</span><div><div class="t">' + esc(c[1]) + '</div><div class="x">' + esc(c[2]) + "</div></div></div>";
+    }).join("") + "</div>";
+
+    // subtitle
+    $("subtitle").textContent = (setting && setting.mb_organizationname ? setting.mb_organizationname + " · " : "") + "Updated " + new Date().toLocaleTimeString();
+  }
+
+  function renderActions() {
+    var a = [
+      ["send", "accent", "New email", "Send to a user, contact, list or addresses", "new:mb_emailmessage"],
+      ["doc", "info", "New template", "Reusable subject and body with tokens", "new:mb_emailtemplate"],
+      ["list", "ok", "New recipient list", "Group users, contacts, teams and external emails", "new:mb_recipientlist"],
+      ["bell", "warn", "New notification rule", "Email automatically when rows change", "new:mb_notificationrule"],
+      ["pen", "gray", "My signatures", "Create or update your signature", "list:mb_emailsignature"],
+      ["flow", "bad", "Delivery log", "Every email, its status and errors", "list:mb_emaildelivery"]
+    ];
+    $("actions").innerHTML = a.map(function (x) {
+      return '<button class="action" data-act="' + x[4] + '"><span class="ic t-' + x[1] + '">' + icon(x[0]) + '</span><span class="t">' + esc(x[2]) + '</span><span class="x">' + esc(x[3]) + "</span></button>";
+    }).join("");
+  }
+
+  // ---------- customize ----------
+  function applyVisibility() {
+    document.querySelectorAll("[data-section]").forEach(function (el) { el.classList.toggle("hidden", prefs.hidden.indexOf(el.getAttribute("data-section")) >= 0); });
+    document.querySelectorAll("#range button").forEach(function (b) { b.classList.toggle("on", +b.getAttribute("data-days") === prefs.days); });
+  }
+  function renderToggles() {
+    $("toggles").innerHTML = SECTIONS.map(function (s) {
+      return '<label><input type="checkbox" data-toggle="' + s[0] + '"' + (prefs.hidden.indexOf(s[0]) < 0 ? " checked" : "") + "> " + esc(s[1]) + "</label>";
+    }).join("") + '<div style="margin-top:14px"><button class="btn" id="resetprefs">Reset to default</button></div>';
+  }
+
+  // ---------- events ----------
+  document.addEventListener("click", function (e) {
+    var t = e.target.closest("[data-open],[data-list],[data-new],[data-act],#range button");
+    if (!t) { return; }
+    if (t.hasAttribute("data-open")) { var p = t.getAttribute("data-open").split(":"); if (p[1]) { openRecord(p[0], p[1]); } }
+    else if (t.hasAttribute("data-list")) { openList(t.getAttribute("data-list")); }
+    else if (t.hasAttribute("data-new")) { e.preventDefault(); newRecord(t.getAttribute("data-new")); }
+    else if (t.hasAttribute("data-act")) { var q = t.getAttribute("data-act").split(":"); (q[0] === "new" ? newRecord : openList)(q[1]); }
+    else if (t.hasAttribute("data-days")) { prefs.days = +t.getAttribute("data-days"); save(); applyVisibility(); refresh(); }
+  });
+  $("toggles").addEventListener("change", function (e) {
+    var k = e.target.getAttribute("data-toggle"); if (!k) { return; }
+    prefs.hidden = prefs.hidden.filter(function (h) { return h !== k; });
+    if (!e.target.checked) { prefs.hidden.push(k); }
+    save(); applyVisibility();
+  });
+  $("toggles").addEventListener("click", function (e) {
+    if (e.target.id === "resetprefs") { prefs = { days: 30, hidden: [] }; save(); renderToggles(); applyVisibility(); refresh(); }
+  });
+  $("customize").onclick = function () { $("panel").classList.add("open"); };
+  $("closepanel").onclick = function () { $("panel").classList.remove("open"); };
+  $("refresh").onclick = function () { refresh(); };
+  $("newmsg").onclick = function () { newRecord("mb_emailmessage"); };
+
+  var busy = false;
+  function refresh() {
+    if (busy) { return; } busy = true;
+    $("subtitle").textContent = "Loading…";
+    loadAll().then(render).catch(function (e) { $("subtitle").textContent = "Could not load data: " + e.message; })
+      .then(function () { busy = false; });
+  }
+
+  renderActions(); renderToggles(); applyVisibility(); refresh();
+})();
+</script>
+</body>
+</html>

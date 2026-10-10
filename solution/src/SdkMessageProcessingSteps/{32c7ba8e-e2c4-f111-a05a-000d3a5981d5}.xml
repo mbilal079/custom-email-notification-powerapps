@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<SdkMessageProcessingStep Name="Email Hub: send delivery (Dataverse channel)" SdkMessageProcessingStepId="{b20ed680-d9c4-f111-a05a-000d3a5981d5}" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<SdkMessageProcessingStep Name="Email Hub: send delivery (Dataverse channel)" SdkMessageProcessingStepId="{32c7ba8e-e2c4-f111-a05a-000d3a5981d5}" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <SdkMessageId>9ebdbb1b-ea3e-db11-86a7-000a3a5473e8</SdkMessageId>
-  <PluginTypeName>EmailHub.Plugins.SendDelivery, EmailHub.Plugins, Version=1.0.0.2, Culture=neutral, PublicKeyToken=167b1d5ffc6d5ccb</PluginTypeName>
-  <PluginTypeId>1165cf7a-d9c4-f111-a05a-000d3a5981d5</PluginTypeId>
+  <PluginTypeName>EmailHub.Plugins.SendDelivery, EmailHub.Plugins, Version=1.0.0.3, Culture=neutral, PublicKeyToken=167b1d5ffc6d5ccb</PluginTypeName>
+  <PluginTypeId>28c7ba8e-e2c4-f111-a05a-000d3a5981d5</PluginTypeId>
   <PrimaryEntity>mb_emaildelivery</PrimaryEntity>
   <AsyncAutoDelete>1</AsyncAutoDelete>
   <Description>Email Hub: send delivery (Dataverse channel)</Description>

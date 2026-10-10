@@ -59,7 +59,7 @@ namespace EmailHub.Plugins.Engine
             catch (Exception ex)
             {
                 _trace.Trace(ex.ToString());
-                Fail(messageId, ex is InvalidPluginExecutionException ? ex.Message : "The email engine failed: " + ex.Message);
+                Fail(messageId, (ex is InvalidPluginExecutionException ? ex.Message : "The email engine failed: " + ex.Message) + $" [engine {typeof(MessageProcessor).Assembly.GetName().Version}]");
             }
         }
 

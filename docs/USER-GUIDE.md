@@ -133,10 +133,29 @@ Always add **Basic User** as well, since it covers activities and core tables.
 
 | Group | Item | Purpose |
 |---|---|---|
-| Overview | **Overview**, **Getting Started** | Dashboard, quick guide and token reference |
+| Overview | **Overview**, **Getting Started** | Live overview page, quick guide and token reference |
 | Send | **Email Messages**, **Delivery Log** | Compose, send, track |
 | Library | **Templates**, **Recipient Lists**, **List Members**, **Signatures** | Reusable content and groups |
 | Administration | **Settings**, **Notification Rules** | Admin configuration and automation |
+
+### 7.1a Overview page
+
+**Overview** is the home page of the app. It reads live data from Dataverse and shows, for the chosen period
+(7 / 30 / 90 days or 1 year):
+
+- **Key figures:** messages, emails delivered, failed, in progress, success rate, active rules, templates and lists.
+- **Delivery activity:** sent / failed / skipped / pending per day (hover a bar for the numbers).
+- **Deliveries by status**, **messages by recipient type**, **most used templates**, **channels and sources**
+  (manual vs. rule-triggered).
+- **Recent messages** and **recent failures** with the error text; click a row to open it.
+- **Notification rules:** table, event, recipients, template, how often each rule fired and when it last ran.
+- **Configuration:** the active Settings at a glance (channel, sender, Test Mode, limits, external recipients…).
+- **Health checks:** settings present, Test Mode, plug-in steps enabled, rule triggers registered, cloud flows on.
+- **Quick actions:** new email, template, list or rule; signatures; delivery log.
+
+A **Test Mode** banner is shown while Test Mode is on. **Customize** lets each user hide sections; the choice and the
+period are remembered in that browser. Each user only sees counts for rows their security role can read; the
+engine and flow checks show *Not visible with your security role* for users without access to them.
 
 ### 7.2 Signature
 
@@ -250,6 +269,7 @@ Case-sensitive; they work in the subject, body, signature and footer. Values are
 | Delivery **Failed**: SendAs denied | Outlook channel: grant *Send As* on the shared mailbox. |
 | Rule save error | The message names the problem (table or column not found, no template, no recipients). |
 | Rule does not fire | Is it **Active**? Does the row match the **Condition**? Did a watched column change? Check **Registered Steps** on the rule and **System Jobs**. |
+| Failure text does not match the current build | Error messages end with `[engine x.y.z.w]`, the engine build that processed them. If it is missing or older than the installed build, an async host is still running a cached copy: run `node scripts/register-plugins.js <env> --fresh` (or wait; hosts recycle). |
 
 Plug-in traces: enable *Plug-in trace log* in system settings and read **Plug-in Trace Logs**.
 

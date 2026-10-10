@@ -893,6 +893,13 @@
       "description": "List Member form logic: member-type visibility and auto-fill from users and contacts."
     },
     {
+      "name": "mb_overview.html",
+      "displayName": "Email Hub - Overview",
+      "type": "html",
+      "contentPath": "webresources/mb_overview.html",
+      "description": "Overview page: live KPIs, SVG charts, rules, configuration and health checks; per-user customizable."
+    },
+    {
       "name": "mb_gettingstarted.html",
       "displayName": "Email Hub - Getting Started",
       "type": "html",
@@ -2012,9 +2019,9 @@
             "label": "Overview",
             "subAreas": [
               {
-                "dashboard": "Email Hub Overview",
                 "title": "Overview",
-                "icon": "mb_overview_icon"
+                "icon": "mb_overview_icon",
+                "url": "$webresource:mb_overview.html"
               },
               {
                 "url": "$webresource:mb_gettingstarted.html",

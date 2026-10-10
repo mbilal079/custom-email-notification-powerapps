@@ -33,7 +33,8 @@ Dataverse teams and external addresses), **ad-hoc addresses**, or automatically 
 - **Delivery log** per email (Pending / Sent / Failed / Skipped + reason) linked to its Email activity.
 - **Security roles:** Email Hub Administrator, Email Hub Manager, Email Hub Sender, plus an owner read-access check on
   related records.
-- **Overview dashboard** and in-app **Getting Started** page.
+- **Overview page** (web resource, no dependencies): live KPIs, SVG charts, recent messages and failures, rules,
+  configuration and health checks, per-user customizable; plus an in-app **Getting Started** page.
 
 ## Repository layout
 
@@ -70,11 +71,11 @@ node $PLUGIN/scripts/lint-app-spec.js --spec @app/app-spec.json
 node $PLUGIN/scripts/build-model-app.js --env $ENV --spec @app/app-spec.json --apply --verify --publish --sample-data
 node scripts/sync-webresources.js $ENV          # push form-script / page updates
 node scripts/enable-rich-text.js $ENV           # rich text editor on HTML columns
-node scripts/fix-dashboard.js $ENV              # dashboard tile heights + view bindings
+node scripts/fix-dashboard.js $ENV              # optional: classic dashboard tile heights + view bindings
 
 pwsh scripts/new-plugin-key.ps1                 # once: strong-name key (git-ignored; keep a backup)
 dotnet build plugins/EmailHub.Plugins -c Release
-node scripts/register-plugins.js $ENV           # assembly, types, steps
+node scripts/register-plugins.js $ENV           # assembly, types, steps (--fresh to re-register from scratch)
 
 node scripts/fetch-choice-values.js $ENV
 node flows/build-flow-definition.js

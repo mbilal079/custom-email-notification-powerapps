@@ -111,19 +111,20 @@
       <RootComponent type="61" schemaName="mb_listmember.js" behavior="0" />
       <RootComponent type="61" schemaName="mb_notificationrule.js" behavior="0" />
       <RootComponent type="61" schemaName="mb_notificationrule_icon" behavior="0" />
+      <RootComponent type="61" schemaName="mb_overview.html" behavior="0" />
       <RootComponent type="61" schemaName="mb_overview_icon" behavior="0" />
       <RootComponent type="61" schemaName="mb_recipientlist_icon" behavior="0" />
       <RootComponent type="61" schemaName="mb_recipientlistmember_icon" behavior="0" />
       <RootComponent type="62" schemaName="mb_emailnotificationhub" behavior="0" />
       <RootComponent type="80" schemaName="mb_emailnotificationhub" behavior="0" />
-      <RootComponent type="91" id="{0d65cf7a-d9c4-f111-a05a-000d3a5981d5}" schemaName="EmailHub.Plugins, Version=1.0.0.2, Culture=neutral, PublicKeyToken=167b1d5ffc6d5ccb" behavior="0" />
-      <RootComponent type="92" id="{ac0ed680-d9c4-f111-a05a-000d3a5981d5}" behavior="0" />
-      <RootComponent type="92" id="{af0ed680-d9c4-f111-a05a-000d3a5981d5}" behavior="0" />
-      <RootComponent type="92" id="{b20ed680-d9c4-f111-a05a-000d3a5981d5}" behavior="0" />
-      <RootComponent type="92" id="{b50ed680-d9c4-f111-a05a-000d3a5981d5}" behavior="0" />
-      <RootComponent type="92" id="{b80ed680-d9c4-f111-a05a-000d3a5981d5}" behavior="0" />
-      <RootComponent type="92" id="{bb0ed680-d9c4-f111-a05a-000d3a5981d5}" behavior="0" />
-      <RootComponent type="92" id="{c93fd386-d9c4-f111-a05a-000d3a5981d5}" behavior="0" />
+      <RootComponent type="91" id="{24c7ba8e-e2c4-f111-a05a-000d3a5981d5}" schemaName="EmailHub.Plugins, Version=1.0.0.3, Culture=neutral, PublicKeyToken=167b1d5ffc6d5ccb" behavior="0" />
+      <RootComponent type="92" id="{2cc7ba8e-e2c4-f111-a05a-000d3a5981d5}" behavior="0" />
+      <RootComponent type="92" id="{2fc7ba8e-e2c4-f111-a05a-000d3a5981d5}" behavior="0" />
+      <RootComponent type="92" id="{32c7ba8e-e2c4-f111-a05a-000d3a5981d5}" behavior="0" />
+      <RootComponent type="92" id="{35c7ba8e-e2c4-f111-a05a-000d3a5981d5}" behavior="0" />
+      <RootComponent type="92" id="{ae1dde94-e2c4-f111-a05a-000d3a5981d5}" behavior="0" />
+      <RootComponent type="92" id="{b21dde94-e2c4-f111-a05a-000d3a5981d5}" behavior="0" />
+      <RootComponent type="92" id="{b51dde94-e2c4-f111-a05a-000d3a5981d5}" behavior="0" />
     </RootComponents>
     <MissingDependencies>
       <MissingDependency>

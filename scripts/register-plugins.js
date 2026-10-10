@@ -2,7 +2,12 @@
 // Uploads plugins/EmailHub.Plugins (Release build) and registers its plug-in types and steps inside the
 // EmailNotificationHub solution. Idempotent: existing assembly/types/steps are updated, not duplicated.
 //
-// Usage: node scripts/register-plugins.js https://yourorg.crm.dynamics.com
+// Usage: node scripts/register-plugins.js https://yourorg.crm.dynamics.com [--fresh]
+//
+// --fresh unregisters the assembly (steps, types, assembly) first and registers it again, then re-saves active
+// Notification Rules so their trigger steps are recreated. Use it when an in-place update does not take effect:
+// Dataverse async hosts can keep running a cached copy of the previous build. Failed messages end with
+// "[engine x.y.z.w]", which shows the build that processed them.
 "use strict";
 const fs = require("fs");
 const path = require("path");
@@ -32,10 +37,24 @@ const one = async (env, query) => (await dv(env, "GET", query)).data.value[0];
 
 (async () => {
   const env = process.argv[2];
+  const fresh = process.argv.includes("--fresh");
   if (!fs.existsSync(DLL)) { throw new Error(`Build the plug-in first: dotnet build plugins/EmailHub.Plugins -c Release (${DLL} not found)`); }
   const content = fs.readFileSync(DLL).toString("base64");
 
   let asm = await one(env, `pluginassemblies?$select=pluginassemblyid&$filter=name eq '${ASSEMBLY}'`);
+  let activeRules = [];
+  if (asm && fresh) {
+    activeRules = (await dv(env, "GET", "mb_notificationrules?$select=mb_notificationruleid&$filter=mb_isactive eq true and statecode eq 0")).data.value;
+    const types = (await dv(env, "GET", `plugintypes?$select=plugintypeid&$filter=_pluginassemblyid_value eq ${asm.pluginassemblyid}`)).data.value;
+    for (const t of types) {
+      const steps = (await dv(env, "GET", `sdkmessageprocessingsteps?$select=sdkmessageprocessingstepid&$filter=_plugintypeid_value eq ${t.plugintypeid}`)).data.value;
+      for (const st of steps) { await dv(env, "DELETE", `sdkmessageprocessingsteps(${st.sdkmessageprocessingstepid})`); }
+      await dv(env, "DELETE", `plugintypes(${t.plugintypeid})`);
+    }
+    await dv(env, "DELETE", `pluginassemblies(${asm.pluginassemblyid})`);
+    asm = null;
+    console.log("unregistered previous assembly");
+  }
   const asmBody = { name: ASSEMBLY, content, isolationmode: 2, sourcetype: 0, culture: "neutral", version: VERSION, description: "Email Notification Hub engine" };
   if (asm) {
     await dv(env, "PATCH", `pluginassemblies(${asm.pluginassemblyid})`, { content, version: VERSION }, SOLUTION);
@@ -80,5 +99,11 @@ const one = async (env, query) => (await dv(env, "GET", query)).data.value[0];
       await dv(env, "POST", "sdkmessageprocessingsteps", body, SOLUTION);
       console.log(`created step: ${s.name}`);
     }
+  }
+
+  // Re-save active rules so NotificationRuleManager registers their trigger steps against the new types.
+  for (const r of activeRules) {
+    await dv(env, "PATCH", `mb_notificationrules(${r.mb_notificationruleid})`, { mb_isactive: true });
+    console.log(`re-armed rule ${r.mb_notificationruleid}`);
   }
 })().catch((e) => { console.error(e.message); process.exit(1); });

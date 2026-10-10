@@ -14,7 +14,7 @@
         <Titles>
           <Title LCID="1033" Title="Overview" />
         </Titles>
-        <SubArea Id="sub_0_0_0" DefaultDashboard="f94c79dd-551a-46ce-b36d-b825fe21efc0" Url="/workplace/home_dashboards.aspx" ResourceId="SitemapDesigner.NewSubArea" Client="All,Outlook,OutlookLaptopClient,OutlookWorkstationClient,Web" Sku="All,OnPremise,Live,SPLA" AvailableOffline="true" PassParams="false" Icon="mb_overview_icon">
+        <SubArea Id="sub_0_0_0" Url="$webresource:mb_overview.html" ResourceId="SitemapDesigner.NewSubArea" Client="All,Outlook,OutlookLaptopClient,OutlookWorkstationClient,Web" Sku="All,OnPremise,Live,SPLA" AvailableOffline="true" PassParams="false" Icon="mb_overview_icon">
           <Titles>
             <Title LCID="1033" Title="Overview" />
           </Titles>
