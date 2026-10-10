@@ -1,0 +1,209 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <systemform>
+    <formid>{4c076465-7ea3-4e33-af03-fcf4b0d442ba}</formid>
+    <IntroducedVersion>1.0</IntroducedVersion>
+    <FormPresentation>0</FormPresentation>
+    <FormActivationState>1</FormActivationState>
+    <form>
+      <tabs>
+        <tab id="bb04218a-cb2b-4f8e-b5fd-a702db311e58" name="tab_general" expanded="true" visible="true">
+          <labels>
+            <label description="Member" languagecode="1033" />
+          </labels>
+          <columns>
+            <column width="100%">
+              <sections>
+                <section id="a2f8991e-3052-4473-b5e8-ee897d823ae3" name="sec_member" showlabel="true" visible="true" columns="11">
+                  <labels>
+                    <label description="Member" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="74b25f91-9105-4871-9c15-24ce8c763d3c" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Recipient List" languagecode="1033" />
+                        </labels>
+                        <control id="d1c4f0f6-90f7-4596-978e-1349a290abf0" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="mb_listid" disabled="false" isrequired="false" />
+                      </cell>
+                      <cell id="1d89bb2d-4fe6-422a-b0f8-a322ae68a4d3" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Member Type" languagecode="1033" />
+                        </labels>
+                        <control id="dd0785d1-64d2-4596-bf33-be18848f3901" classid="{3EF39988-22BB-4F0B-BBBE-64B5A3748AEE}" datafieldname="mb_membertype" disabled="false" isrequired="true" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="e3f7ff05-5bee-4723-9566-29c53d703afe" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="User" languagecode="1033" />
+                        </labels>
+                        <control id="d623c9ef-1caa-42ae-99bb-522be5840d4f" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="mb_userid" disabled="false" isrequired="false" />
+                      </cell>
+                      <cell id="6ab32c83-1cc0-41a7-858c-547b83c0bdae" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Contact" languagecode="1033" />
+                        </labels>
+                        <control id="55d627d8-7967-43a2-b6c9-29b2ca81bab1" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="mb_contactid" disabled="false" isrequired="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="70ea1e61-6b16-42a1-9afb-46d0a5d600f0" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Team" languagecode="1033" />
+                        </labels>
+                        <control id="b605f251-a7e7-4682-9fe0-f20a284667a0" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="mb_teamid" disabled="false" isrequired="false" />
+                      </cell>
+                      <cell id="ab1bc380-fef3-4d97-853a-025a2aa66ddd" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Email Address" languagecode="1033" />
+                        </labels>
+                        <control id="81684c94-8b45-4020-b3e2-3af1947ebf09" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="mb_emailaddress" disabled="false" isrequired="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="62ef2c0c-939a-483e-8956-4827612cd455" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="First Name" languagecode="1033" />
+                        </labels>
+                        <control id="61c08560-f61f-49da-a042-c688fa44a8a4" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="mb_firstname" disabled="false" isrequired="false" />
+                      </cell>
+                      <cell id="bf75d275-776a-4952-843e-a6e887b61fc3" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Last Name" languagecode="1033" />
+                        </labels>
+                        <control id="c5f678fc-a0b4-4788-9a87-2f0c5c37caf8" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="mb_lastname" disabled="false" isrequired="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="fccf603d-2f2c-49fa-affd-aba8d165b750" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Company" languagecode="1033" />
+                        </labels>
+                        <control id="29e7bb04-9c9f-4af7-9cc2-49d93946af8a" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="mb_company" disabled="false" isrequired="false" />
+                      </cell>
+                      <cell id="27f71c53-0a81-4bbe-bc2f-8e83284ca0dc" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Opted Out" languagecode="1033" />
+                        </labels>
+                        <control id="d19349f0-68e1-4614-b705-49296182af18" classid="{67FAC785-CD58-4F9F-ABB3-4B7DDC6ED5ED}" datafieldname="mb_optedout" disabled="false" isrequired="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="2d018b86-0bda-4bad-9d46-ffbab581db64" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Member Name" languagecode="1033" />
+                        </labels>
+                        <control id="9230fcdc-e3a3-4aa8-9d0c-af9578276c90" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="mb_name" disabled="false" isrequired="true" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+              </sections>
+            </column>
+          </columns>
+        </tab>
+      </tabs>
+      <header id="{2f539e3b-9a64-4a24-9303-d98b27f2b647}" celllabelposition="Top" columns="111" labelwidth="115" celllabelalignment="Left">
+        <rows>
+          <row>
+            <cell id="{ab0a61dd-42d5-4607-9045-b738f8c053ad}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{55e147b3-3e27-4f02-b882-2d3cdf7bbff0}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{fc1e2546-27b0-41d8-b8c1-a4462ec06aa3}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+          </row>
+        </rows>
+      </header>
+      <footer id="{e09b4968-6a9c-4f3d-880e-b506956f8189}" celllabelposition="Top" columns="111" labelwidth="115" celllabelalignment="Left">
+        <rows>
+          <row>
+            <cell id="{ad3e909b-c812-4c35-8518-ecf7bf80a8aa}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{a51f7ca0-b7ef-41a0-ad03-f5a24ef3bc52}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{fd25f1a7-5827-44f3-98f1-cf2326f45b47}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+          </row>
+        </rows>
+      </footer>
+      <DisplayConditions Order="0" FallbackForm="true">
+        <Everyone />
+      </DisplayConditions>
+      <events>
+        <event name="onload" application="false" active="false">
+          <Handlers>
+            <Handler functionName="EmailHub.ListMember.onLoad" libraryName="mb_listmember.js" enabled="true" parameters="" passExecutionContext="true" handlerUniqueId="{d048dbd5-c0e7-4ec2-975c-554bf611f8d8}" />
+          </Handlers>
+        </event>
+        <event name="onsave" application="false" active="false">
+          <Handlers>
+            <Handler functionName="EmailHub.ListMember.onSave" libraryName="mb_listmember.js" enabled="true" parameters="" passExecutionContext="true" handlerUniqueId="{4cdfa0ce-5b68-40e1-9831-53eaf4f71398}" />
+          </Handlers>
+        </event>
+        <event name="onchange" application="false" active="false" attribute="mb_membertype">
+          <Handlers>
+            <Handler functionName="EmailHub.ListMember.onTypeChange" libraryName="mb_listmember.js" enabled="true" parameters="" passExecutionContext="true" handlerUniqueId="{9f748105-36c2-41c3-a11d-f55c70ee66e0}" />
+          </Handlers>
+        </event>
+        <event name="onchange" application="false" active="false" attribute="mb_userid">
+          <Handlers>
+            <Handler functionName="EmailHub.ListMember.onUserChange" libraryName="mb_listmember.js" enabled="true" parameters="" passExecutionContext="true" handlerUniqueId="{6b732f1e-80a3-4433-931c-eb6315de4432}" />
+          </Handlers>
+        </event>
+        <event name="onchange" application="false" active="false" attribute="mb_contactid">
+          <Handlers>
+            <Handler functionName="EmailHub.ListMember.onContactChange" libraryName="mb_listmember.js" enabled="true" parameters="" passExecutionContext="true" handlerUniqueId="{c3a6fc79-f8ce-484f-97b2-db784d23f2c6}" />
+          </Handlers>
+        </event>
+        <event name="onchange" application="false" active="false" attribute="mb_teamid">
+          <Handlers>
+            <Handler functionName="EmailHub.ListMember.onTeamChange" libraryName="mb_listmember.js" enabled="true" parameters="" passExecutionContext="true" handlerUniqueId="{27188bde-caff-4d56-80ff-fec1875c619c}" />
+          </Handlers>
+        </event>
+        <event name="onchange" application="false" active="false" attribute="mb_emailaddress">
+          <Handlers>
+            <Handler functionName="EmailHub.ListMember.onEmailChange" libraryName="mb_listmember.js" enabled="true" parameters="" passExecutionContext="true" handlerUniqueId="{359bf295-b2e1-4de4-a3a9-78cfd212ffd4}" />
+          </Handlers>
+        </event>
+        <event name="onchange" application="false" active="false" attribute="mb_firstname">
+          <Handlers>
+            <Handler functionName="EmailHub.ListMember.onEmailChange" libraryName="mb_listmember.js" enabled="true" parameters="" passExecutionContext="true" handlerUniqueId="{078178af-fc12-49ee-96c4-bf1b5acbba5e}" />
+          </Handlers>
+        </event>
+        <event name="onchange" application="false" active="false" attribute="mb_lastname">
+          <Handlers>
+            <Handler functionName="EmailHub.ListMember.onEmailChange" libraryName="mb_listmember.js" enabled="true" parameters="" passExecutionContext="true" handlerUniqueId="{30755998-ec24-41fa-b171-a634686e298c}" />
+          </Handlers>
+        </event>
+      </events>
+    </form>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>1</CanBeDeleted>
+    <LocalizedNames>
+      <LocalizedName description="List Member" languagecode="1033" />
+    </LocalizedNames>
+    <Descriptions>
+      <Description description="One list member; fields adapt to the member type." languagecode="1033" />
+    </Descriptions>
+  </systemform>
+</forms>

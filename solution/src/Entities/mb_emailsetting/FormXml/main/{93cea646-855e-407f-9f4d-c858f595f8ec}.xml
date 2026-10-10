@@ -1,0 +1,230 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <systemform>
+    <formid>{93cea646-855e-407f-9f4d-c858f595f8ec}</formid>
+    <IntroducedVersion>1.0</IntroducedVersion>
+    <FormPresentation>0</FormPresentation>
+    <FormActivationState>1</FormActivationState>
+    <form>
+      <tabs>
+        <tab id="5ebb966c-3b5b-4629-921f-b8995749c754" name="tab_sending" expanded="true" visible="true">
+          <labels>
+            <label description="Sending" languagecode="1033" />
+          </labels>
+          <columns>
+            <column width="100%">
+              <sections>
+                <section id="f3934273-9c8b-4ed3-9c6a-6a2814348407" name="sec_sending" showlabel="true" visible="true" columns="11">
+                  <labels>
+                    <label description="Mailbox" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="63527153-e9b9-4ee2-8fce-2a358627015e" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Setting Name" languagecode="1033" />
+                        </labels>
+                        <control id="9b581cf6-3a3e-47b4-87f3-e2f6365eaf4b" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="mb_name" disabled="false" isrequired="true" />
+                      </cell>
+                      <cell id="9723e1b7-94ca-450e-8935-343954331c1a" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Active Configuration" languagecode="1033" />
+                        </labels>
+                        <control id="ceda195b-71fb-4a55-8d96-7d7e3a6a1dc0" classid="{67FAC785-CD58-4F9F-ABB3-4B7DDC6ED5ED}" datafieldname="mb_isactive" disabled="false" isrequired="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="ad6ab75c-bdf4-4da5-a9ec-7d8954260964" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Send From" languagecode="1033" />
+                        </labels>
+                        <control id="ecaf0fd9-a865-4ff8-b88a-b9698e5eaae6" classid="{3EF39988-22BB-4F0B-BBBE-64B5A3748AEE}" datafieldname="mb_sendmode" disabled="false" isrequired="false" />
+                      </cell>
+                      <cell id="f115a9a4-002d-4518-82cc-e5cd1437a995" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Shared Mailbox Address" languagecode="1033" />
+                        </labels>
+                        <control id="971f3277-482c-4dc5-b063-577c65a7de48" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="mb_sharedmailbox" disabled="false" isrequired="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="942432af-1697-4ffd-bbf6-b8e557c2010b" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Reply-To Address" languagecode="1033" />
+                        </labels>
+                        <control id="9a94e4f2-10b8-4c19-812f-80d5d4a80412" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="mb_replyto" disabled="false" isrequired="false" />
+                      </cell>
+                      <cell id="9d64f731-46eb-4abd-875a-90bc64d43949" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Organization Name" languagecode="1033" />
+                        </labels>
+                        <control id="990dcc82-2de8-4bc4-9c23-e273570d8111" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="mb_organizationname" disabled="false" isrequired="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="72838c75-6d9a-4351-9f76-556535096e0a" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Default Signature" languagecode="1033" />
+                        </labels>
+                        <control id="f8561f63-091f-40fc-8c72-6a58d33d3621" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="mb_defaultsignatureid" disabled="false" isrequired="false" />
+                      </cell>
+                      <cell id="48387e48-38df-4ca4-b61b-39cc63f5e3d8" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Keep Delivery Log" languagecode="1033" />
+                        </labels>
+                        <control id="7e904229-e028-469f-bde3-8479f4b5d4c5" classid="{67FAC785-CD58-4F9F-ABB3-4B7DDC6ED5ED}" datafieldname="mb_logdelivery" disabled="false" isrequired="false" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+                <section id="99679745-254a-462a-8c70-15e8b276233f" name="sec_guardrails" showlabel="true" visible="true" columns="11">
+                  <labels>
+                    <label description="Guard rails" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="73d855f0-ddee-4629-88b8-87a411613fad" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Test Mode" languagecode="1033" />
+                        </labels>
+                        <control id="9ae1004d-7010-4d38-9c40-72709d307ed6" classid="{67FAC785-CD58-4F9F-ABB3-4B7DDC6ED5ED}" datafieldname="mb_testmode" disabled="false" isrequired="false" />
+                      </cell>
+                      <cell id="b4fb3f2c-95bf-492d-905a-6cdf667597e7" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Test Mode Recipient" languagecode="1033" />
+                        </labels>
+                        <control id="fa17f11a-508c-4a1d-ab4d-e922a8ec2453" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="mb_testrecipient" disabled="false" isrequired="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="b09c463e-5eac-4625-8951-a5a9c7961b69" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Max Recipients Per Send" languagecode="1033" />
+                        </labels>
+                        <control id="ca5df9f9-6e19-4d37-9713-cf4c7d95d524" classid="{C6D124CA-7EDA-4A60-AEA9-7FB8D318B68F}" datafieldname="mb_maxrecipients" disabled="false" isrequired="false" />
+                      </cell>
+                      <cell id="3a5a9153-aa50-4fab-a0d0-2c7f199ec31b" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Allow External Recipients" languagecode="1033" />
+                        </labels>
+                        <control id="7bf46d5c-0638-48f1-b527-b1f524f7aebd" classid="{67FAC785-CD58-4F9F-ABB3-4B7DDC6ED5ED}" datafieldname="mb_allowexternal" disabled="false" isrequired="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="5d3682e2-5293-468d-a416-b0c04fc586e8" showlabel="true" visible="true" colspan="2" rowspan="1">
+                        <labels>
+                          <label description="Allowed External Domains" languagecode="1033" />
+                        </labels>
+                        <control id="5cb6452c-5a2d-4882-8e72-ad3ffdfae27d" classid="{E0DECE4B-6FC8-4A8F-A065-082708572369}" datafieldname="mb_alloweddomains" disabled="false" isrequired="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="617647b4-4f13-42a6-9e71-6eae8c3ce4c7" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Archive BCC Address" languagecode="1033" />
+                        </labels>
+                        <control id="de9256f5-5317-4e6d-98ee-0ba0cc6332fc" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="mb_archivebcc" disabled="false" isrequired="false" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+                <section id="a55aa775-c978-4a90-8bf8-3b41298f168e" name="sec_branding" showlabel="true" visible="true" columns="1">
+                  <labels>
+                    <label description="Footer" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="5a47473a-3357-4100-b275-ecb6cf1f7ea6" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Global Footer (HTML)" languagecode="1033" />
+                        </labels>
+                        <control uniqueid="{a19b0ef7-87c1-49a3-a169-b9998cd5e05a}" id="24c9bad9-7036-4e5f-8d03-1ab6165ae8bb" classid="{E0DECE4B-6FC8-4A8F-A065-082708572369}" datafieldname="mb_globalfooter" disabled="false" isrequired="false" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+              </sections>
+            </column>
+          </columns>
+        </tab>
+      </tabs>
+      <header id="{e528d73b-6229-43dc-845e-c21e0b1a026b}" celllabelposition="Top" columns="111" labelwidth="115" celllabelalignment="Left">
+        <rows>
+          <row>
+            <cell id="{3ce4d91a-3368-4e10-a5c6-ff51ecd8647f}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{a35abaac-4c3e-40af-b543-48b27154387b}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{42efee85-4038-44c0-88c1-091cc456ee1d}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+          </row>
+        </rows>
+      </header>
+      <footer id="{697523a7-94b6-4b8a-9839-18728e257687}" celllabelposition="Top" columns="111" labelwidth="115" celllabelalignment="Left">
+        <rows>
+          <row>
+            <cell id="{bc5749bb-722b-4f49-bbbc-f70589f50fe3}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{22d31430-117f-47f3-acdb-334643e9a732}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{e57ac47c-d6ff-4783-a030-764d51c97602}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+          </row>
+        </rows>
+      </footer>
+      <controlDescriptions>
+        <controlDescription forControl="{a19b0ef7-87c1-49a3-a169-b9998cd5e05a}">
+          <customControl id="{E0DECE4B-6FC8-4a8f-A065-082708572369}">
+            <parameters>
+              <datafieldname>mb_globalfooter</datafieldname>
+            </parameters>
+          </customControl>
+          <customControl formFactor="0" name="MscrmControls.RichTextEditor.RichTextEditorControl">
+            <parameters>
+              <datafieldname>mb_globalfooter</datafieldname>
+            </parameters>
+          </customControl>
+          <customControl formFactor="1" name="MscrmControls.RichTextEditor.RichTextEditorControl">
+            <parameters>
+              <datafieldname>mb_globalfooter</datafieldname>
+            </parameters>
+          </customControl>
+          <customControl formFactor="2" name="MscrmControls.RichTextEditor.RichTextEditorControl">
+            <parameters>
+              <datafieldname>mb_globalfooter</datafieldname>
+            </parameters>
+          </customControl>
+        </controlDescription>
+      </controlDescriptions>
+      <DisplayConditions Order="0" FallbackForm="true">
+        <Everyone />
+      </DisplayConditions>
+    </form>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>1</CanBeDeleted>
+    <LocalizedNames>
+      <LocalizedName description="Email Setting" languagecode="1033" />
+    </LocalizedNames>
+    <Descriptions>
+      <Description description="Administrator configuration for sending." languagecode="1033" />
+    </Descriptions>
+  </systemform>
+</forms>

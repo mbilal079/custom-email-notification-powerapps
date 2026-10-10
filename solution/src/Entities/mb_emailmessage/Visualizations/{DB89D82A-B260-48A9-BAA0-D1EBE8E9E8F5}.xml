@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<visualization xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <savedqueryvisualizationid>{DB89D82A-B260-48A9-BAA0-D1EBE8E9E8F5}</savedqueryvisualizationid>
+  <datadescription>
+    <datadefinition>
+      <fetchcollection>
+        <fetch mapping="logical" aggregate="true">
+          <entity name="mb_emailmessage">
+            <attribute alias="agg_0" name="mb_emailmessageid" aggregate="count" />
+            <attribute alias="grp_0" name="mb_recipienttype" groupby="true" />
+          </entity>
+        </fetch>
+      </fetchcollection>
+      <categorycollection>
+        <category alias="grp_0">
+          <measurecollection>
+            <measure alias="agg_0" />
+          </measurecollection>
+        </category>
+      </categorycollection>
+    </datadefinition>
+  </datadescription>
+  <presentationdescription>
+    <Chart Palette="BrightPastel">
+      <Series>
+        <Series ChartType="Column" ChartArea="Default" />
+      </Series>
+      <ChartAreas>
+        <ChartArea Name="Default" />
+      </ChartAreas>
+      <Legends>
+        <Legend Name="Default" />
+      </Legends>
+    </Chart>
+  </presentationdescription>
+  <isdefault>0</isdefault>
+  <LocalizedNames>
+    <LocalizedName description="Messages by Send To" languagecode="1033" />
+  </LocalizedNames>
+  <Descriptions>
+    <Description description="How people address their emails." languagecode="1033" />
+  </Descriptions>
+  <IsCustomizable>1</IsCustomizable>
+  <IntroducedVersion>1.0</IntroducedVersion>
+  <CanBeDeleted>1</CanBeDeleted>
+</visualization>

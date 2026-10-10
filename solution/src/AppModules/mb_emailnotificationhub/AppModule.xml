@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<AppModule>
+  <UniqueName>mb_emailnotificationhub</UniqueName>
+  <IntroducedVersion>1.0</IntroducedVersion>
+  <WebResourceId>5f2b0a1b-abc4-f111-a05a-000d3a5981d5</WebResourceId>
+  <OptimizedFor></OptimizedFor>
+  <statecode>0</statecode>
+  <statuscode>1</statuscode>
+  <FormFactor>1</FormFactor>
+  <ClientType>4</ClientType>
+  <NavigationType>0</NavigationType>
+  <AppModuleComponents>
+    <AppModuleComponent type="1" schemaName="mb_emaildelivery" />
+    <AppModuleComponent type="1" schemaName="mb_emailmessage" />
+    <AppModuleComponent type="1" schemaName="mb_emailsetting" />
+    <AppModuleComponent type="1" schemaName="mb_emailsignature" />
+    <AppModuleComponent type="1" schemaName="mb_emailtemplate" />
+    <AppModuleComponent type="1" schemaName="mb_recipientlist" />
+    <AppModuleComponent type="1" schemaName="mb_recipientlistmember" />
+    <AppModuleComponent type="26" id="{16267d96-73e4-4047-99ae-0222aa6daaba}" />
+    <AppModuleComponent type="26" id="{8f1b78fc-3456-4387-bce8-1bdfb8c4f2be}" />
+    <AppModuleComponent type="26" id="{4ba5cc2d-aa47-4bb9-b067-1c4ea31c4fd3}" />
+    <AppModuleComponent type="26" id="{b3e860ec-fb08-4806-9b0a-20a214417b2a}" />
+    <AppModuleComponent type="26" id="{67cb1b4b-0855-4c2b-98cd-220a9aac8fcb}" />
+    <AppModuleComponent type="26" id="{16b60260-e98a-4db8-b403-26187cfb0179}" />
+    <AppModuleComponent type="26" id="{a7001582-6463-445c-b794-36d0259c3f1f}" />
+    <AppModuleComponent type="26" id="{efdbc2d5-faf1-416f-b916-37c0cd3f5dfe}" />
+    <AppModuleComponent type="26" id="{cf876a8d-2dcf-4e4e-be92-3d30d31e0112}" />
+    <AppModuleComponent type="26" id="{0453aa9b-56ee-4f89-8db1-3f79e3350c86}" />
+    <AppModuleComponent type="26" id="{090a9f34-f9ae-4e5d-a8ff-461ee48485b1}" />
+    <AppModuleComponent type="26" id="{71307e54-d56d-497c-980a-4faacc8cddfa}" />
+    <AppModuleComponent type="26" id="{c219d45c-f8bc-4755-bbc2-5511bcf83109}" />
+    <AppModuleComponent type="26" id="{d58a8db5-ab71-473b-96c8-58415d19f09c}" />
+    <AppModuleComponent type="26" id="{5c410fbf-1bfe-4138-8306-5d3db416ffa4}" />
+    <AppModuleComponent type="26" id="{40c86dcc-a24d-42b1-b58d-65563317b98c}" />
+    <AppModuleComponent type="26" id="{aeca0e4c-24b5-4bf5-ad4d-658b205309d8}" />
+    <AppModuleComponent type="26" id="{fb2597bf-c278-4370-9180-6c1b91d683b0}" />
+    <AppModuleComponent type="26" id="{8d700e68-bd76-47c2-be12-7792cc59ee4b}" />
+    <AppModuleComponent type="26" id="{b95481ab-2246-41d0-a886-7d8f4d3eb411}" />
+    <AppModuleComponent type="26" id="{b348b0b0-07ea-4246-8979-9be46665f1ef}" />
+    <AppModuleComponent type="26" id="{01c1ae68-39bd-4185-9d09-aaad03b74cd6}" />
+    <AppModuleComponent type="26" id="{6e097ff5-3ae7-498a-8845-b0b0e63d5dbf}" />
+    <AppModuleComponent type="26" id="{3b933c5b-f27e-4230-83b8-bb37e041005a}" />
+    <AppModuleComponent type="26" id="{3a90995c-3434-4eb3-af32-cefc7f05d1f4}" />
+    <AppModuleComponent type="26" id="{831bab56-f717-4126-9696-d51e37ede6d3}" />
+    <AppModuleComponent type="26" id="{e96dbf0c-70d8-4442-b4d4-d6952239d00e}" />
+    <AppModuleComponent type="26" id="{a9b16fb9-b2f0-48b3-9b96-dffc50efcee5}" />
+    <AppModuleComponent type="26" id="{96185898-e09b-4d28-b17d-f222fdca75df}" />
+    <AppModuleComponent type="26" id="{10957397-de34-41e7-be59-f57a5b0b8b0e}" />
+    <AppModuleComponent type="26" id="{7b957370-9780-42fd-9b29-ffdbe88e60f2}" />
+    <AppModuleComponent type="59" id="{4bbd3031-e83c-47dc-b213-53781c3321d1}" />
+    <AppModuleComponent type="59" id="{8fed2b23-e474-4360-b8d6-6c82f6975c4b}" />
+    <AppModuleComponent type="59" id="{e9e5ec00-75b6-49eb-897b-975b647f444b}" />
+    <AppModuleComponent type="59" id="{db89d82a-b260-48a9-baa0-d1ebe8e9e8f5}" />
+    <AppModuleComponent type="60" id="{5f4a7ada-6f8c-4bf0-8bbd-1b66296d8cb5}" />
+    <AppModuleComponent type="60" id="{48fb0a5f-688e-4bed-926f-26a51f6f257f}" />
+    <AppModuleComponent type="60" id="{69c16f44-6bfe-4519-bd33-28f25b713c28}" />
+    <AppModuleComponent type="60" id="{687154db-f49f-45d7-bc9e-2ac28d2bbf6f}" />
+    <AppModuleComponent type="60" id="{11370a3c-efb7-4659-af3d-479b4a6fbe99}" />
+    <AppModuleComponent type="60" id="{86a01af7-d79b-4456-9ab5-49502ed9092a}" />
+    <AppModuleComponent type="60" id="{bc8997dd-4110-4ab6-b442-531747a8f6fe}" />
+    <AppModuleComponent type="60" id="{2c1f42db-3f28-477e-af68-5e76cb71ab4c}" />
+    <AppModuleComponent type="60" id="{e63f048e-ed6c-428c-aacb-7058ba7d6771}" />
+    <AppModuleComponent type="60" id="{ad5d34c4-25bb-4a34-88b2-804d6917b84f}" />
+    <AppModuleComponent type="60" id="{e8b7107c-a025-448b-b92e-99650cd213c3}" />
+    <AppModuleComponent type="60" id="{f94c79dd-551a-46ce-b36d-b825fe21efc0}" />
+    <AppModuleComponent type="60" id="{93cea646-855e-407f-9f4d-c858f595f8ec}" />
+    <AppModuleComponent type="60" id="{bc679585-3379-4f01-afd3-d55e6eafefc0}" />
+    <AppModuleComponent type="60" id="{4c076465-7ea3-4e33-af03-fcf4b0d442ba}" />
+    <AppModuleComponent type="62" schemaName="mb_emailnotificationhub" />
+  </AppModuleComponents>
+  <AppModuleRoleMaps>
+    <Role id="{5e7ff936-abc4-f111-a05a-000d3a5981d5}" />
+    <Role id="{b5ea103d-abc4-f111-a05a-000d3a5981d5}" />
+    <Role id="{f2ea103d-abc4-f111-a05a-000d3a5981d5}" />
+    <Role id="{627090ff-40a3-4053-8790-584edc5be201}" />
+    <Role id="{119f245c-3cc8-4b62-b31c-d1a046ced15d}" />
+  </AppModuleRoleMaps>
+  <LocalizedNames>
+    <LocalizedName description="Email Notification Hub" languagecode="1033" />
+  </LocalizedNames>
+  <Descriptions>
+    <Description description="Send personalized emails to users, contacts, lists and external addresses." languagecode="1033" />
+  </Descriptions>
+  <appsettings>
+    <appsetting settingdefinitionid.uniquename="AppChannel">
+      <iscustomizable>1</iscustomizable>
+      <value>1</value>
+    </appsetting>
+    <appsetting settingdefinitionid.uniquename="HeaderAndNavigationRefresh">
+      <iscustomizable>1</iscustomizable>
+      <value>2</value>
+    </appsetting>
+    <appsetting settingdefinitionid.uniquename="NewLookAlwaysOn">
+      <iscustomizable>1</iscustomizable>
+      <value>true</value>
+    </appsetting>
+  </appsettings>
+</AppModule>

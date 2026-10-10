@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<AppModuleSiteMap xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <SiteMapUniqueName>mb_emailnotificationhub</SiteMapUniqueName>
+  <EnableCollapsibleGroups>False</EnableCollapsibleGroups>
+  <ShowHome>True</ShowHome>
+  <ShowPinned>True</ShowPinned>
+  <ShowRecents>True</ShowRecents>
+  <SiteMap IntroducedVersion="7.0.0.0">
+    <Area Id="area_0" ShowGroups="true" ResourceId="SitemapDesigner.NewTitle" DescriptionResourceId="SitemapDesigner.NewTitle" IntroducedVersion="7.0.0.0">
+      <Titles>
+        <Title LCID="1033" Title="Email Hub" />
+      </Titles>
+      <Group Id="group_0_0" ResourceId="SitemapDesigner.NewGroup" DescriptionResourceId="SitemapDesigner.NewGroup" ToolTipResourseId="SitemapDesigner.Unknown" IntroducedVersion="7.0.0.0" IsProfile="false">
+        <Titles>
+          <Title LCID="1033" Title="Overview" />
+        </Titles>
+        <SubArea Id="sub_0_0_0" DefaultDashboard="f94c79dd-551a-46ce-b36d-b825fe21efc0" Url="/workplace/home_dashboards.aspx" ResourceId="SitemapDesigner.NewSubArea" Client="All,Outlook,OutlookLaptopClient,OutlookWorkstationClient,Web" Sku="All,OnPremise,Live,SPLA" AvailableOffline="true" PassParams="false" Icon="mb_overview_icon">
+          <Titles>
+            <Title LCID="1033" Title="Overview" />
+          </Titles>
+        </SubArea>
+        <SubArea Id="sub_0_0_1" Url="$webresource:mb_gettingstarted.html" ResourceId="SitemapDesigner.NewSubArea" Client="All,Outlook,OutlookLaptopClient,OutlookWorkstationClient,Web" Sku="All,OnPremise,Live,SPLA" AvailableOffline="true" PassParams="false" Icon="mb_help_icon">
+          <Titles>
+            <Title LCID="1033" Title="Getting Started" />
+          </Titles>
+        </SubArea>
+      </Group>
+      <Group Id="group_0_1" ResourceId="SitemapDesigner.NewGroup" DescriptionResourceId="SitemapDesigner.NewGroup" ToolTipResourseId="SitemapDesigner.Unknown" IntroducedVersion="7.0.0.0" IsProfile="false">
+        <Titles>
+          <Title LCID="1033" Title="Send" />
+        </Titles>
+        <SubArea Id="sub_0_1_0" Entity="mb_emailmessage" ResourceId="SitemapDesigner.NewSubArea" Client="All,Outlook,OutlookLaptopClient,OutlookWorkstationClient,Web" Sku="All,OnPremise,Live,SPLA" AvailableOffline="true" PassParams="false">
+          <Titles>
+            <Title LCID="1033" Title="Email Messages" />
+          </Titles>
+        </SubArea>
+        <SubArea Id="sub_0_1_1" Entity="mb_emaildelivery" ResourceId="SitemapDesigner.NewSubArea" Client="All,Outlook,OutlookLaptopClient,OutlookWorkstationClient,Web" Sku="All,OnPremise,Live,SPLA" AvailableOffline="true" PassParams="false">
+          <Titles>
+            <Title LCID="1033" Title="Delivery Log" />
+          </Titles>
+        </SubArea>
+      </Group>
+      <Group Id="group_0_2" ResourceId="SitemapDesigner.NewGroup" DescriptionResourceId="SitemapDesigner.NewGroup" ToolTipResourseId="SitemapDesigner.Unknown" IntroducedVersion="7.0.0.0" IsProfile="false">
+        <Titles>
+          <Title LCID="1033" Title="Library" />
+        </Titles>
+        <SubArea Id="sub_0_2_0" Entity="mb_emailtemplate" ResourceId="SitemapDesigner.NewSubArea" Client="All,Outlook,OutlookLaptopClient,OutlookWorkstationClient,Web" Sku="All,OnPremise,Live,SPLA" AvailableOffline="true" PassParams="false">
+          <Titles>
+            <Title LCID="1033" Title="Templates" />
+          </Titles>
+        </SubArea>
+        <SubArea Id="sub_0_2_1" Entity="mb_recipientlist" ResourceId="SitemapDesigner.NewSubArea" Client="All,Outlook,OutlookLaptopClient,OutlookWorkstationClient,Web" Sku="All,OnPremise,Live,SPLA" AvailableOffline="true" PassParams="false">
+          <Titles>
+            <Title LCID="1033" Title="Recipient Lists" />
+          </Titles>
+        </SubArea>
+        <SubArea Id="sub_0_2_2" Entity="mb_recipientlistmember" ResourceId="SitemapDesigner.NewSubArea" Client="All,Outlook,OutlookLaptopClient,OutlookWorkstationClient,Web" Sku="All,OnPremise,Live,SPLA" AvailableOffline="true" PassParams="false">
+          <Titles>
+            <Title LCID="1033" Title="List Members" />
+          </Titles>
+        </SubArea>
+        <SubArea Id="sub_0_2_3" Entity="mb_emailsignature" ResourceId="SitemapDesigner.NewSubArea" Client="All,Outlook,OutlookLaptopClient,OutlookWorkstationClient,Web" Sku="All,OnPremise,Live,SPLA" AvailableOffline="true" PassParams="false">
+          <Titles>
+            <Title LCID="1033" Title="Signatures" />
+          </Titles>
+        </SubArea>
+      </Group>
+      <Group Id="group_0_3" ResourceId="SitemapDesigner.NewGroup" DescriptionResourceId="SitemapDesigner.NewGroup" ToolTipResourseId="SitemapDesigner.Unknown" IntroducedVersion="7.0.0.0" IsProfile="false">
+        <Titles>
+          <Title LCID="1033" Title="Administration" />
+        </Titles>
+        <SubArea Id="sub_0_3_0" Entity="mb_emailsetting" ResourceId="SitemapDesigner.NewSubArea" Client="All,Outlook,OutlookLaptopClient,OutlookWorkstationClient,Web" Sku="All,OnPremise,Live,SPLA" AvailableOffline="true" PassParams="false">
+          <Titles>
+            <Title LCID="1033" Title="Settings" />
+          </Titles>
+        </SubArea>
+      </Group>
+    </Area>
+  </SiteMap>
+  <LocalizedNames>
+    <LocalizedName description="Email Notification Hub" languagecode="1033" />
+  </LocalizedNames>
+</AppModuleSiteMap>

@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedqueries xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>1</CanBeDeleted>
+    <isquickfindquery>0</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>0</isdefault>
+    <savedqueryid>{831bab56-f717-4126-9696-d51e37ede6d3}</savedqueryid>
+    <layoutxml>
+      <grid name="resultset" jump="mb_name" select="1" icon="1" preview="1">
+        <row name="result" id="mb_emaildeliveryid">
+          <cell name="mb_name" width="100" />
+          <cell name="mb_recipientname" width="100" />
+          <cell name="mb_deliverystatus" width="100" />
+          <cell name="mb_errordetail" width="100" />
+          <cell name="mb_sentat" width="100" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>0</querytype>
+    <fetchxml>
+      <fetch version="1.0" mapping="logical">
+        <entity name="mb_emaildelivery">
+          <attribute name="mb_name" />
+          <attribute name="mb_recipientname" />
+          <attribute name="mb_deliverystatus" />
+          <attribute name="mb_errordetail" />
+          <attribute name="mb_sentat" />
+          <order attribute="mb_name" descending="false" />
+          <filter type="and">
+            <condition attribute="statecode" operator="eq" value="0" />
+          </filter>
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>1.0</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="Message Deliveries" languagecode="1033" />
+    </LocalizedNames>
+    <Descriptions>
+      <Description description="Sub-grid on the Email Message form." languagecode="1033" />
+    </Descriptions>
+  </savedquery>
+</savedqueries>

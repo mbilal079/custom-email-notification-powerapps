@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Dashboard xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <LocalizedNames>
+    <LocalizedName description="Email Hub Overview" languagecode="1033" />
+  </LocalizedNames>
+  <Descriptions>
+    <Description description="Delivery health and my recent messages." languagecode="1033" />
+  </Descriptions>
+  <FormId>{f94c79dd-551a-46ce-b36d-b825fe21efc0}</FormId>
+  <IsCustomizable>1</IsCustomizable>
+  <IsDefault>0</IsDefault>
+  <FormXml>
+    <forms type="dashboard">
+      <form>
+        <tabs>
+          <tab id="{91943860-2a74-4563-ba06-54f179d3684c}" name="General" showlabel="true" expanded="true" verticallayout="true">
+            <labels>
+              <label description="" languagecode="1033" />
+            </labels>
+            <columns>
+              <column width="100%">
+                <sections>
+                  <section id="{71f55068-472d-48c6-a9ad-7ea2536483f5}" name="Section 1" showlabel="false" columns="2">
+                    <labels>
+                      <label description="" languagecode="1033" />
+                    </labels>
+                    <rows>
+                      <row>
+                        <cell id="{4bcf885e-3c5d-4fbe-9405-7b987996710f}" colspan="1" rowspan="1" showlabel="true">
+                          <labels>
+                            <label description="Messages by Delivery Status" languagecode="1033" />
+                          </labels>
+                          <control id="{a66345c5-4460-46fb-94b3-68e81c95f846}" classid="{E7A81278-8635-4D9E-8D4D-59480B391C5B}">
+                            <parameters>
+                              <TargetEntityType>mb_emailmessage</TargetEntityType>
+                              <ViewId>96185898-e09b-4d28-b17d-f222fdca75df</ViewId>
+                              <VisualizationId>8fed2b23-e474-4360-b8d6-6c82f6975c4b</VisualizationId>
+                              <ChartGridMode>Chart</ChartGridMode>
+                            </parameters>
+                          </control>
+                        </cell>
+                        <cell id="{f4118865-ff17-44cb-b24e-28c634c8dc9a}" colspan="1" rowspan="1" showlabel="true">
+                          <labels>
+                            <label description="Deliveries by Status" languagecode="1033" />
+                          </labels>
+                          <control id="{55fc9b96-678c-4733-87e0-9d9acda1ea03}" classid="{E7A81278-8635-4D9E-8D4D-59480B391C5B}">
+                            <parameters>
+                              <TargetEntityType>mb_emaildelivery</TargetEntityType>
+                              <ViewId>5c410fbf-1bfe-4138-8306-5d3db416ffa4</ViewId>
+                              <VisualizationId>e9e5ec00-75b6-49eb-897b-975b647f444b</VisualizationId>
+                              <ChartGridMode>Chart</ChartGridMode>
+                            </parameters>
+                          </control>
+                        </cell>
+                      </row>
+                      <row>
+                        <cell id="{41905d20-c37b-4799-9120-b66d054bb50e}" colspan="1" rowspan="1" showlabel="true">
+                          <labels>
+                            <label description="My Email Messages" languagecode="1033" />
+                          </labels>
+                          <control id="{2f85771f-2f13-46b9-9d00-6171fcdc16e6}" classid="{E7A81278-8635-4D9E-8D4D-59480B391C5B}">
+                            <parameters>
+                              <TargetEntityType>mb_emailmessage</TargetEntityType>
+                              <ViewId>fb2597bf-c278-4370-9180-6c1b91d683b0</ViewId>
+                              <IsUserView>false</IsUserView>
+                              <ChartGridMode>Grid</ChartGridMode>
+                              <RecordsPerPage>10</RecordsPerPage>
+                            </parameters>
+                          </control>
+                        </cell>
+                        <cell id="{7beb0918-f381-4732-8222-ce25a7ad470f}" colspan="1" rowspan="1" showlabel="true">
+                          <labels>
+                            <label description="Failed Deliveries" languagecode="1033" />
+                          </labels>
+                          <control id="{347afb9b-6da5-4adc-a41e-52272bc7a3de}" classid="{E7A81278-8635-4D9E-8D4D-59480B391C5B}">
+                            <parameters>
+                              <TargetEntityType>mb_emaildelivery</TargetEntityType>
+                              <ViewId>b348b0b0-07ea-4246-8979-9be46665f1ef</ViewId>
+                              <IsUserView>false</IsUserView>
+                              <ChartGridMode>Grid</ChartGridMode>
+                              <RecordsPerPage>10</RecordsPerPage>
+                            </parameters>
+                          </control>
+                        </cell>
+                      </row>
+                      <row>
+                        <cell id="{816a320b-b1cd-4ca2-a4c9-1352210a9d99}" colspan="1" rowspan="1" showlabel="true">
+                          <labels>
+                            <label description="Queued and Sending" languagecode="1033" />
+                          </labels>
+                          <control id="{63dd5eac-3308-412b-9a13-b6a3967229e0}" classid="{E7A81278-8635-4D9E-8D4D-59480B391C5B}">
+                            <parameters>
+                              <TargetEntityType>mb_emailmessage</TargetEntityType>
+                              <ViewId>8d700e68-bd76-47c2-be12-7792cc59ee4b</ViewId>
+                              <IsUserView>false</IsUserView>
+                              <ChartGridMode>Grid</ChartGridMode>
+                              <RecordsPerPage>10</RecordsPerPage>
+                            </parameters>
+                          </control>
+                        </cell>
+                        <cell id="{4a835f3a-fdb1-485f-827c-34acbdb9d1a4}" colspan="1" rowspan="1" showlabel="true">
+                          <labels>
+                            <label description="Templates by Category" languagecode="1033" />
+                          </labels>
+                          <control id="{e9a86698-911f-4892-b008-0807b173b7b8}" classid="{E7A81278-8635-4D9E-8D4D-59480B391C5B}">
+                            <parameters>
+                              <TargetEntityType>mb_emailtemplate</TargetEntityType>
+                              <ViewId>40c86dcc-a24d-42b1-b58d-65563317b98c</ViewId>
+                              <VisualizationId>4bbd3031-e83c-47dc-b213-53781c3321d1</VisualizationId>
+                              <ChartGridMode>Chart</ChartGridMode>
+                            </parameters>
+                          </control>
+                        </cell>
+                      </row>
+                    </rows>
+                  </section>
+                </sections>
+              </column>
+            </columns>
+          </tab>
+        </tabs>
+      </form>
+    </forms>
+  </FormXml>
+  <IntroducedVersion>1.0</IntroducedVersion>
+  <IsTabletEnabled>0</IsTabletEnabled>
+</Dashboard>

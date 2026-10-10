@@ -1,0 +1,36 @@
+# --- Build workspaces / logs (may contain environment URLs, org ids, user ids) ---
+.maker-workspace/
+**/.maker-workspace/
+workflow-log.md
+model-app-plan.md
+app-builder-page-plan.md
+RuntimeTypes.ts
+*.log
+build-status.json
+build-log.jsonl
+page-ownership*.json
+last-applied.json
+out/
+tmp/
+
+# --- Secrets / local config ---
+.env
+.env.*
+*.pfx
+*.pem
+*.key
+local.settings.json
+**/connections.local.json
+
+# --- pac CLI artefacts ---
+.pac/
+cdsproj-obj/
+bin/
+obj/
+
+# --- OS / editor ---
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+node_modules/

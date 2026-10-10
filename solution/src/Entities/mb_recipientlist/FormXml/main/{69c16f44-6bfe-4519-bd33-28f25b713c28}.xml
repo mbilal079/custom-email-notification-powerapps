@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <systemform>
+    <formid>{69c16f44-6bfe-4519-bd33-28f25b713c28}</formid>
+    <IntroducedVersion>1.0</IntroducedVersion>
+    <FormPresentation>0</FormPresentation>
+    <FormActivationState>1</FormActivationState>
+    <form>
+      <tabs>
+        <tab id="2dd3a240-f0a4-42bf-a939-d996d763653a" name="tab_general" expanded="true" visible="true">
+          <labels>
+            <label description="General" languagecode="1033" />
+          </labels>
+          <columns>
+            <column width="100%">
+              <sections>
+                <section id="4aa58fe0-d48f-4793-bc7c-e884b3b2435c" name="section_general" showlabel="false" visible="true" columns="1">
+                  <labels>
+                    <label description="General" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="627fe3e9-9055-42d0-ac99-44bc024b35e3" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="List Name" languagecode="1033" />
+                        </labels>
+                        <control id="810ffc52-41a3-4db0-af89-ce47be13793b" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="mb_name" disabled="false" isrequired="true" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="7d95d299-b799-4a9e-acf0-278ec73833fe" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="List Type" languagecode="1033" />
+                        </labels>
+                        <control id="ad8a857b-cc74-4a92-b6db-747ede8290aa" classid="{3EF39988-22BB-4F0B-BBBE-64B5A3748AEE}" datafieldname="mb_listtype" disabled="false" isrequired="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="eca46a3a-eb82-4162-9131-d16519f0249c" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Description" languagecode="1033" />
+                        </labels>
+                        <control id="f8ef2793-215e-4560-8a9e-b09ef1fe7e1f" classid="{E0DECE4B-6FC8-4A8F-A065-082708572369}" datafieldname="mb_description" disabled="false" isrequired="false" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+                <section id="2e526e3c-4494-4d9d-83e3-f2104b11a6b3" name="section_grid_mb_recipientlist_mb_recipientlistmember" showlabel="true" visible="true" columns="1">
+                  <labels>
+                    <label description="Members" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="f1eea9f9-6071-4358-84e0-9c30c030755c" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Members" languagecode="1033" />
+                        </labels>
+                        <control id="713a2e5b-0c36-4676-b670-ef3e26e73821" classid="{E7A81278-8635-4D9E-8D4D-59480B391C5B}" disabled="false" isrequired="false">
+                          <parameters>
+                            <TargetEntityType>mb_recipientlistmember</TargetEntityType>
+                            <ViewId>01c1ae68-39bd-4185-9d09-aaad03b74cd6</ViewId>
+                            <IsUserView>false</IsUserView>
+                            <RelationshipName>mb_recipientlist_mb_recipientlistmember</RelationshipName>
+                            <ChartGridMode>Grid</ChartGridMode>
+                            <RecordsPerPage>10</RecordsPerPage>
+                          </parameters>
+                        </control>
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+              </sections>
+            </column>
+          </columns>
+        </tab>
+      </tabs>
+      <header id="{d1097f50-62a5-4e91-824a-888f7a863f46}" celllabelposition="Top" columns="111" labelwidth="115" celllabelalignment="Left">
+        <rows>
+          <row>
+            <cell id="{2f36b397-91e0-4289-9c2c-1fbb05184634}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{0a6bbbda-1fc5-4d6d-b4dd-2f07f17ea6c0}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{f9cb0e26-a0f9-4111-95a9-513d70d9f6c9}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+          </row>
+        </rows>
+      </header>
+      <footer id="{f7c8219b-fbf0-4a4a-aacb-f2440945bbe1}" celllabelposition="Top" columns="111" labelwidth="115" celllabelalignment="Left">
+        <rows>
+          <row>
+            <cell id="{99d86d4e-a2a8-4227-a0e3-f9ab4f260dde}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{1edd543b-aa1a-4915-b938-f86a594a683b}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{08362a25-3334-4661-be38-9ac418a1d435}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+          </row>
+        </rows>
+      </footer>
+      <DisplayConditions Order="0" FallbackForm="true">
+        <Everyone />
+      </DisplayConditions>
+    </form>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>1</CanBeDeleted>
+    <LocalizedNames>
+      <LocalizedName description="Recipient List" languagecode="1033" />
+    </LocalizedNames>
+    <Descriptions>
+      <Description description="A recipient list and its members." languagecode="1033" />
+    </Descriptions>
+  </systemform>
+</forms>

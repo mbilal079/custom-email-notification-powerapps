@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<WebResource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <WebResourceId>{6f94068e-aac4-f111-a05a-000d3a5981d5}</WebResourceId>
+  <Name>mb_emailmessage.js</Name>
+  <DisplayName>Email Hub - Email Message form</DisplayName>
+  <Description>Email Message form logic: recipient field visibility, template apply, Send Now / Reset to Draft commands, locking.</Description>
+  <WebResourceType>3</WebResourceType>
+  <IntroducedVersion>1.0</IntroducedVersion>
+  <IsEnabledForMobileClient>0</IsEnabledForMobileClient>
+  <IsAvailableForMobileOffline>0</IsAvailableForMobileOffline>
+  <IsCustomizable>1</IsCustomizable>
+  <CanBeDeleted>1</CanBeDeleted>
+  <IsHidden>0</IsHidden>
+  <FileName>/WebResources/mb_emailmessagejs6F94068E-AAC4-F111-A05A-000D3A5981D5</FileName>
+</WebResource>

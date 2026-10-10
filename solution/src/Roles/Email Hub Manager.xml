@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Role id="{b5ea103d-abc4-f111-a05a-000d3a5981d5}" name="Email Hub Manager" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <IsCustomizable>1</IsCustomizable>
+  <IsAutoAssigned>0</IsAutoAssigned>
+  <Description>Authored by @maker-studio/cds-maker-sdk (persona/security role).</Description>
+  <RolePrivileges>
+    <RolePrivilege name="prvAppendmb_emailmessage" level="Basic" />
+    <RolePrivilege name="prvAppendmb_emailsignature" level="Basic" />
+    <RolePrivilege name="prvAppendmb_emailtemplate" level="Global" />
+    <RolePrivilege name="prvAppendmb_recipientlist" level="Global" />
+    <RolePrivilege name="prvAppendmb_recipientlistmember" level="Global" />
+    <RolePrivilege name="prvAppendToContact" level="Global" />
+    <RolePrivilege name="prvAppendTomb_emailmessage" level="Basic" />
+    <RolePrivilege name="prvAppendTomb_emailsignature" level="Basic" />
+    <RolePrivilege name="prvAppendTomb_emailtemplate" level="Global" />
+    <RolePrivilege name="prvAppendTomb_recipientlist" level="Global" />
+    <RolePrivilege name="prvAppendTomb_recipientlistmember" level="Global" />
+    <RolePrivilege name="prvAppendToTeam" level="Global" />
+    <RolePrivilege name="prvAppendToUser" level="Global" />
+    <RolePrivilege name="prvAssignmb_emailmessage" level="Basic" />
+    <RolePrivilege name="prvAssignmb_emailtemplate" level="Global" />
+    <RolePrivilege name="prvAssignmb_recipientlist" level="Global" />
+    <RolePrivilege name="prvAssignmb_recipientlistmember" level="Global" />
+    <RolePrivilege name="prvCreatemb_emailmessage" level="Basic" />
+    <RolePrivilege name="prvCreatemb_emailsignature" level="Basic" />
+    <RolePrivilege name="prvCreatemb_emailtemplate" level="Global" />
+    <RolePrivilege name="prvCreatemb_recipientlist" level="Global" />
+    <RolePrivilege name="prvCreatemb_recipientlistmember" level="Global" />
+    <RolePrivilege name="prvCreateSharePointData" level="Global" />
+    <RolePrivilege name="prvDeletemb_emailmessage" level="Basic" />
+    <RolePrivilege name="prvDeletemb_emailsignature" level="Basic" />
+    <RolePrivilege name="prvDeletemb_emailtemplate" level="Global" />
+    <RolePrivilege name="prvDeletemb_recipientlist" level="Global" />
+    <RolePrivilege name="prvDeletemb_recipientlistmember" level="Global" />
+    <RolePrivilege name="prvReadAppModule" level="Global" />
+    <RolePrivilege name="prvReadContact" level="Global" />
+    <RolePrivilege name="prvReadmb_emaildelivery" level="Global" />
+    <RolePrivilege name="prvReadmb_emailmessage" level="Global" />
+    <RolePrivilege name="prvReadmb_emailsetting" level="Global" />
+    <RolePrivilege name="prvReadmb_emailsignature" level="Basic" />
+    <RolePrivilege name="prvReadmb_emailtemplate" level="Global" />
+    <RolePrivilege name="prvReadmb_recipientlist" level="Global" />
+    <RolePrivilege name="prvReadmb_recipientlistmember" level="Global" />
+    <RolePrivilege name="prvReadSharePointData" level="Global" />
+    <RolePrivilege name="prvReadSharePointDocument" level="Global" />
+    <RolePrivilege name="prvReadTeam" level="Global" />
+    <RolePrivilege name="prvReadUser" level="Global" />
+    <RolePrivilege name="prvSharemb_emailmessage" level="Basic" />
+    <RolePrivilege name="prvSharemb_emailtemplate" level="Global" />
+    <RolePrivilege name="prvSharemb_recipientlist" level="Global" />
+    <RolePrivilege name="prvSharemb_recipientlistmember" level="Global" />
+    <RolePrivilege name="prvWritemb_emailmessage" level="Basic" />
+    <RolePrivilege name="prvWritemb_emailsignature" level="Basic" />
+    <RolePrivilege name="prvWritemb_emailtemplate" level="Global" />
+    <RolePrivilege name="prvWritemb_recipientlist" level="Global" />
+    <RolePrivilege name="prvWritemb_recipientlistmember" level="Global" />
+    <RolePrivilege name="prvWriteSharePointData" level="Global" />
+  </RolePrivileges>
+</Role>

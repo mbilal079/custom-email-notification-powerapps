@@ -1,0 +1,160 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <systemform>
+    <formid>{bc679585-3379-4f01-afd3-d55e6eafefc0}</formid>
+    <IntroducedVersion>1.0</IntroducedVersion>
+    <FormPresentation>0</FormPresentation>
+    <FormActivationState>1</FormActivationState>
+    <form>
+      <tabs>
+        <tab id="f5bc599c-4c75-407f-ad1f-df760e2e5830" name="tab_general" expanded="true" visible="true">
+          <labels>
+            <label description="Template" languagecode="1033" />
+          </labels>
+          <columns>
+            <column width="100%">
+              <sections>
+                <section id="94bc8018-9e59-4fee-867e-374634bdec30" name="sec_template" showlabel="true" visible="true" columns="11">
+                  <labels>
+                    <label description="Template" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="eb6b7542-a40f-48e8-a6fa-6ecf5c41d506" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Template Name" languagecode="1033" />
+                        </labels>
+                        <control id="73320c28-e6c6-4cb3-a528-80c1d4239a5c" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="mb_name" disabled="false" isrequired="true" />
+                      </cell>
+                      <cell id="0beb0346-5b1b-4bc8-b045-6d7f7ca28ff7" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Category" languagecode="1033" />
+                        </labels>
+                        <control id="032131c1-5cf5-4f69-bc60-a001c211eb9d" classid="{3EF39988-22BB-4F0B-BBBE-64B5A3748AEE}" datafieldname="mb_category" disabled="false" isrequired="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="6b791655-47ec-448a-b6da-7fff583e24c4" showlabel="true" visible="true" colspan="2" rowspan="1">
+                        <labels>
+                          <label description="Subject" languagecode="1033" />
+                        </labels>
+                        <control id="3d320006-ed6c-4513-86be-3a92b3375ed2" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="mb_subject" disabled="false" isrequired="true" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="09e59ea2-91f7-4d46-a945-38fa9e4b3096" showlabel="true" visible="true" colspan="2" rowspan="1">
+                        <labels>
+                          <label description="Body" languagecode="1033" />
+                        </labels>
+                        <control uniqueid="{113a8406-1618-4ad4-8503-44885172c80d}" id="f0dd995d-337a-4cee-995b-9a0fbab41f61" classid="{E0DECE4B-6FC8-4A8F-A065-082708572369}" datafieldname="mb_body" disabled="false" isrequired="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="cf9d40b2-5048-4196-b8c4-c4c50800a5d7" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Importance" languagecode="1033" />
+                        </labels>
+                        <control id="52971b55-7961-4349-9717-7ae1708e5606" classid="{3EF39988-22BB-4F0B-BBBE-64B5A3748AEE}" datafieldname="mb_importance" disabled="false" isrequired="false" />
+                      </cell>
+                      <cell id="77ae493c-8a98-4d79-bc2d-2222deaa8811" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Include Signature" languagecode="1033" />
+                        </labels>
+                        <control id="9295649e-2b14-405b-97bb-898912260f4e" classid="{67FAC785-CD58-4F9F-ABB3-4B7DDC6ED5ED}" datafieldname="mb_includesignature" disabled="false" isrequired="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="c2f40fc8-3edc-4230-ad49-410d7179cd7b" showlabel="true" visible="true" colspan="2" rowspan="1">
+                        <labels>
+                          <label description="Usage Notes" languagecode="1033" />
+                        </labels>
+                        <control id="6572beb4-5ec0-4a77-b8c4-b4cf023e3528" classid="{E0DECE4B-6FC8-4A8F-A065-082708572369}" datafieldname="mb_description" disabled="false" isrequired="false" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+              </sections>
+            </column>
+          </columns>
+        </tab>
+      </tabs>
+      <header id="{025ef10f-bbc0-4807-9bfb-effc485f06cd}" celllabelposition="Top" columns="111" labelwidth="115" celllabelalignment="Left">
+        <rows>
+          <row>
+            <cell id="{ac39b419-52f6-47f6-a458-cdfdbf6475aa}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{3f92a377-b2cf-48cf-b03e-e344d89ae7cd}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{7a71d732-5162-4f68-aa6e-0f5c1eb4fae0}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+          </row>
+        </rows>
+      </header>
+      <footer id="{b08ef622-f9e6-4acc-a7f6-0246664c8c21}" celllabelposition="Top" columns="111" labelwidth="115" celllabelalignment="Left">
+        <rows>
+          <row>
+            <cell id="{e1d97cd0-9f98-4b16-a67d-a815042fb3d4}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{81eb2650-ddc4-462e-bd99-4f1d4c12329c}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{bea11f52-324c-42af-8eac-241a9c0b3354}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+          </row>
+        </rows>
+      </footer>
+      <controlDescriptions>
+        <controlDescription forControl="{113a8406-1618-4ad4-8503-44885172c80d}">
+          <customControl id="{E0DECE4B-6FC8-4a8f-A065-082708572369}">
+            <parameters>
+              <datafieldname>mb_body</datafieldname>
+            </parameters>
+          </customControl>
+          <customControl formFactor="0" name="MscrmControls.RichTextEditor.RichTextEditorControl">
+            <parameters>
+              <datafieldname>mb_body</datafieldname>
+            </parameters>
+          </customControl>
+          <customControl formFactor="1" name="MscrmControls.RichTextEditor.RichTextEditorControl">
+            <parameters>
+              <datafieldname>mb_body</datafieldname>
+            </parameters>
+          </customControl>
+          <customControl formFactor="2" name="MscrmControls.RichTextEditor.RichTextEditorControl">
+            <parameters>
+              <datafieldname>mb_body</datafieldname>
+            </parameters>
+          </customControl>
+        </controlDescription>
+      </controlDescriptions>
+      <DisplayConditions Order="0" FallbackForm="true">
+        <Everyone />
+      </DisplayConditions>
+    </form>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>1</CanBeDeleted>
+    <LocalizedNames>
+      <LocalizedName description="Email Template" languagecode="1033" />
+    </LocalizedNames>
+    <Descriptions>
+      <Description description="Author a reusable template. Use tokens such as {{FirstName}} in the subject and body." languagecode="1033" />
+    </Descriptions>
+  </systemform>
+</forms>

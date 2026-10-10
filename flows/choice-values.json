@@ -1,0 +1,62 @@
+{
+  "mb_emailmessage": {
+    "mb_status": {
+      "Draft": 100000000,
+      "Queued": 100000001,
+      "Sending": 100000002,
+      "Sent": 100000003,
+      "Partially Sent": 100000004,
+      "Failed": 100000005
+    },
+    "mb_recipienttype": {
+      "Single User": 100000000,
+      "Single Contact": 100000001,
+      "Recipient List": 100000002,
+      "Email Addresses": 100000003
+    },
+    "mb_deliverymode": {
+      "Personalized (one email per recipient)": 100000000,
+      "Single email to all recipients": 100000001
+    },
+    "mb_importance": {
+      "Low": 100000000,
+      "Normal": 100000001,
+      "High": 100000002
+    }
+  },
+  "mb_emailsetting": {
+    "mb_sendmode": {
+      "Flow Owner Mailbox": 100000000,
+      "Shared Mailbox": 100000001
+    }
+  },
+  "mb_recipientlistmember": {
+    "mb_membertype": {
+      "User": 100000000,
+      "Contact": 100000001,
+      "Team": 100000002,
+      "External Email": 100000003
+    }
+  },
+  "mb_emaildelivery": {
+    "mb_deliverystatus": {
+      "Sent": 100000000,
+      "Failed": 100000001,
+      "Skipped": 100000002
+    }
+  },
+  "entitySets": {
+    "mb_emailmessage": "mb_emailmessages",
+    "mb_emailsetting": "mb_emailsettings",
+    "mb_recipientlistmember": "mb_recipientlistmembers",
+    "mb_emaildelivery": "mb_emaildeliveries",
+    "mb_emailsignature": "mb_emailsignatures",
+    "systemuser": "systemusers",
+    "contact": "contacts"
+  },
+  "navigationProperties": {
+    "mb_emaildelivery.mb_emailmessageid": "mb_EmailMessageId",
+    "mb_recipientlistmember.mb_userid": "mb_UserId",
+    "mb_recipientlistmember.mb_contactid": "mb_ContactId"
+  }
+}

@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Workflow WorkflowId="{3b7e5f2a-9c4d-4e61-8a5f-6d2b1c0e9f47}" Name="Email Hub - Process Email Message" Description="Email Notification Hub delivery engine: when an Email Message is queued it expands the recipients, renders personalization tokens, sends through Office 365 Outlook and writes the delivery log." xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <JsonFileName>/Workflows/EmailHub-ProcessEmailMessage-3B7E5F2A-9C4D-4E61-8A5F-6D2B1C0E9F47.json</JsonFileName>
+  <Type>1</Type>
+  <Subprocess>0</Subprocess>
+  <Category>5</Category>
+  <Mode>0</Mode>
+  <Scope>4</Scope>
+  <OnDemand>0</OnDemand>
+  <TriggerOnCreate>0</TriggerOnCreate>
+  <TriggerOnDelete>0</TriggerOnDelete>
+  <AsyncAutodelete>0</AsyncAutodelete>
+  <SyncWorkflowLogOnFailure>0</SyncWorkflowLogOnFailure>
+  <StateCode>1</StateCode>
+  <StatusCode>2</StatusCode>
+  <RunAs>1</RunAs>
+  <IsTransacted>1</IsTransacted>
+  <IntroducedVersion>1.0.0.0</IntroducedVersion>
+  <IsCustomizable>1</IsCustomizable>
+  <BusinessProcessType>0</BusinessProcessType>
+  <IsCustomProcessingStepAllowedForOtherPublishers>1</IsCustomProcessingStepAllowedForOtherPublishers>
+  <ModernFlowType>0</ModernFlowType>
+  <PrimaryEntity>none</PrimaryEntity>
+  <LocalizedNames>
+    <LocalizedName languagecode="1033" description="Email Hub - Process Email Message" />
+  </LocalizedNames>
+  <Descriptions>
+    <Description languagecode="1033" description="Email Notification Hub delivery engine: when an Email Message is queued it expands the recipients, renders personalization tokens, sends through Office 365 Outlook and writes the delivery log." />
+  </Descriptions>
+</Workflow>

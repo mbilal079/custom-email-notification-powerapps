@@ -1,0 +1,11 @@
+<dvtablesearch dvtablesearchid="b817c736-abc4-f111-a05a-000d3a372572">
+  <appmoduleuniquename>mb_emailnotificationhub</appmoduleuniquename>
+  <iscustomizable>1</iscustomizable>
+  <m365appmoduleid>
+    <uniquename>mb_emailnotificationhub</uniquename>
+  </m365appmoduleid>
+  <name>M365_Primary_model_mb_emailnotificationhub</name>
+  <searchtype>0</searchtype>
+  <statecode>1</statecode>
+  <statuscode>2</statuscode>
+</dvtablesearch>

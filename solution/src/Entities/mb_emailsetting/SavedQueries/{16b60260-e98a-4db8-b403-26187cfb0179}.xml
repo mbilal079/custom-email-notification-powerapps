@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedqueries xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>0</CanBeDeleted>
+    <isquickfindquery>0</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>1</isdefault>
+    <savedqueryid>{16b60260-e98a-4db8-b403-26187cfb0179}</savedqueryid>
+    <layoutxml>
+      <grid name="resultset" jump="mb_name" select="1" icon="1" preview="1">
+        <row name="result" id="mb_emailsettingid">
+          <cell name="mb_name" width="300" />
+          <cell name="mb_isactive" width="150" />
+          <cell name="mb_sendmode" width="150" />
+          <cell name="mb_sharedmailbox" width="150" />
+          <cell name="mb_replyto" width="150" />
+          <cell name="mb_organizationname" width="150" />
+          <cell name="mb_defaultsignatureid" width="150" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>0</querytype>
+    <fetchxml>
+      <fetch version="1.0" mapping="logical">
+        <entity name="mb_emailsetting">
+          <attribute name="mb_emailsettingid" />
+          <attribute name="mb_name" />
+          <attribute name="mb_isactive" />
+          <attribute name="mb_sendmode" />
+          <attribute name="mb_sharedmailbox" />
+          <attribute name="mb_replyto" />
+          <attribute name="mb_organizationname" />
+          <attribute name="mb_defaultsignatureid" />
+          <order attribute="mb_name" descending="false" />
+          <filter type="and">
+            <condition attribute="statecode" operator="eq" value="0" />
+          </filter>
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>1.0</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="Active Email Settings" languagecode="1033" />
+    </LocalizedNames>
+  </savedquery>
+</savedqueries>

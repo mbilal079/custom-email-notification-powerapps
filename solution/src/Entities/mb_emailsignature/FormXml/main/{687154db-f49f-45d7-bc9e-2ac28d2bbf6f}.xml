@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <systemform>
+    <formid>{687154db-f49f-45d7-bc9e-2ac28d2bbf6f}</formid>
+    <IntroducedVersion>1.0</IntroducedVersion>
+    <FormPresentation>0</FormPresentation>
+    <FormActivationState>1</FormActivationState>
+    <form>
+      <tabs>
+        <tab id="a24bdd71-5a2e-475b-92be-00a87da88270" name="tab_general" expanded="true" visible="true">
+          <labels>
+            <label description="Signature" languagecode="1033" />
+          </labels>
+          <columns>
+            <column width="100%">
+              <sections>
+                <section id="17e0eef1-d529-4f0a-882b-4da68da5baca" name="sec_signature" showlabel="true" visible="true" columns="11">
+                  <labels>
+                    <label description="Signature" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="fbf8cab4-fae5-414e-aac6-c8fb03eb57fb" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Signature Name" languagecode="1033" />
+                        </labels>
+                        <control id="c6d939ff-3c49-4cf0-9875-4ea26a8701b6" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="mb_name" disabled="false" isrequired="true" />
+                      </cell>
+                      <cell id="e5846a9a-0405-43b2-a896-c99451e040e0" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="My Default" languagecode="1033" />
+                        </labels>
+                        <control id="0ef36ee7-4809-431f-aa68-f9884a41b631" classid="{67FAC785-CD58-4F9F-ABB3-4B7DDC6ED5ED}" datafieldname="mb_isdefault" disabled="false" isrequired="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="9b0ae401-e258-4dd4-9011-e385c4898e30" showlabel="true" visible="true" colspan="2" rowspan="1">
+                        <labels>
+                          <label description="Signature" languagecode="1033" />
+                        </labels>
+                        <control uniqueid="{1786ffa2-bb0b-4a02-9664-7e25fe2781cf}" id="74fe135d-802f-450b-9087-9b7f51509e9e" classid="{E0DECE4B-6FC8-4A8F-A065-082708572369}" datafieldname="mb_signaturehtml" disabled="false" isrequired="false" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+              </sections>
+            </column>
+          </columns>
+        </tab>
+      </tabs>
+      <header id="{af5e59e5-495d-4de9-a0ed-b8f11b496495}" celllabelposition="Top" columns="111" labelwidth="115" celllabelalignment="Left">
+        <rows>
+          <row>
+            <cell id="{869ab8a9-4bb1-47f9-8e93-5ee34177387c}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{8caf4bae-9f0b-4b2d-b38a-12ca562f4c4f}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{9689f618-745f-4ac3-81bd-545995f45f60}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+          </row>
+        </rows>
+      </header>
+      <footer id="{47b0e986-f0b7-463d-a25e-fc22357c1291}" celllabelposition="Top" columns="111" labelwidth="115" celllabelalignment="Left">
+        <rows>
+          <row>
+            <cell id="{eb694e85-b799-4b80-b97d-ede060e8fd99}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{10b85876-a863-46b2-a59a-7fde67aac044}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{69d872a2-2921-424f-ba14-5bfa4d7ee3b4}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+          </row>
+        </rows>
+      </footer>
+      <controlDescriptions>
+        <controlDescription forControl="{1786ffa2-bb0b-4a02-9664-7e25fe2781cf}">
+          <customControl id="{E0DECE4B-6FC8-4a8f-A065-082708572369}">
+            <parameters>
+              <datafieldname>mb_signaturehtml</datafieldname>
+            </parameters>
+          </customControl>
+          <customControl formFactor="0" name="MscrmControls.RichTextEditor.RichTextEditorControl">
+            <parameters>
+              <datafieldname>mb_signaturehtml</datafieldname>
+            </parameters>
+          </customControl>
+          <customControl formFactor="1" name="MscrmControls.RichTextEditor.RichTextEditorControl">
+            <parameters>
+              <datafieldname>mb_signaturehtml</datafieldname>
+            </parameters>
+          </customControl>
+          <customControl formFactor="2" name="MscrmControls.RichTextEditor.RichTextEditorControl">
+            <parameters>
+              <datafieldname>mb_signaturehtml</datafieldname>
+            </parameters>
+          </customControl>
+        </controlDescription>
+      </controlDescriptions>
+      <DisplayConditions Order="0" FallbackForm="true">
+        <Everyone />
+      </DisplayConditions>
+    </form>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>1</CanBeDeleted>
+    <LocalizedNames>
+      <LocalizedName description="Email Signature" languagecode="1033" />
+    </LocalizedNames>
+    <Descriptions>
+      <Description description="Edit a personal signature." languagecode="1033" />
+    </Descriptions>
+  </systemform>
+</forms>

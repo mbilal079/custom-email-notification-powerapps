@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<visualization xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <savedqueryvisualizationid>{E9E5EC00-75B6-49EB-897B-975B647F444B}</savedqueryvisualizationid>
+  <datadescription>
+    <datadefinition>
+      <fetchcollection>
+        <fetch mapping="logical" aggregate="true">
+          <entity name="mb_emaildelivery">
+            <attribute alias="agg_0" name="mb_emaildeliveryid" aggregate="count" />
+            <attribute alias="grp_0" name="mb_deliverystatus" groupby="true" />
+          </entity>
+        </fetch>
+      </fetchcollection>
+      <categorycollection>
+        <category alias="grp_0">
+          <measurecollection>
+            <measure alias="agg_0" />
+          </measurecollection>
+        </category>
+      </categorycollection>
+    </datadefinition>
+  </datadescription>
+  <presentationdescription>
+    <Chart Palette="BrightPastel">
+      <Series>
+        <Series ChartType="Column" ChartArea="Default" />
+      </Series>
+      <ChartAreas>
+        <ChartArea Name="Default" />
+      </ChartAreas>
+      <Legends>
+        <Legend Name="Default" />
+      </Legends>
+    </Chart>
+  </presentationdescription>
+  <isdefault>0</isdefault>
+  <LocalizedNames>
+    <LocalizedName description="Deliveries by Status" languagecode="1033" />
+  </LocalizedNames>
+  <Descriptions>
+    <Description description="Delivery success versus failures and skips." languagecode="1033" />
+  </Descriptions>
+  <IsCustomizable>1</IsCustomizable>
+  <IntroducedVersion>1.0</IntroducedVersion>
+  <CanBeDeleted>1</CanBeDeleted>
+</visualization>

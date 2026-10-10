@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <systemform>
+    <formid>{e63f048e-ed6c-428c-aacb-7058ba7d6771}</formid>
+    <IntroducedVersion>1.0</IntroducedVersion>
+    <FormPresentation>0</FormPresentation>
+    <FormActivationState>1</FormActivationState>
+    <form>
+      <tabs>
+        <tab id="91c7a60f-e5e2-41b8-aaed-1b8e6e7be942" name="tab_general" expanded="true" visible="true">
+          <labels>
+            <label description="General" languagecode="1033" />
+          </labels>
+          <columns>
+            <column width="100%">
+              <sections>
+                <section id="1a0b9933-4786-4143-8d14-7f6dade91f6d" name="section_general" showlabel="false" visible="true" columns="11">
+                  <labels>
+                    <label description="General" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="5ffc3793-63f7-4492-9302-bdf85c7b08c3" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Email Address" languagecode="1033" />
+                        </labels>
+                        <control id="27f22fb4-9d7e-491b-93a8-f549cd963dfa" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="mb_name" disabled="false" isrequired="true" />
+                      </cell>
+                      <cell id="a2e000b2-3cfe-4875-bec8-5458974527e9" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Recipient Name" languagecode="1033" />
+                        </labels>
+                        <control id="31a9bc3e-4eb0-4516-8f76-12c0f3ff8dcf" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="mb_recipientname" disabled="false" isrequired="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="51c87c4b-3667-46aa-b1f2-54c0df90014d" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Delivery Status" languagecode="1033" />
+                        </labels>
+                        <control id="24158f45-fa0a-49b0-af1d-788bb1bee787" classid="{3EF39988-22BB-4F0B-BBBE-64B5A3748AEE}" datafieldname="mb_deliverystatus" disabled="false" isrequired="false" />
+                      </cell>
+                      <cell id="8ffeb8c6-c453-4ce6-bfe8-7af8e8d16cd2" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Subject Sent" languagecode="1033" />
+                        </labels>
+                        <control id="6634c399-f98f-4667-84d5-33b4138423a4" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="mb_subjectsent" disabled="false" isrequired="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="f6d1e46a-0b08-47f4-9c97-5f37cb8703d0" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Error Detail" languagecode="1033" />
+                        </labels>
+                        <control id="aac8a1da-6ca8-4cfc-89fc-bed86bb79150" classid="{E0DECE4B-6FC8-4A8F-A065-082708572369}" datafieldname="mb_errordetail" disabled="false" isrequired="false" />
+                      </cell>
+                      <cell id="8a88d612-f5a1-4b1c-becd-b1ca2340baab" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Sent At" languagecode="1033" />
+                        </labels>
+                        <control id="42eb4370-51c9-478a-b198-a400b85d6db5" classid="{5B773807-9FB2-42DB-97C3-7A91EFF8ADFF}" datafieldname="mb_sentat" disabled="false" isrequired="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="1cac7562-442d-4c40-bdc1-063c3547209f" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Email Message" languagecode="1033" />
+                        </labels>
+                        <control id="520550c7-40cb-4b5f-810a-89985fb0329e" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="mb_emailmessageid" disabled="false" isrequired="false" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+              </sections>
+            </column>
+          </columns>
+        </tab>
+      </tabs>
+      <header id="{60511449-0a6f-4b9e-87a9-b0bbb5984eea}" celllabelposition="Top" columns="111" labelwidth="115" celllabelalignment="Left">
+        <rows>
+          <row>
+            <cell id="{bfb9fa5f-0217-4a6c-802c-330c1ebb5f6c}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{c3977f6e-a260-4fdc-8034-7a5892e633b5}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{3774046a-dc93-40c8-a7b0-cc2560d89978}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+          </row>
+        </rows>
+      </header>
+      <footer id="{0140a14c-9ea0-44d0-a1ce-52fea752349f}" celllabelposition="Top" columns="111" labelwidth="115" celllabelalignment="Left">
+        <rows>
+          <row>
+            <cell id="{0830c565-d21f-4a94-868f-37a952950f2a}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{d44f8fcc-55af-4135-8658-f03f5507a421}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{8b72421a-e9b7-4344-b776-d45f5e695d6d}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+          </row>
+        </rows>
+      </footer>
+      <DisplayConditions Order="0" FallbackForm="true">
+        <Everyone />
+      </DisplayConditions>
+    </form>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>1</CanBeDeleted>
+    <LocalizedNames>
+      <LocalizedName description="Email Delivery" languagecode="1033" />
+    </LocalizedNames>
+    <Descriptions>
+      <Description description="Read-only delivery record written by the flow." languagecode="1033" />
+    </Descriptions>
+  </systemform>
+</forms>

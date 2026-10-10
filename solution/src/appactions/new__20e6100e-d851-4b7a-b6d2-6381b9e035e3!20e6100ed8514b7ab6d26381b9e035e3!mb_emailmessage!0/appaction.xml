@@ -1,0 +1,27 @@
+<appaction uniquename="new__20e6100e-d851-4b7a-b6d2-6381b9e035e3!20e6100ed8514b7ab6d26381b9e035e3!mb_emailmessage!0">
+  <buttonlabeltext default="Reset to Draft">
+    <label description="Reset to Draft" languagecode="1033" />
+  </buttonlabeltext>
+  <context>1</context>
+  <contextentity>
+    <logicalname>mb_emailmessage</logicalname>
+  </contextentity>
+  <contextvalue>mb_emailmessage</contextvalue>
+  <hidden>0</hidden>
+  <iscustomizable>1</iscustomizable>
+  <isdisabled>0</isdisabled>
+  <isgrouptitlehidden>0</isgrouptitlehidden>
+  <location>0</location>
+  <name>20e6100e-d851-4b7a-b6d2-6381b9e035e3!20e6100ed8514b7ab6d26381b9e035e3</name>
+  <onclickeventjavascriptfunctionname>EmailHub.Message.resetToDraft</onclickeventjavascriptfunctionname>
+  <onclickeventjavascriptparameters>[{"type":5,"value":null}]</onclickeventjavascriptparameters>
+  <onclickeventjavascriptwebresourceid>
+    <webresourceid>6f94068e-aac4-f111-a05a-000d3a5981d5</webresourceid>
+  </onclickeventjavascriptwebresourceid>
+  <onclickeventtype>2</onclickeventtype>
+  <origin>0</origin>
+  <sequence>1.0000000000</sequence>
+  <statecode>0</statecode>
+  <statuscode>1</statuscode>
+  <type>0</type>
+</appaction>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Email Notification Hub - Getting Started</title>
+<style>
+  :root { --fg:#242424; --muted:#616161; --line:#e0e0e0; --accent:#0f6cbd; --bg:#ffffff; --code:#f5f5f5; }
+  @media (prefers-color-scheme: dark) { :root { --fg:#f0f0f0; --muted:#adadad; --line:#3d3d3d; --accent:#479ef5; --bg:#1f1f1f; --code:#2b2b2b; } }
+  body { margin:0; padding:24px; font-family:"Segoe UI",system-ui,sans-serif; font-size:14px; line-height:1.5; color:var(--fg); background:var(--bg); }
+  main { max-width:920px; margin:0 auto; }
+  h1 { font-size:24px; font-weight:600; margin:0 0 4px; }
+  h2 { font-size:18px; font-weight:600; margin:28px 0 8px; border-bottom:1px solid var(--line); padding-bottom:6px; }
+  p.lead { color:var(--muted); margin:0 0 16px; }
+  ol li, ul li { margin:4px 0; }
+  table { border-collapse:collapse; width:100%; margin:8px 0; }
+  th, td { text-align:left; padding:6px 10px; border-bottom:1px solid var(--line); vertical-align:top; }
+  th { font-weight:600; }
+  code { background:var(--code); padding:1px 5px; border-radius:4px; font-family:Consolas,monospace; font-size:13px; }
+  .note { border-left:3px solid var(--accent); padding:8px 12px; background:var(--code); border-radius:4px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Email Notification Hub</h1>
+  <p class="lead">Send personalized emails to users, contacts, recipient lists and external addresses, from templates, with your signature.</p>
+
+  <h2>Administrator setup (one time)</h2>
+  <ol>
+    <li>Open <b>Settings</b> and create a record named <code>Default</code> with <b>Active Configuration = Yes</b>.</li>
+    <li>Choose <b>Send From</b>: the flow connection owner's mailbox, or a <b>Shared Mailbox</b> (enter its address; the connection owner needs <i>Send As</i> permission).</li>
+    <li>Set <b>Organization Name</b>, an optional <b>Global Footer</b> and <b>Archive BCC Address</b>.</li>
+    <li>Leave <b>Test Mode</b> on and enter a <b>Test Mode Recipient</b> until you have sent a test. Every email is redirected to that address while Test Mode is on.</li>
+    <li>In <b>Power Automate &rarr; Solutions &rarr; Email Notification Hub</b>, make sure the flow <i>Email Hub - Process Email Message</i> is <b>On</b>.</li>
+    <li>Assign the security roles: <b>Email Hub Administrator</b>, <b>Email Hub Manager</b> or <b>Email Hub Sender</b> (together with <i>Basic User</i>).</li>
+  </ol>
+
+  <h2>Sending an email</h2>
+  <ol>
+    <li>Go to <b>Email Messages &rarr; New</b>.</li>
+    <li>Pick <b>Send To</b> (Single User, Single Contact, Recipient List or Email Addresses) and select the recipients.</li>
+    <li>Optionally pick a <b>Template</b>: the subject and body are filled in for you.</li>
+    <li>Review the body, choose a <b>Signature</b>, then click <b>Send Now</b>.</li>
+    <li>Watch <b>Delivery Status</b> move from Queued &rarr; Sending &rarr; Sent. The <b>Delivery</b> tab lists every recipient.</li>
+  </ol>
+  <p class="note">Use <b>Delivery Mode = Personalized</b> to send one email per recipient with their own name and details. <b>Single email</b> sends one message with everyone on the To line.</p>
+
+  <h2>Personalization tokens</h2>
+  <table>
+    <tr><th>Token</th><th>Replaced with</th></tr>
+    <tr><td><code>{{FirstName}}</code> <code>{{LastName}}</code> <code>{{FullName}}</code></td><td>Recipient's name</td></tr>
+    <tr><td><code>{{Email}}</code></td><td>Recipient's email address</td></tr>
+    <tr><td><code>{{Company}}</code> <code>{{JobTitle}}</code></td><td>Recipient's company / job title (when known)</td></tr>
+    <tr><td><code>{{SenderName}}</code> <code>{{SenderEmail}}</code> <code>{{SenderJobTitle}}</code></td><td>The person who owns the email message</td></tr>
+    <tr><td><code>{{OrganizationName}}</code></td><td>Organization Name from Settings</td></tr>
+    <tr><td><code>{{Today}}</code></td><td>The send date</td></tr>
+    <tr><td><code>{{Signature}}</code></td><td>Places your signature here; otherwise it is added at the end</td></tr>
+  </table>
+  <p>Tokens work in both the subject and the body, and are case-sensitive.</p>
+
+  <h2>Recipient lists</h2>
+  <ul>
+    <li>Create a <b>Recipient List</b>, then add <b>List Members</b> from its form.</li>
+    <li>A member can be a <b>User</b>, a <b>Contact</b>, a whole Dataverse <b>Team</b> (all members receive it) or an <b>External Email</b>.</li>
+    <li>Tick <b>Opted Out</b> to keep a member on the list without emailing them.</li>
+    <li>Duplicate addresses are sent once.</li>
+  </ul>
+
+  <h2>Signatures</h2>
+  <p>Create your own signature under <b>Signatures</b> and tick <b>My Default</b>. It is pre-selected on every new email.</p>
+</main>
+</body>
+</html>

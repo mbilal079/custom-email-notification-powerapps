@@ -1,0 +1,600 @@
+{
+  "solution": {
+    "uniqueName": "EmailNotificationHub",
+    "displayName": "Email Notification Hub",
+    "publisherPrefix": "mb",
+    "description": "Configurable email notifications for Dataverse: templates with personalization tokens, recipient lists, signatures, delivery log and security roles. Publisher: Muhammad Bilal."
+  },
+  "app": {
+    "name": "Email Notification Hub",
+    "description": "Send personalized emails to users, contacts, lists and external addresses.",
+    "aiDescription": "For anyone who needs to email people from Dataverse: compose an Email Message to a single user, a single contact, a recipient list (users, contacts, teams, external addresses) or typed external addresses, optionally from a reusable Email Template with personalization tokens and a personal signature, then track per-recipient delivery. Administrators configure the sending mailbox, test mode, limits and footer in Email Settings. Excludes marketing journeys, inbound email, and Dataverse Email activities.",
+    "newLook": true
+  },
+  "entities": [
+    {
+      "schemaName": "mb_emailsetting",
+      "displayName": "Email Setting",
+      "pluralName": "Email Settings",
+      "description": "Administrator configuration for the email engine. The delivery flow reads the first row marked Active Configuration; built-in defaults apply when none exists.",
+      "vectorIcon": "mb_emailsetting_icon",
+      "iconDescription": "three horizontal slider bars each with a round knob",
+      "primaryAttribute": { "schemaName": "mb_name", "displayName": "Setting Name" },
+      "columns": [
+        { "schemaName": "mb_isactive", "displayName": "Active Configuration", "type": "Boolean", "defaultValue": true,
+          "description": "Only one row should be active; the flow uses the first active row." },
+        { "schemaName": "mb_sendmode", "displayName": "Send From", "type": "Choice", "options": ["Flow Owner Mailbox", "Shared Mailbox"],
+          "description": "Which mailbox the Office 365 Outlook connection sends from." },
+        { "schemaName": "mb_sharedmailbox", "displayName": "Shared Mailbox Address", "type": "Text", "format": "Email", "maxLength": 320,
+          "description": "Used when Send From = Shared Mailbox. The connection owner needs Send As permission on it." },
+        { "schemaName": "mb_replyto", "displayName": "Reply-To Address", "type": "Text", "format": "Email", "maxLength": 320,
+          "description": "Optional reply-to address applied to every email." },
+        { "schemaName": "mb_organizationname", "displayName": "Organization Name", "type": "Text", "maxLength": 200,
+          "description": "Value of the {{OrganizationName}} token." },
+        { "schemaName": "mb_globalfooter", "displayName": "Global Footer (HTML)", "type": "Memo", "maxLength": 100000,
+          "description": "HTML appended to every email after the signature, e.g. a disclaimer or unsubscribe note." },
+        { "schemaName": "mb_maxrecipients", "displayName": "Max Recipients Per Send", "type": "Integer", "minValue": 1, "maxValue": 5000,
+          "description": "Safety limit; a message that expands to more recipients fails without sending. Default 500." },
+        { "schemaName": "mb_allowexternal", "displayName": "Allow External Recipients", "type": "Boolean", "defaultValue": true,
+          "description": "When No, addresses that are not Dataverse users are skipped." },
+        { "schemaName": "mb_alloweddomains", "displayName": "Allowed External Domains", "type": "Memo", "maxLength": 4000,
+          "description": "Optional ; separated list (e.g. contoso.com;fabrikam.com). Blank allows any domain." },
+        { "schemaName": "mb_testmode", "displayName": "Test Mode", "type": "Boolean", "defaultValue": false,
+          "description": "When Yes, every email is redirected to the Test Mode Recipient." },
+        { "schemaName": "mb_testrecipient", "displayName": "Test Mode Recipient", "type": "Text", "format": "Email", "maxLength": 320,
+          "description": "Receives all emails while Test Mode is on." },
+        { "schemaName": "mb_archivebcc", "displayName": "Archive BCC Address", "type": "Text", "format": "Email", "maxLength": 320,
+          "description": "Optional mailbox blind-copied on every email for record keeping." },
+        { "schemaName": "mb_logdelivery", "displayName": "Keep Delivery Log", "type": "Boolean", "defaultValue": true,
+          "description": "When Yes, one Email Delivery row is written per recipient." }
+      ]
+    },
+    {
+      "schemaName": "mb_emailsignature",
+      "displayName": "Email Signature",
+      "pluralName": "Email Signatures",
+      "description": "A personal HTML signature. Each user keeps their own; the one marked My Default is pre-selected on new messages.",
+      "vectorIcon": "mb_emailsignature_icon",
+      "iconDescription": "a slanted pen",
+      "primaryAttribute": { "schemaName": "mb_name", "displayName": "Signature Name" },
+      "columns": [
+        { "schemaName": "mb_signaturehtml", "displayName": "Signature", "type": "Memo", "maxLength": 100000,
+          "description": "Signature content (HTML, edited with the rich text editor)." },
+        { "schemaName": "mb_isdefault", "displayName": "My Default", "type": "Boolean", "defaultValue": false,
+          "description": "Pre-selected on new Email Messages created by the owner." }
+      ]
+    },
+    {
+      "schemaName": "mb_emailtemplate",
+      "displayName": "Email Template",
+      "pluralName": "Email Templates",
+      "description": "Reusable subject and HTML body with personalization tokens such as {{FirstName}} that are filled per recipient at send time.",
+      "vectorIcon": "mb_emailtemplate_icon",
+      "iconDescription": "a page with a folded corner and three text lines",
+      "primaryAttribute": { "schemaName": "mb_name", "displayName": "Template Name" },
+      "columns": [
+        { "schemaName": "mb_subject", "displayName": "Subject", "type": "Text", "maxLength": 400, "required": true,
+          "description": "Email subject; may contain tokens." },
+        { "schemaName": "mb_body", "displayName": "Body", "type": "Memo", "maxLength": 1048576,
+          "description": "Email body (HTML, edited with the rich text editor); may contain tokens." },
+        { "schemaName": "mb_category", "displayName": "Category", "type": "Choice",
+          "options": ["General", "Announcement", "Reminder", "Alert", "Onboarding", "Follow-up"],
+          "description": "Groups templates so senders can find the right one." },
+        { "schemaName": "mb_importance", "displayName": "Importance", "type": "Choice", "options": ["Low", "Normal", "High"],
+          "description": "Outlook importance flag copied to messages that use this template." },
+        { "schemaName": "mb_includesignature", "displayName": "Include Signature", "type": "Boolean", "defaultValue": true,
+          "description": "Whether messages using this template include the sender signature." },
+        { "schemaName": "mb_description", "displayName": "Usage Notes", "type": "Memo", "maxLength": 4000,
+          "description": "When and how to use the template." }
+      ]
+    },
+    {
+      "schemaName": "mb_recipientlist",
+      "displayName": "Recipient List",
+      "pluralName": "Recipient Lists",
+      "description": "A named group of recipients (users, contacts, Dataverse teams and external addresses) that can be emailed in one send.",
+      "vectorIcon": "mb_recipientlist_icon",
+      "iconDescription": "two people side by side",
+      "primaryAttribute": { "schemaName": "mb_name", "displayName": "List Name" },
+      "columns": [
+        { "schemaName": "mb_listtype", "displayName": "List Type", "type": "Choice",
+          "options": ["Internal", "External", "Mixed"],
+          "description": "Informational; any member type can be added to any list." },
+        { "schemaName": "mb_description", "displayName": "Description", "type": "Memo", "maxLength": 4000,
+          "description": "Who is on the list and what it is used for." }
+      ]
+    },
+    {
+      "schemaName": "mb_recipientlistmember",
+      "displayName": "List Member",
+      "pluralName": "List Members",
+      "description": "One member of a Recipient List: a user, a contact, a whole Dataverse team, or an external email address.",
+      "vectorIcon": "mb_recipientlistmember_icon",
+      "iconDescription": "a single person",
+      "primaryAttribute": { "schemaName": "mb_name", "displayName": "Member Name" },
+      "columns": [
+        { "schemaName": "mb_membertype", "displayName": "Member Type", "type": "Choice",
+          "options": ["User", "Contact", "Team", "External Email"], "required": true,
+          "description": "Decides which lookup or address the flow uses for this member." },
+        { "schemaName": "mb_emailaddress", "displayName": "Email Address", "type": "Text", "format": "Email", "maxLength": 320,
+          "description": "Typed for external members; auto-filled from the user or contact otherwise." },
+        { "schemaName": "mb_firstname", "displayName": "First Name", "type": "Text", "maxLength": 100,
+          "description": "{{FirstName}} for external members." },
+        { "schemaName": "mb_lastname", "displayName": "Last Name", "type": "Text", "maxLength": 100,
+          "description": "{{LastName}} for external members." },
+        { "schemaName": "mb_company", "displayName": "Company", "type": "Text", "maxLength": 200,
+          "description": "{{Company}} for external members." },
+        { "schemaName": "mb_optedout", "displayName": "Opted Out", "type": "Boolean", "defaultValue": false,
+          "description": "Keeps the member on the list but skips them when sending." }
+      ]
+    },
+    {
+      "schemaName": "mb_emailmessage",
+      "displayName": "Email Message",
+      "pluralName": "Email Messages",
+      "description": "One email send request. Users compose it (optionally from a template), click Send Now, and the delivery flow expands the recipients, renders tokens per recipient and sends it.",
+      "vectorIcon": "mb_emailmessage_icon",
+      "iconDescription": "a closed envelope",
+      "hasNotes": true,
+      "primaryAttribute": { "schemaName": "mb_name", "displayName": "Subject" },
+      "columns": [
+        { "schemaName": "mb_recipienttype", "displayName": "Send To", "type": "Choice",
+          "options": ["Single User", "Single Contact", "Recipient List", "Email Addresses"], "required": true,
+          "description": "Which kind of recipient this message targets; the form shows only the matching field." },
+        { "schemaName": "mb_toaddresses", "displayName": "Email Addresses", "type": "Memo", "maxLength": 20000,
+          "description": "External recipients, separated by ; or new lines. Used when Send To = Email Addresses." },
+        { "schemaName": "mb_ccaddresses", "displayName": "CC", "type": "Text", "maxLength": 2000,
+          "description": "Optional ; separated CC addresses (added to every email)." },
+        { "schemaName": "mb_bccaddresses", "displayName": "BCC", "type": "Text", "maxLength": 2000,
+          "description": "Optional ; separated BCC addresses (added to every email)." },
+        { "schemaName": "mb_body", "displayName": "Body", "type": "Memo", "maxLength": 1048576,
+          "description": "Email body (HTML) with optional tokens; filled from the template when one is chosen." },
+        { "schemaName": "mb_includesignature", "displayName": "Include Signature", "type": "Boolean", "defaultValue": true,
+          "description": "Adds the selected signature at {{Signature}} or at the end of the body." },
+        { "schemaName": "mb_importance", "displayName": "Importance", "type": "Choice", "options": ["Low", "Normal", "High"],
+          "description": "Outlook importance flag." },
+        { "schemaName": "mb_deliverymode", "displayName": "Delivery Mode", "type": "Choice",
+          "options": ["Personalized (one email per recipient)", "Single email to all recipients"],
+          "description": "Personalized renders recipient tokens for each person; Single email puts every recipient on one To line." },
+        { "schemaName": "mb_scheduledon", "displayName": "Send After", "type": "DateTime", "dateFormat": "DateAndTime",
+          "description": "Optional; the flow waits until this time (max 30 days) before sending." },
+        { "schemaName": "mb_status", "displayName": "Delivery Status", "type": "Choice",
+          "options": ["Draft", "Queued", "Sending", "Sent", "Partially Sent", "Failed"],
+          "description": "Lifecycle; Send Now sets Queued, which triggers the delivery flow. Set by the flow afterwards." },
+        { "schemaName": "mb_senton", "displayName": "Sent On", "type": "DateTime", "dateFormat": "DateAndTime",
+          "description": "When the flow finished sending." },
+        { "schemaName": "mb_totalrecipients", "displayName": "Total Recipients", "type": "Integer", "minValue": 0, "maxValue": 100000,
+          "description": "Unique recipients after expanding lists and removing duplicates." },
+        { "schemaName": "mb_sentcount", "displayName": "Sent", "type": "Integer", "minValue": 0, "maxValue": 100000,
+          "description": "Emails delivered to the mail server." },
+        { "schemaName": "mb_failedcount", "displayName": "Failed / Skipped", "type": "Integer", "minValue": 0, "maxValue": 100000,
+          "description": "Recipients that failed or were skipped (invalid, opted out, domain not allowed)." },
+        { "schemaName": "mb_lasterror", "displayName": "Last Error", "type": "Memo", "maxLength": 10000,
+          "description": "The most recent error reported by the flow." }
+      ]
+    },
+    {
+      "schemaName": "mb_emaildelivery",
+      "displayName": "Email Delivery",
+      "pluralName": "Email Deliveries",
+      "description": "Per-recipient delivery log written by the flow and owned by the message owner.",
+      "vectorIcon": "mb_emaildelivery_icon",
+      "iconDescription": "a paper plane",
+      "primaryAttribute": { "schemaName": "mb_name", "displayName": "Email Address" },
+      "columns": [
+        { "schemaName": "mb_recipientname", "displayName": "Recipient Name", "type": "Text", "maxLength": 200,
+          "description": "Recipient display name at send time." },
+        { "schemaName": "mb_deliverystatus", "displayName": "Delivery Status", "type": "Choice", "options": ["Sent", "Failed", "Skipped"],
+          "description": "Outcome for this recipient." },
+        { "schemaName": "mb_subjectsent", "displayName": "Subject Sent", "type": "Text", "maxLength": 400,
+          "description": "The subject after tokens were replaced." },
+        { "schemaName": "mb_errordetail", "displayName": "Error Detail", "type": "Memo", "maxLength": 10000,
+          "description": "Why the email failed or was skipped." },
+        { "schemaName": "mb_sentat", "displayName": "Sent At", "type": "DateTime", "dateFormat": "DateAndTime",
+          "description": "When this recipient was processed." }
+      ]
+    }
+  ],
+  "relationships": [
+    { "type": "OneToMany", "referenced": "systemuser", "referencing": "mb_emailmessage",
+      "lookup": { "schemaName": "mb_ToUserId", "displayName": "To User" } },
+    { "type": "OneToMany", "referenced": "contact", "referencing": "mb_emailmessage",
+      "lookup": { "schemaName": "mb_ToContactId", "displayName": "To Contact" } },
+    { "type": "OneToMany", "referenced": "mb_recipientlist", "referencing": "mb_emailmessage",
+      "lookup": { "schemaName": "mb_RecipientListId", "displayName": "Recipient List" } },
+    { "type": "OneToMany", "referenced": "mb_emailtemplate", "referencing": "mb_emailmessage",
+      "lookup": { "schemaName": "mb_TemplateId", "displayName": "Template" } },
+    { "type": "OneToMany", "referenced": "mb_emailsignature", "referencing": "mb_emailmessage",
+      "lookup": { "schemaName": "mb_SignatureId", "displayName": "Signature" } },
+    { "type": "OneToMany", "referenced": "mb_emailmessage", "referencing": "mb_emaildelivery",
+      "lookup": { "schemaName": "mb_EmailMessageId", "displayName": "Email Message" } },
+    { "type": "OneToMany", "referenced": "mb_recipientlist", "referencing": "mb_recipientlistmember",
+      "lookup": { "schemaName": "mb_ListId", "displayName": "Recipient List" } },
+    { "type": "OneToMany", "referenced": "systemuser", "referencing": "mb_recipientlistmember",
+      "lookup": { "schemaName": "mb_UserId", "displayName": "User" } },
+    { "type": "OneToMany", "referenced": "contact", "referencing": "mb_recipientlistmember",
+      "lookup": { "schemaName": "mb_ContactId", "displayName": "Contact" } },
+    { "type": "OneToMany", "referenced": "team", "referencing": "mb_recipientlistmember",
+      "lookup": { "schemaName": "mb_TeamId", "displayName": "Team" } },
+    { "type": "OneToMany", "referenced": "mb_emailsignature", "referencing": "mb_emailsetting",
+      "lookup": { "schemaName": "mb_DefaultSignatureId", "displayName": "Default Signature" } }
+  ],
+  "webResources": [
+    { "name": "mb_emailmessage.js", "displayName": "Email Hub - Email Message form", "type": "js", "contentPath": "webresources/mb_emailmessage.js",
+      "description": "Email Message form logic: recipient field visibility, template apply, Send Now / Reset to Draft commands, locking." },
+    { "name": "mb_listmember.js", "displayName": "Email Hub - List Member form", "type": "js", "contentPath": "webresources/mb_listmember.js",
+      "description": "List Member form logic: member-type visibility and auto-fill from users and contacts." },
+    { "name": "mb_gettingstarted.html", "displayName": "Email Hub - Getting Started", "type": "html", "contentPath": "webresources/mb_gettingstarted.html",
+      "description": "In-app setup checklist and token reference." },
+    { "name": "mb_emailsetting_icon", "displayName": "Email Setting icon", "type": "svg", "contentPath": "webresources/icons/mb_emailsetting_icon.svg" },
+    { "name": "mb_emailsignature_icon", "displayName": "Email Signature icon", "type": "svg", "contentPath": "webresources/icons/mb_emailsignature_icon.svg" },
+    { "name": "mb_emailtemplate_icon", "displayName": "Email Template icon", "type": "svg", "contentPath": "webresources/icons/mb_emailtemplate_icon.svg" },
+    { "name": "mb_recipientlist_icon", "displayName": "Recipient List icon", "type": "svg", "contentPath": "webresources/icons/mb_recipientlist_icon.svg" },
+    { "name": "mb_recipientlistmember_icon", "displayName": "List Member icon", "type": "svg", "contentPath": "webresources/icons/mb_recipientlistmember_icon.svg" },
+    { "name": "mb_emailmessage_icon", "displayName": "Email Message icon", "type": "svg", "contentPath": "webresources/icons/mb_emailmessage_icon.svg" },
+    { "name": "mb_emaildelivery_icon", "displayName": "Email Delivery icon", "type": "svg", "contentPath": "webresources/icons/mb_emaildelivery_icon.svg" },
+    { "name": "mb_overview_icon", "displayName": "Overview nav icon", "type": "svg", "contentPath": "webresources/icons/mb_overview_icon.svg" },
+    { "name": "mb_help_icon", "displayName": "Getting Started nav icon", "type": "svg", "contentPath": "webresources/icons/mb_help_icon.svg" }
+  ],
+  "views": [
+    { "entity": "mb_emailmessage", "name": "All Email Messages", "columns": ["mb_name", "mb_recipienttype", "mb_status", "mb_totalrecipients", "mb_sentcount", "mb_failedcount", "mb_senton"],
+      "sort": [{ "attr": "createdon", "dir": "desc" }], "activeOnly": true,
+      "description": "Every active email message, newest first." },
+    { "entity": "mb_emailmessage", "name": "My Messages", "columns": ["mb_name", "mb_recipienttype", "mb_status", "mb_totalrecipients", "mb_sentcount", "mb_failedcount", "mb_senton"],
+      "sort": [{ "attr": "createdon", "dir": "desc" }], "activeOnly": true,
+      "filters": [{ "attr": "ownerid", "op": "eq-userid" }],
+      "description": "Messages I own, newest first - the sender's home list." },
+    { "entity": "mb_emailmessage", "name": "Queued and Sending", "columns": ["mb_name", "mb_recipienttype", "mb_status", "mb_scheduledon", "mb_totalrecipients", "mb_sentcount"],
+      "sort": [{ "attr": "mb_scheduledon", "dir": "asc" }], "activeOnly": true,
+      "filters": [{ "attr": "mb_status", "op": "in", "values": ["Queued", "Sending"] }],
+      "description": "Messages waiting for or in delivery." },
+    { "entity": "mb_emailmessage", "name": "Failed Messages", "columns": ["mb_name", "mb_recipienttype", "mb_status", "mb_failedcount", "mb_lasterror", "mb_senton"],
+      "sort": [{ "attr": "modifiedon", "dir": "desc" }], "activeOnly": true,
+      "filters": [{ "attr": "mb_status", "op": "in", "values": ["Failed", "Partially Sent"] }],
+      "description": "Messages that need attention because some or all recipients failed." },
+    { "entity": "mb_emailmessage", "name": "Sent This Week", "columns": ["mb_name", "mb_recipienttype", "mb_totalrecipients", "mb_sentcount", "mb_senton"],
+      "sort": [{ "attr": "mb_senton", "dir": "desc" }], "activeOnly": true,
+      "filters": [{ "attr": "mb_status", "op": "eq", "value": "Sent" }, { "attr": "mb_senton", "op": "this-week" }],
+      "description": "Messages fully delivered this week." },
+    { "entity": "mb_emaildelivery", "name": "Delivery Log", "columns": ["mb_name", "mb_recipientname", "mb_deliverystatus", "mb_subjectsent", "mb_emailmessageid", "mb_sentat"],
+      "sort": [{ "attr": "mb_sentat", "dir": "desc" }], "activeOnly": true,
+      "description": "Every per-recipient delivery, newest first." },
+    { "entity": "mb_emaildelivery", "name": "Failed Deliveries", "columns": ["mb_name", "mb_recipientname", "mb_deliverystatus", "mb_errordetail", "mb_emailmessageid", "mb_sentat"],
+      "sort": [{ "attr": "mb_sentat", "dir": "desc" }], "activeOnly": true,
+      "filters": [{ "attr": "mb_deliverystatus", "op": "in", "values": ["Failed", "Skipped"] }],
+      "description": "Recipients that failed or were skipped, with the reason." },
+    { "entity": "mb_emaildelivery", "name": "Message Deliveries", "columns": ["mb_name", "mb_recipientname", "mb_deliverystatus", "mb_errordetail", "mb_sentat"],
+      "sort": [{ "attr": "mb_name", "dir": "asc" }], "activeOnly": true,
+      "description": "Sub-grid on the Email Message form." },
+    { "entity": "mb_emailtemplate", "name": "Email Templates", "columns": ["mb_name", "mb_category", "mb_subject", "mb_importance", "mb_includesignature"],
+      "sort": [{ "attr": "mb_name", "dir": "asc" }], "activeOnly": true,
+      "description": "All active templates by name - what senders pick from." },
+    { "entity": "mb_emailtemplate", "name": "My Templates", "columns": ["mb_name", "mb_category", "mb_subject", "mb_importance"],
+      "sort": [{ "attr": "mb_name", "dir": "asc" }], "activeOnly": true,
+      "filters": [{ "attr": "ownerid", "op": "eq-userid" }],
+      "description": "Templates I own." },
+    { "entity": "mb_recipientlist", "name": "Recipient Lists", "columns": ["mb_name", "mb_listtype", "mb_description"],
+      "sort": [{ "attr": "mb_name", "dir": "asc" }], "activeOnly": true,
+      "description": "All active recipient lists." },
+    { "entity": "mb_recipientlist", "name": "My Lists", "columns": ["mb_name", "mb_listtype", "mb_description"],
+      "sort": [{ "attr": "mb_name", "dir": "asc" }], "activeOnly": true,
+      "filters": [{ "attr": "ownerid", "op": "eq-userid" }],
+      "description": "Lists I own." },
+    { "entity": "mb_recipientlistmember", "name": "List Members", "columns": ["mb_name", "mb_membertype", "mb_emailaddress", "mb_company", "mb_optedout", "mb_listid"],
+      "sort": [{ "attr": "mb_name", "dir": "asc" }], "activeOnly": true,
+      "description": "Members of recipient lists; also the sub-grid on the list form." },
+    { "entity": "mb_emailsignature", "name": "My Signatures", "columns": ["mb_name", "mb_isdefault", "modifiedon"],
+      "sort": [{ "attr": "mb_name", "dir": "asc" }], "activeOnly": true,
+      "filters": [{ "attr": "ownerid", "op": "eq-userid" }],
+      "description": "Signatures I own." }
+  ],
+  "charts": [
+    { "entity": "mb_emailmessage", "name": "Messages by Delivery Status", "chartType": "Pie", "groupBy": "mb_status", "measure": "count",
+      "description": "Where messages are in their lifecycle." },
+    { "entity": "mb_emailmessage", "name": "Messages by Send To", "chartType": "Column", "groupBy": "mb_recipienttype", "measure": "count",
+      "description": "How people address their emails." },
+    { "entity": "mb_emaildelivery", "name": "Deliveries by Status", "chartType": "Column", "groupBy": "mb_deliverystatus", "measure": "count",
+      "description": "Delivery success versus failures and skips." },
+    { "entity": "mb_emailtemplate", "name": "Templates by Category", "chartType": "Bar", "groupBy": "mb_category", "measure": "count",
+      "description": "Template library coverage by category." }
+  ],
+  "forms": [
+    {
+      "entity": "mb_emailmessage", "type": "main", "name": "Email Message", "isDefault": true, "deactivateOtherMainForms": true,
+      "description": "Compose, send and track one email message.",
+      "tabs": [
+        { "name": "tab_compose", "label": "Compose", "columns": [
+          { "width": "68%", "sections": [
+            { "name": "sec_recipients", "label": "Recipients", "columns": 2, "fields": [
+              "mb_recipienttype", "mb_deliverymode",
+              { "name": "mb_touserid", "colspan": 2 },
+              { "name": "mb_tocontactid", "colspan": 2 },
+              { "name": "mb_recipientlistid", "colspan": 2 },
+              { "name": "mb_toaddresses", "colspan": 2 },
+              "mb_ccaddresses", "mb_bccaddresses" ] },
+            { "name": "sec_content", "label": "Content", "columns": 2, "fields": [
+              "mb_templateid", "mb_importance",
+              { "name": "mb_name", "colspan": 2 },
+              { "name": "mb_body", "colspan": 2 },
+              "mb_signatureid", "mb_includesignature" ] } ] },
+          { "width": "32%", "sections": [
+            { "name": "sec_status", "label": "Delivery", "columns": 1, "fields": [
+              { "name": "mb_status", "readOnly": true },
+              "mb_scheduledon",
+              { "name": "mb_senton", "readOnly": true },
+              { "name": "mb_totalrecipients", "readOnly": true },
+              { "name": "mb_sentcount", "readOnly": true },
+              { "name": "mb_failedcount", "readOnly": true },
+              { "name": "mb_lasterror", "readOnly": true } ] } ] } ] }
+      ],
+      "subgrids": [ { "childEntity": "mb_emaildelivery", "view": "Message Deliveries", "label": "Delivery Log" } ],
+      "events": [
+        { "event": "onload", "library": "mb_emailmessage.js", "function": "EmailHub.Message.onLoad" },
+        { "event": "onchange", "attribute": "mb_recipienttype", "library": "mb_emailmessage.js", "function": "EmailHub.Message.onSendToChange" },
+        { "event": "onchange", "attribute": "mb_templateid", "library": "mb_emailmessage.js", "function": "EmailHub.Message.onTemplateChange" }
+      ]
+    },
+    {
+      "entity": "mb_emailtemplate", "type": "main", "name": "Email Template", "isDefault": true, "deactivateOtherMainForms": true,
+      "description": "Author a reusable template. Use tokens such as {{FirstName}} in the subject and body.",
+      "tabs": [
+        { "name": "tab_general", "label": "Template", "sections": [
+          { "name": "sec_template", "label": "Template", "columns": 2, "fields": [
+            "mb_name", "mb_category",
+            { "name": "mb_subject", "colspan": 2 },
+            { "name": "mb_body", "colspan": 2 },
+            "mb_importance", "mb_includesignature",
+            { "name": "mb_description", "colspan": 2 } ] } ] }
+      ]
+    },
+    {
+      "entity": "mb_recipientlist", "type": "main", "name": "Recipient List", "isDefault": true, "deactivateOtherMainForms": true,
+      "layout": "auto",
+      "description": "A recipient list and its members.",
+      "subgrids": [ { "childEntity": "mb_recipientlistmember", "view": "List Members", "label": "Members" } ]
+    },
+    {
+      "entity": "mb_recipientlistmember", "type": "main", "name": "List Member", "isDefault": true, "deactivateOtherMainForms": true,
+      "description": "One list member; fields adapt to the member type.",
+      "tabs": [
+        { "name": "tab_general", "label": "Member", "sections": [
+          { "name": "sec_member", "label": "Member", "columns": 2, "fields": [
+            "mb_listid", "mb_membertype",
+            "mb_userid", "mb_contactid", "mb_teamid",
+            "mb_emailaddress", "mb_firstname", "mb_lastname", "mb_company",
+            "mb_optedout", "mb_name" ] } ] }
+      ],
+      "events": [
+        { "event": "onload", "library": "mb_listmember.js", "function": "EmailHub.ListMember.onLoad" },
+        { "event": "onsave", "library": "mb_listmember.js", "function": "EmailHub.ListMember.onSave" },
+        { "event": "onchange", "attribute": "mb_membertype", "library": "mb_listmember.js", "function": "EmailHub.ListMember.onTypeChange" },
+        { "event": "onchange", "attribute": "mb_userid", "library": "mb_listmember.js", "function": "EmailHub.ListMember.onUserChange" },
+        { "event": "onchange", "attribute": "mb_contactid", "library": "mb_listmember.js", "function": "EmailHub.ListMember.onContactChange" },
+        { "event": "onchange", "attribute": "mb_teamid", "library": "mb_listmember.js", "function": "EmailHub.ListMember.onTeamChange" },
+        { "event": "onchange", "attribute": "mb_emailaddress", "library": "mb_listmember.js", "function": "EmailHub.ListMember.onEmailChange" },
+        { "event": "onchange", "attribute": "mb_firstname", "library": "mb_listmember.js", "function": "EmailHub.ListMember.onEmailChange" },
+        { "event": "onchange", "attribute": "mb_lastname", "library": "mb_listmember.js", "function": "EmailHub.ListMember.onEmailChange" }
+      ]
+    },
+    {
+      "entity": "mb_recipientlistmember", "name": "List Member Quick Create", "formType": "QuickCreate",
+      "description": "Add a member straight from the list's Members sub-grid.",
+      "tabs": [
+        { "name": "tab_general", "label": "Member", "sections": [
+          { "name": "sec_member", "label": "Member", "columns": 1, "fields": [
+            "mb_listid", "mb_membertype", "mb_userid", "mb_contactid", "mb_teamid",
+            "mb_emailaddress", "mb_firstname", "mb_lastname", "mb_company", "mb_name" ] } ] }
+      ],
+      "events": [
+        { "event": "onload", "library": "mb_listmember.js", "function": "EmailHub.ListMember.onLoad" },
+        { "event": "onsave", "library": "mb_listmember.js", "function": "EmailHub.ListMember.onSave" },
+        { "event": "onchange", "attribute": "mb_membertype", "library": "mb_listmember.js", "function": "EmailHub.ListMember.onTypeChange" },
+        { "event": "onchange", "attribute": "mb_userid", "library": "mb_listmember.js", "function": "EmailHub.ListMember.onUserChange" },
+        { "event": "onchange", "attribute": "mb_contactid", "library": "mb_listmember.js", "function": "EmailHub.ListMember.onContactChange" },
+        { "event": "onchange", "attribute": "mb_teamid", "library": "mb_listmember.js", "function": "EmailHub.ListMember.onTeamChange" },
+        { "event": "onchange", "attribute": "mb_emailaddress", "library": "mb_listmember.js", "function": "EmailHub.ListMember.onEmailChange" }
+      ]
+    },
+    {
+      "entity": "mb_emailsignature", "type": "main", "name": "Email Signature", "isDefault": true, "deactivateOtherMainForms": true,
+      "description": "Edit a personal signature.",
+      "tabs": [
+        { "name": "tab_general", "label": "Signature", "sections": [
+          { "name": "sec_signature", "label": "Signature", "columns": 2, "fields": [
+            "mb_name", "mb_isdefault",
+            { "name": "mb_signaturehtml", "colspan": 2 } ] } ] }
+      ]
+    },
+    {
+      "entity": "mb_emailsetting", "type": "main", "name": "Email Setting", "isDefault": true, "deactivateOtherMainForms": true,
+      "description": "Administrator configuration for sending.",
+      "tabs": [
+        { "name": "tab_sending", "label": "Sending", "sections": [
+          { "name": "sec_sending", "label": "Mailbox", "columns": 2, "fields": [
+            "mb_name", "mb_isactive",
+            "mb_sendmode", "mb_sharedmailbox",
+            "mb_replyto", "mb_organizationname",
+            "mb_defaultsignatureid", "mb_logdelivery" ] },
+          { "name": "sec_guardrails", "label": "Guard rails", "columns": 2, "fields": [
+            "mb_testmode", "mb_testrecipient",
+            "mb_maxrecipients", "mb_allowexternal",
+            { "name": "mb_alloweddomains", "colspan": 2 },
+            "mb_archivebcc" ] },
+          { "name": "sec_branding", "label": "Footer", "columns": 1, "fields": [ "mb_globalfooter" ] } ] }
+      ]
+    },
+    {
+      "entity": "mb_emaildelivery", "type": "main", "name": "Email Delivery", "isDefault": true, "deactivateOtherMainForms": true,
+      "layout": "auto",
+      "description": "Read-only delivery record written by the flow."
+    }
+  ],
+  "commands": [
+    { "entity": "mb_emailmessage", "label": "Send Now", "location": "MainTab",
+      "library": "mb_emailmessage.js", "function": "EmailHub.Message.sendNow" },
+    { "entity": "mb_emailmessage", "label": "Reset to Draft", "location": "MainTab",
+      "library": "mb_emailmessage.js", "function": "EmailHub.Message.resetToDraft" }
+  ],
+  "dashboards": [
+    { "name": "Email Hub Overview", "description": "Delivery health and my recent messages.",
+      "tiles": [
+        { "type": "chart", "chart": "Messages by Delivery Status", "view": "All Email Messages" },
+        { "type": "chart", "chart": "Deliveries by Status", "view": "Delivery Log" },
+        { "type": "list", "view": "My Messages" },
+        { "type": "list", "view": "Failed Deliveries" },
+        { "type": "list", "view": "Queued and Sending" },
+        { "type": "chart", "chart": "Templates by Category", "view": "Email Templates" }
+      ] }
+  ],
+  "appShell": {
+    "areas": [
+      {
+        "label": "Email Hub",
+        "groups": [
+          { "label": "Overview", "subAreas": [
+            { "dashboard": "Email Hub Overview", "title": "Overview", "icon": "mb_overview_icon" },
+            { "url": "$webresource:mb_gettingstarted.html", "title": "Getting Started", "icon": "mb_help_icon" } ] },
+          { "label": "Send", "subAreas": [
+            { "entity": "mb_emailmessage", "title": "Email Messages" },
+            { "entity": "mb_emaildelivery", "title": "Delivery Log" } ] },
+          { "label": "Library", "subAreas": [
+            { "entity": "mb_emailtemplate", "title": "Templates" },
+            { "entity": "mb_recipientlist", "title": "Recipient Lists" },
+            { "entity": "mb_recipientlistmember", "title": "List Members" },
+            { "entity": "mb_emailsignature", "title": "Signatures" } ] },
+          { "label": "Administration", "subAreas": [
+            { "entity": "mb_emailsetting", "title": "Settings" } ] }
+        ]
+      }
+    ]
+  },
+  "personas": [
+    {
+      "persona": "Email Hub Administrator",
+      "jobs": [
+        { "name": "Configure sending, limits and test mode",
+          "surfaces": ["Email Setting"],
+          "privileges": [
+            { "entity": "mb_emailsetting", "access": ["create", "read", "write", "delete", "append", "appendTo", "assign", "share"], "scope": "organization" } ] },
+        { "name": "Manage every template, list, signature and message",
+          "surfaces": ["Email Templates", "Recipient Lists", "List Members", "All Email Messages"],
+          "privileges": [
+            { "entity": "mb_emailtemplate", "access": ["create", "read", "write", "delete", "append", "appendTo", "assign", "share"], "scope": "organization" },
+            { "entity": "mb_recipientlist", "access": ["create", "read", "write", "delete", "append", "appendTo", "assign", "share"], "scope": "organization" },
+            { "entity": "mb_recipientlistmember", "access": ["create", "read", "write", "delete", "append", "appendTo", "assign", "share"], "scope": "organization" },
+            { "entity": "mb_emailsignature", "access": ["create", "read", "write", "delete", "append", "appendTo", "assign", "share"], "scope": "organization" },
+            { "entity": "mb_emailmessage", "access": ["create", "read", "write", "delete", "append", "appendTo", "assign", "share"], "scope": "organization" } ] },
+        { "name": "Monitor and troubleshoot delivery",
+          "surfaces": ["Email Hub Overview", "Delivery Log", "Failed Deliveries"],
+          "privileges": [
+            { "entity": "mb_emaildelivery", "access": ["create", "read", "write", "delete", "append", "appendTo", "assign", "share"], "scope": "organization" } ] }
+      ],
+      "additionalPrivileges": [
+        { "entity": "systemuser", "access": ["read", "appendTo"], "scope": "organization" },
+        { "entity": "contact", "access": ["read", "appendTo"], "scope": "organization" },
+        { "entity": "team", "access": ["read", "appendTo"], "scope": "organization" }
+      ],
+      "excludes": ["Granting Dataverse security roles - done in the Power Platform admin center"]
+    },
+    {
+      "persona": "Email Hub Manager",
+      "jobs": [
+        { "name": "Curate the shared template library",
+          "surfaces": ["Email Templates", "Email Template"],
+          "privileges": [
+            { "entity": "mb_emailtemplate", "access": ["create", "read", "write", "delete", "append", "appendTo", "assign", "share"], "scope": "organization" } ] },
+        { "name": "Maintain shared recipient lists",
+          "surfaces": ["Recipient Lists", "List Members"],
+          "privileges": [
+            { "entity": "mb_recipientlist", "access": ["create", "read", "write", "delete", "append", "appendTo", "assign", "share"], "scope": "organization" },
+            { "entity": "mb_recipientlistmember", "access": ["create", "read", "write", "delete", "append", "appendTo", "assign", "share"], "scope": "organization" } ] },
+        { "name": "Send emails and review team delivery",
+          "surfaces": ["My Messages", "All Email Messages", "Delivery Log", "Email Hub Overview"],
+          "privileges": [
+            { "entity": "mb_emailmessage", "access": ["read"], "scope": "organization" },
+            { "entity": "mb_emailmessage", "access": ["create", "write", "delete", "append", "appendTo", "assign", "share"], "scope": "user" },
+            { "entity": "mb_emaildelivery", "access": ["read"], "scope": "organization" },
+            { "entity": "mb_emailsignature", "access": ["create", "read", "write", "delete", "append", "appendTo"], "scope": "user" },
+            { "entity": "mb_emailsetting", "access": ["read"], "scope": "organization" } ] }
+      ],
+      "additionalPrivileges": [
+        { "entity": "systemuser", "access": ["read", "appendTo"], "scope": "organization" },
+        { "entity": "contact", "access": ["read", "appendTo"], "scope": "organization" },
+        { "entity": "team", "access": ["read", "appendTo"], "scope": "organization" }
+      ],
+      "excludes": ["Changing the sending mailbox, limits or test mode - Administrator only"]
+    },
+    {
+      "persona": "Email Hub Sender",
+      "jobs": [
+        { "name": "Compose and send emails",
+          "surfaces": ["My Messages", "Email Message", "Message Deliveries"],
+          "privileges": [
+            { "entity": "mb_emailmessage", "access": ["create", "read", "write", "delete", "append", "appendTo", "assign", "share"], "scope": "user" },
+            { "entity": "mb_emaildelivery", "access": ["read"], "scope": "user" },
+            { "entity": "mb_emailsetting", "access": ["read"], "scope": "organization" } ] },
+        { "name": "Use shared templates and keep my own",
+          "surfaces": ["Email Templates", "My Templates"],
+          "privileges": [
+            { "entity": "mb_emailtemplate", "access": ["read", "appendTo"], "scope": "organization" },
+            { "entity": "mb_emailtemplate", "access": ["create", "write", "delete", "append", "assign", "share"], "scope": "user" } ] },
+        { "name": "Use shared lists and build my own",
+          "surfaces": ["Recipient Lists", "My Lists", "List Members"],
+          "privileges": [
+            { "entity": "mb_recipientlist", "access": ["read", "appendTo"], "scope": "organization" },
+            { "entity": "mb_recipientlist", "access": ["create", "write", "delete", "append", "assign", "share"], "scope": "user" },
+            { "entity": "mb_recipientlistmember", "access": ["read"], "scope": "organization" },
+            { "entity": "mb_recipientlistmember", "access": ["create", "write", "delete", "append", "appendTo"], "scope": "user" } ] },
+        { "name": "Manage my signature",
+          "surfaces": ["My Signatures", "Email Signature"],
+          "privileges": [
+            { "entity": "mb_emailsignature", "access": ["create", "read", "write", "delete", "append", "appendTo"], "scope": "user" } ] }
+      ],
+      "additionalPrivileges": [
+        { "entity": "systemuser", "access": ["read", "appendTo"], "scope": "organization" },
+        { "entity": "contact", "access": ["read", "appendTo"], "scope": "organization" },
+        { "entity": "team", "access": ["read", "appendTo"], "scope": "organization" }
+      ],
+      "excludes": ["Editing other people's templates, lists or messages", "Changing Email Settings"]
+    }
+  ],
+  "sampleData": {
+    "mb_emailsignature": [
+      { "mb_name": "Standard Signature", "mb_isdefault": true,
+        "mb_signaturehtml": "<p>Kind regards,<br/><strong>{{SenderName}}</strong><br/>{{SenderJobTitle}}<br/>{{OrganizationName}}</p>" }
+    ],
+    "mb_emailsetting": [
+      { "mb_name": "Default", "mb_isactive": true, "mb_sendmode": "Flow Owner Mailbox", "mb_organizationname": "Contoso",
+        "mb_maxrecipients": 500, "mb_allowexternal": true, "mb_testmode": true, "mb_testrecipient": "test-inbox@example.com",
+        "mb_logdelivery": true,
+        "mb_globalfooter": "<p style=\"color:#707070;font-size:12px\">This message was sent by {{OrganizationName}} via Email Notification Hub.</p>",
+        "$parent": { "entity": "mb_emailsignature", "match": { "mb_name": "Standard Signature" } } }
+    ],
+    "mb_emailtemplate": [
+      { "mb_name": "Welcome", "mb_category": "Onboarding", "mb_importance": "Normal", "mb_includesignature": true,
+        "mb_subject": "Welcome to {{OrganizationName}}, {{FirstName}}!",
+        "mb_body": "<p>Hi {{FirstName}},</p><p>Welcome aboard! We are glad to have you with us at {{OrganizationName}}.</p><p>If you have any questions just reply to this email.</p>{{Signature}}",
+        "mb_description": "First email to a new user, contact or partner." },
+      { "mb_name": "Meeting Reminder", "mb_category": "Reminder", "mb_importance": "High", "mb_includesignature": true,
+        "mb_subject": "Reminder: our meeting on {{Today}}",
+        "mb_body": "<p>Hello {{FullName}},</p><p>This is a friendly reminder about our meeting today ({{Today}}).</p><p>See you soon.</p>",
+        "mb_description": "Same-day meeting reminder." },
+      { "mb_name": "General Announcement", "mb_category": "Announcement", "mb_importance": "Normal", "mb_includesignature": true,
+        "mb_subject": "Announcement from {{OrganizationName}}",
+        "mb_body": "<p>Dear {{FirstName}},</p><p>We would like to share an update with you.</p><p>[Write the announcement here]</p>",
+        "mb_description": "Generic announcement to a recipient list." }
+    ],
+    "mb_recipientlist": [
+      { "mb_name": "Sample - External Partners", "mb_listtype": "External",
+        "mb_description": "Example list with external addresses (example.com is a reserved test domain)." }
+    ],
+    "mb_recipientlistmember": [
+      { "mb_name": "Alex Doe", "mb_membertype": "External Email", "mb_emailaddress": "alex.doe@example.com",
+        "mb_firstname": "Alex", "mb_lastname": "Doe", "mb_company": "Example Partner Ltd",
+        "$parent": { "entity": "mb_recipientlist", "match": { "mb_name": "Sample - External Partners" } } },
+      { "mb_name": "Sam Roe", "mb_membertype": "External Email", "mb_emailaddress": "sam.roe@example.com",
+        "mb_firstname": "Sam", "mb_lastname": "Roe", "mb_company": "Example Supplier Inc",
+        "$parent": { "entity": "mb_recipientlist", "match": { "mb_name": "Sample - External Partners" } } }
+    ]
+  }
+}
