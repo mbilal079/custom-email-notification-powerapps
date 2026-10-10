@@ -105,6 +105,24 @@ recipients allowed, Test Mode off and activities on.
 **First test:** keep *Test Mode = Yes* with your own address as the test recipient. Send to a list and check that you
 get one email per recipient. Then set *Test Mode = No*.
 
+### 5.1 Email design
+
+The **Email Design** tab of Settings controls how every email looks. Click **Preview Email Design** on the command bar
+to see the result (desktop and mobile, with and without a related record and the Test Mode notice) before you save.
+
+| Setting | Effect |
+|---|---|
+| **Email Layout** | **Branded**: coloured header with logo and title, white content card, centred footer. **Minimal**: thin accent line, logo and title, simple footer. **Plain**: the body only, as in older versions. |
+| **Brand Color** | Header and button colour (hex, e.g. `#0F6CBD`). Text on it switches between white and dark automatically for contrast. |
+| **Background Color** | Colour behind the card in the Branded layout. |
+| **Logo URL** | Public `https` image, about 36 px high. Empty = text-only header. |
+| **Header Title** | Text next to the logo; defaults to Organization Name. |
+| **Show Open Record Button** / **Label** | When an email is about a record (Notification Rules, emails to a contact, or messages with a related record), a button opens that record in Dataverse. It sits after the message and before the signature, or wherever the template has `{{RecordButton}}`. |
+| **Global Footer** | Shown in the footer area, under it a `© year Organization` line. Tokens work here. |
+
+The design is HTML that email clients render reliably (tables, inline styles, 600 px wide, no scripts or web
+fonts). Templates and messages also have a **Preview Email** button that shows them in this design with sample values.
+
 ## 6. Security roles
 
 Assign roles in the **Power Platform admin center → Environments → *env* → Settings → Users + permissions**.
@@ -257,6 +275,7 @@ Case-sensitive; they work in the subject, body, signature and footer. Values are
 | `{{Record.column}}` | Any column of the related record, formatted (choices show labels, lookups show names, dates `yyyy-MM-dd HH:mm UTC`) |
 | `{{RecordName}}` `{{RecordUrl}}` | Related record's name and a link to it |
 | `{{Signature}}` | Signature position |
+| `{{RecordButton}}` | Position of the Open record button (when the email is about a record) |
 
 ## 10. Monitoring and troubleshooting
 

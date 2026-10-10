@@ -105,7 +105,7 @@ namespace EmailHub.Plugins.Engine
                     signatureHtml = _svc.Retrieve(Tables.Signature, sig.Id, new ColumnSet("mb_signaturehtml")).GetAttributeValue<string>("mb_signaturehtml") ?? "";
                 }
             }
-            var bodyTemplate = TokenRenderer.Assemble(msg.GetAttributeValue<string>("mb_body"), signatureHtml, settings.Footer);
+            var bodyTemplate = TokenRenderer.Assemble(EmailLayout.MarkButton(msg.GetAttributeValue<string>("mb_body")), signatureHtml, null);
             var subjectTemplate = msg.GetAttributeValue<string>("mb_name") ?? "";
 
             // ----- recipients -----
@@ -135,6 +135,22 @@ namespace EmailHub.Plugins.Engine
                 var subject = renderer.Render(subjectTemplate, one, false);
                 var body = renderer.Render(bodyTemplate, one, true);
                 var realTo = string.Join(";", unit.Select(r => r.Email));
+                body = EmailLayout.Wrap(body, new EmailLayout.Options
+                {
+                    Layout = settings.Layout,
+                    BrandColor = settings.BrandColor,
+                    BackgroundColor = settings.BackgroundColor,
+                    LogoUrl = settings.LogoUrl,
+                    HeaderTitle = settings.HeaderTitle,
+                    OrganizationName = settings.OrganizationName,
+                    FooterHtml = renderer.Render(settings.Footer ?? "", one, true),
+                    RecordUrl = renderer.RecordUrl ?? "",
+                    RecordName = renderer.RecordName ?? "",
+                    ShowRecordButton = settings.ShowRecordButton,
+                    RecordButtonLabel = settings.RecordButtonLabel,
+                    TestNotice = settings.TestMode ? "Test Mode: this email was addressed to " + realTo : "",
+                    Preheader = EmailLayout.Preheader(body)
+                });
                 IEnumerable<Recipient> toParties = unit;
                 if (settings.TestMode)
                 {

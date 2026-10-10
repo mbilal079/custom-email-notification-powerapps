@@ -139,6 +139,60 @@
           "type": "Boolean",
           "defaultValue": true,
           "description": "When Yes, one Email Delivery row is written per recipient."
+        },
+        {
+          "schemaName": "mb_emaillayout",
+          "displayName": "Email Layout",
+          "type": "Choice",
+          "options": [
+            "Branded (header, card and footer)",
+            "Minimal (clean, accent line)",
+            "Plain (no layout)"
+          ],
+          "description": "How every email is framed. Branded: coloured header with logo, white content card, footer. Minimal: accent line, logo and title, simple footer. Plain: the body only."
+        },
+        {
+          "schemaName": "mb_brandcolor",
+          "displayName": "Brand Color",
+          "type": "Text",
+          "maxLength": 7,
+          "description": "Hex colour for the header and buttons, e.g. #0F6CBD. Text colour on it is chosen automatically for contrast."
+        },
+        {
+          "schemaName": "mb_backgroundcolor",
+          "displayName": "Background Color",
+          "type": "Text",
+          "maxLength": 7,
+          "description": "Hex colour behind the email card (Branded layout), e.g. #F3F5F8."
+        },
+        {
+          "schemaName": "mb_logourl",
+          "displayName": "Logo URL",
+          "type": "Text",
+          "format": "Url",
+          "maxLength": 1000,
+          "description": "Public https URL of a logo image (PNG or JPG, about 36px high). Leave empty for a text-only header."
+        },
+        {
+          "schemaName": "mb_headertitle",
+          "displayName": "Header Title",
+          "type": "Text",
+          "maxLength": 200,
+          "description": "Text next to the logo. Defaults to the Organization Name."
+        },
+        {
+          "schemaName": "mb_showrecordbutton",
+          "displayName": "Show Open Record Button",
+          "type": "Boolean",
+          "defaultValue": true,
+          "description": "Adds a button that opens the related record when the email is about a record (e.g. from a Notification Rule)."
+        },
+        {
+          "schemaName": "mb_recordbuttonlabel",
+          "displayName": "Open Record Button Label",
+          "type": "Text",
+          "maxLength": 100,
+          "description": "Button text, e.g. View task. Defaults to Open record."
         }
       ]
     },
@@ -898,6 +952,20 @@
       "type": "html",
       "contentPath": "webresources/mb_overview.html",
       "description": "Overview page: live KPIs, SVG charts, rules, configuration and health checks; per-user customizable."
+    },
+    {
+      "name": "mb_preview.js",
+      "displayName": "Email Hub - Preview commands",
+      "type": "js",
+      "contentPath": "webresources/mb_preview.js",
+      "description": "Preview Email command for Settings, Templates and Email Messages."
+    },
+    {
+      "name": "mb_emailpreview.html",
+      "displayName": "Email Hub - Email Preview",
+      "type": "html",
+      "contentPath": "webresources/mb_emailpreview.html",
+      "description": "Renders the email design (layout, colours, logo, button, footer) with sample data, desktop and mobile."
     },
     {
       "name": "mb_gettingstarted.html",
@@ -1835,6 +1903,36 @@
                 },
                 "mb_archivebcc"
               ]
+            }
+          ]
+        },
+        {
+          "name": "tab_design",
+          "label": "Email Design",
+          "sections": [
+            {
+              "name": "sec_layout",
+              "label": "Layout and colours",
+              "columns": 2,
+              "fields": [
+                "mb_emaillayout",
+                "mb_headertitle",
+                "mb_brandcolor",
+                "mb_backgroundcolor",
+                {
+                  "name": "mb_logourl",
+                  "colspan": 2
+                }
+              ]
+            },
+            {
+              "name": "sec_button",
+              "label": "Open record button",
+              "columns": 2,
+              "fields": [
+                "mb_showrecordbutton",
+                "mb_recordbuttonlabel"
+              ]
             },
             {
               "name": "sec_branding",
@@ -1973,6 +2071,27 @@
       "location": "MainTab",
       "library": "mb_emailmessage.js",
       "function": "EmailHub.Message.resetToDraft"
+    },
+    {
+      "entity": "mb_emailsetting",
+      "label": "Preview Email Design",
+      "location": "MainTab",
+      "library": "mb_preview.js",
+      "function": "EmailHub.Preview.open"
+    },
+    {
+      "entity": "mb_emailtemplate",
+      "label": "Preview Email",
+      "location": "MainTab",
+      "library": "mb_preview.js",
+      "function": "EmailHub.Preview.open"
+    },
+    {
+      "entity": "mb_emailmessage",
+      "label": "Preview Email",
+      "location": "MainTab",
+      "library": "mb_preview.js",
+      "function": "EmailHub.Preview.open"
     }
   ],
   "dashboards": [
@@ -2638,7 +2757,13 @@
           "match": {
             "mb_name": "Standard Signature"
           }
-        }
+        },
+        "mb_emaillayout": "Branded (header, card and footer)",
+        "mb_brandcolor": "#0F6CBD",
+        "mb_backgroundcolor": "#F3F5F8",
+        "mb_headertitle": "Contoso",
+        "mb_showrecordbutton": true,
+        "mb_recordbuttonlabel": "Open record"
       }
     ],
     "mb_emailtemplate": [

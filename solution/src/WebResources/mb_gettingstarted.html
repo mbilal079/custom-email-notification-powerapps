@@ -31,6 +31,7 @@
     <li>Choose the <b>Delivery Channel</b>: <b>Office 365 Outlook</b> (no admin setup; send from the connection mailbox or a <b>Shared Mailbox</b>) or <b>Dataverse Email</b> (server-side sync; mailboxes must be approved).</li>
     <li>Keep <b>Create Email Activities</b> on so every email appears on the timeline of the recipient and the related record.</li>
     <li>Set <b>Organization Name</b>, an optional <b>Global Footer</b> and <b>Archive BCC Address</b>.</li>
+    <li>On the <b>Email Design</b> tab pick a layout, brand colour and logo, then click <b>Preview Email Design</b>.</li>
     <li>Leave <b>Test Mode</b> on and enter a <b>Test Mode Recipient</b> until you have sent a test. Every email is redirected to that address while Test Mode is on.</li>
     <li>In <b>Power Automate &rarr; Solutions &rarr; Email Notification Hub</b>, make sure the flows <i>Email Hub - Send via Outlook</i> and <i>Email Hub - Release Scheduled Messages</i> are <b>On</b>.</li>
     <li>Assign the security roles: <b>Email Hub Administrator</b>, <b>Email Hub Manager</b> or <b>Email Hub Sender</b> (together with <i>Basic User</i>).</li>
@@ -58,6 +59,7 @@
     <tr><td><code>{{Record.column}}</code></td><td>Any column of the related record, e.g. <code>{{Record.subject}}</code></td></tr>
     <tr><td><code>{{RecordName}}</code> <code>{{RecordUrl}}</code></td><td>The related record&#39;s name and a link to open it</td></tr>
     <tr><td><code>{{Signature}}</code></td><td>Places your signature here; otherwise it is added at the end</td></tr>
+    <tr><td><code>{{RecordButton}}</code></td><td>Places the Open record button here (emails about a record); otherwise it follows the message</td></tr>
   </table>
   <p>Tokens work in both the subject and the body, and are case-sensitive.</p>
 

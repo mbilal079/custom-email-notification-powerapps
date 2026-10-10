@@ -26,6 +26,13 @@ namespace EmailHub.Plugins.Engine
         public bool CreateActivities = true;
         public EntityReference DefaultSignature;
         public EntityReference FromQueue;
+        public int Layout = EmailLayout.Branded;
+        public string BrandColor = EmailLayout.DefaultBrand;
+        public string BackgroundColor = EmailLayout.DefaultBackground;
+        public string LogoUrl = "";
+        public string HeaderTitle = "";
+        public bool ShowRecordButton = true;
+        public string RecordButtonLabel = "Open record";
 
         public static HubSettings Load(IOrganizationService svc)
         {
@@ -52,6 +59,13 @@ namespace EmailHub.Plugins.Engine
             s.CreateActivities = row.GetAttributeValue<bool?>("mb_createactivities") ?? true;
             s.DefaultSignature = row.GetAttributeValue<EntityReference>("mb_defaultsignatureid");
             s.FromQueue = row.GetAttributeValue<EntityReference>("mb_fromqueueid");
+            s.Layout = row.GetAttributeValue<OptionSetValue>("mb_emaillayout")?.Value ?? s.Layout;
+            s.BrandColor = EmailLayout.Color(row.GetAttributeValue<string>("mb_brandcolor"), EmailLayout.DefaultBrand);
+            s.BackgroundColor = EmailLayout.Color(row.GetAttributeValue<string>("mb_backgroundcolor"), EmailLayout.DefaultBackground);
+            s.LogoUrl = (row.GetAttributeValue<string>("mb_logourl") ?? "").Trim();
+            s.HeaderTitle = (row.GetAttributeValue<string>("mb_headertitle") ?? "").Trim();
+            s.ShowRecordButton = row.GetAttributeValue<bool?>("mb_showrecordbutton") ?? true;
+            s.RecordButtonLabel = (row.GetAttributeValue<string>("mb_recordbuttonlabel") ?? "").Trim();
             return s;
         }
 

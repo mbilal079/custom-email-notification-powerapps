@@ -11,7 +11,7 @@ const { dv } = require("./lib/dv");
 
 const COLUMNS = {
   mb_emailmessage: ["mb_status", "mb_recipienttype", "mb_deliverymode", "mb_importance"],
-  mb_emailsetting: ["mb_sendmode", "mb_deliverychannel"],
+  mb_emailsetting: ["mb_sendmode", "mb_deliverychannel", "mb_emaillayout"],
   mb_recipientlistmember: ["mb_membertype"],
   mb_emaildelivery: ["mb_deliverystatus", "mb_channel"],
   mb_notificationrule: ["mb_triggerevent", "mb_deliverymode"]

@@ -152,6 +152,81 @@
                     </row>
                   </rows>
                 </section>
+              </sections>
+            </column>
+          </columns>
+        </tab>
+        <tab id="6f1e02ee-5936-4334-8804-9aeb23c04e5a" name="tab_design" expanded="true" visible="true">
+          <labels>
+            <label description="Email Design" languagecode="1033" />
+          </labels>
+          <columns>
+            <column width="100%">
+              <sections>
+                <section id="eef2e247-52c3-4f80-aeaf-9a624825fbd5" name="sec_layout" showlabel="true" visible="true" columns="11">
+                  <labels>
+                    <label description="Layout and colours" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="c9713f6e-24d9-4d5b-959f-29471040f82f" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="mb_emaillayout" languagecode="1033" />
+                        </labels>
+                        <control id="983fac63-26bd-44aa-8d42-a28922225d9b" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="mb_emaillayout" disabled="false" isrequired="false" />
+                      </cell>
+                      <cell id="99efa284-1c5c-40c5-a1dc-18a216c29e66" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="mb_headertitle" languagecode="1033" />
+                        </labels>
+                        <control id="2b411a80-f1ca-4b09-881c-4104b388e1eb" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="mb_headertitle" disabled="false" isrequired="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="4aa1a177-9951-4bd9-a86e-ee3984d03a60" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="mb_brandcolor" languagecode="1033" />
+                        </labels>
+                        <control id="8b84139b-950d-46b4-b371-d381294d4ad6" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="mb_brandcolor" disabled="false" isrequired="false" />
+                      </cell>
+                      <cell id="766184bd-edf1-4632-8507-96797273a76c" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="mb_backgroundcolor" languagecode="1033" />
+                        </labels>
+                        <control id="7fba87f2-916b-4712-be0e-ec570898be0e" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="mb_backgroundcolor" disabled="false" isrequired="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="66ca5e63-9cd5-4892-ad15-e1b5bcfbfdba" showlabel="true" visible="true" colspan="2" rowspan="1">
+                        <labels>
+                          <label description="mb_logourl" languagecode="1033" />
+                        </labels>
+                        <control id="bda036e8-f329-482a-9de5-7bdc1543af5b" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="mb_logourl" disabled="false" isrequired="false" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+                <section id="1e8e9bb4-1b2d-4c94-bb05-93f27386a49c" name="sec_button" showlabel="true" visible="true" columns="11">
+                  <labels>
+                    <label description="Open record button" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="12b8e15f-2e12-43bf-aad5-40ea425a5d50" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="mb_showrecordbutton" languagecode="1033" />
+                        </labels>
+                        <control id="edb46f18-aedd-4518-ae6e-7ace38319b00" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="mb_showrecordbutton" disabled="false" isrequired="false" />
+                      </cell>
+                      <cell id="4eb22da1-3a92-49e5-a06e-905eb3deaf44" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="mb_recordbuttonlabel" languagecode="1033" />
+                        </labels>
+                        <control id="7bc6e2d5-dcd7-4a79-91b2-8c03b5352b60" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="mb_recordbuttonlabel" disabled="false" isrequired="false" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
                 <section id="a55aa775-c978-4a90-8bf8-3b41298f168e" name="sec_branding" showlabel="true" visible="true" columns="1">
                   <labels>
                     <label description="Footer" languagecode="1033" />

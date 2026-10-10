@@ -35,6 +35,11 @@
     "mb_deliverychannel": {
       "Office 365 Outlook (cloud flow)": 100000000,
       "Dataverse Email (server-side sync)": 100000001
+    },
+    "mb_emaillayout": {
+      "Branded (header, card and footer)": 100000000,
+      "Minimal (clean, accent line)": 100000001,
+      "Plain (no layout)": 100000002
     }
   },
   "mb_recipientlistmember": {

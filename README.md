@@ -26,6 +26,8 @@ Dataverse teams and external addresses), **ad-hoc addresses**, or automatically 
 - **Templates** with tokens resolved per recipient and from the related record: `{{FirstName}}`, `{{Company}}`,
   `{{SenderName}}`, `{{OrganizationName}}`, `{{Today}}`, `{{Record.<column>}}`, `{{RecordName}}`, `{{RecordUrl}}`,
   `{{Signature}}` …
+- **Email design:** Branded / Minimal / Plain layouts with brand colour, logo, header title, footer and an
+  **Open record** button; email-client-safe HTML; **Preview** from Settings, Templates and Messages (desktop/mobile).
 - **Signatures** (personal, rich text, default per user), **rich text editor** on all HTML fields.
 - **Delivery modes:** personalized (one email each) or single email; **Send After** scheduling.
 - **Admin settings:** channel, shared mailbox / queue sender, reply-to, footer, **Test Mode** redirect, max recipients,

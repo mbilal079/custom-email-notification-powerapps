@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Email Preview</title>
+<style>
+  :root { --bg:#eef1f5; --card:#fff; --fg:#1b1b1f; --muted:#64666e; --line:#e3e6eb; --accent:#0f6cbd; --soft:#f3f5f8; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) { --bg:#141518; --card:#1d1f23; --fg:#ececf0; --muted:#a0a3ab; --line:#2e3036; --accent:#4ea1f0; --soft:#25272c; }
+  }
+  * { box-sizing:border-box; }
+  html, body { margin:0; height:100%; background:var(--bg); color:var(--fg); font:14px/1.45 "Segoe UI",system-ui,sans-serif; }
+  .shell { display:flex; flex-direction:column; height:100%; }
+  .bar { display:flex; align-items:center; gap:10px; flex-wrap:wrap; padding:10px 16px; background:var(--card); border-bottom:1px solid var(--line); }
+  .bar .title { font-weight:600; margin-right:auto; display:flex; align-items:center; gap:8px; }
+  .seg { display:inline-flex; background:var(--soft); border-radius:8px; padding:2px; }
+  .seg button { border:0; background:none; color:var(--muted); padding:5px 12px; border-radius:6px; cursor:pointer; font:inherit; display:inline-flex; gap:6px; align-items:center; }
+  .seg button.on { background:var(--card); color:var(--accent); font-weight:600; box-shadow:0 1px 2px rgba(0,0,0,.08); }
+  label.chk { display:inline-flex; align-items:center; gap:6px; color:var(--muted); cursor:pointer; }
+  label.chk input { accent-color:var(--accent); }
+  svg.i { width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+  .stage { flex:1; overflow:auto; padding:20px; display:flex; justify-content:center; }
+  .mail { width:100%; max-width:860px; align-self:flex-start; background:var(--card); border:1px solid var(--line); border-radius:12px; box-shadow:0 8px 30px rgba(16,24,40,.08);
+          display:flex; flex-direction:column; overflow:hidden; transition:max-width .25s; }
+  .mail.mobile { max-width:390px; border-radius:28px; border-width:8px; border-color:#1f2125; }
+  .meta { padding:14px 18px; border-bottom:1px solid var(--line); }
+  .meta .subj { font-size:17px; font-weight:600; margin-bottom:8px; overflow-wrap:anywhere; }
+  .meta .row { display:flex; align-items:center; gap:10px; color:var(--muted); font-size:13px; }
+  .avatar { width:34px; height:34px; border-radius:50%; display:grid; place-items:center; color:#fff; font-weight:600; flex:none; }
+  .meta b { color:var(--fg); font-weight:600; }
+  iframe { border:0; width:100%; min-height:560px; background:#fff; display:block; }
+  .note { color:var(--muted); font-size:12px; text-align:center; padding:8px 16px 14px; }
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="bar">
+    <div class="title"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg><span id="ttl">Email preview</span></div>
+    <label class="chk"><input type="checkbox" id="rec" checked> About a record</label>
+    <label class="chk"><input type="checkbox" id="test"> Show Test Mode notice</label>
+    <div class="seg" id="device">
+      <button data-d="desktop" class="on"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg>Desktop</button>
+      <button data-d="mobile"><svg class="i" viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg>Mobile</button>
+    </div>
+  </div>
+  <div class="stage">
+    <div class="mail" id="mail">
+      <div class="meta">
+        <div class="subj" id="subj"></div>
+        <div class="row"><span class="avatar" id="av"></span><div><b id="from"></b><div>to <span id="to"></span></div></div><span style="margin-left:auto" id="when"></span></div>
+      </div>
+      <iframe id="frame" title="Email body" sandbox="allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
+    </div>
+  </div>
+  <div class="note">Sample values are used for tokens such as {{FirstName}}. Unsaved changes on the form are included.</div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+  var Xrm = (function () { try { return window.parent.Xrm || window.top.Xrm || null; } catch (e) { return null; } })();
+  var API = (function () { try { return Xrm.Utility.getGlobalContext().getClientUrl() + "/api/data/v9.2/"; } catch (e) { return location.origin + "/api/data/v9.2/"; } })();
+  var payload = (function () { try { return window.top.__mbEmailPreview || null; } catch (e) { return null; } })() || { mode: "mb_emailsetting" };
+
+  // ---- layout (mirror of plugins/EmailHub.Plugins/Engine/EmailLayout.cs) ----
+  var BRANDED = 100000000, MINIMAL = 100000001, PLAIN = 100000002;
+  var FONT = "'Segoe UI',Roboto,Helvetica,Arial,sans-serif";
+  function enc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+  function color(v, fb) { v = (v || "").trim(); if (v && v[0] !== "#") { v = "#" + v; } return /^#([0-9a-f]{3}){1,2}$/i.test(v) ? v.toUpperCase() : fb; }
+  function isDark(hex) {
+    var v = hex.slice(1); if (v.length === 3) { v = v[0] + v[0] + v[1] + v[1] + v[2] + v[2]; }
+    function lin(i) { var c = parseInt(v.substr(i, 2), 16) / 255; return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4); }
+    return 0.2126 * lin(0) + 0.7152 * lin(2) + 0.0722 * lin(4) < 0.179;
+  }
+  function isHttp(u) { return /^https?:\/\//i.test(u || ""); }
+
+  var MARK = "<!--mb:button-->";
+  function markButton(b) { b = b || ""; return b.indexOf("{{RecordButton}}") >= 0 ? b.replace("{{RecordButton}}", MARK) : b + MARK; }
+  function place(body, html) { if (body.indexOf(MARK) < 0) { body += MARK; } return body.replace(MARK, html).split(MARK).join(""); }
+
+  function wrap(body, o) {
+    var showButton = o.showRecordButton && isHttp(o.recordUrl), label = (o.recordButtonLabel || "").trim() || "Open record";
+    if (o.layout === PLAIN) {
+      return (o.testNotice ? '<p style="color:#8a5300"><b>' + enc(o.testNotice) + "</b></p>" : "") +
+        place(body, showButton ? '<p><a href="' + enc(o.recordUrl) + '">' + enc(label) + "</a></p>" : "") + (o.footer ? "<br/>" + o.footer : "");
+    }
+    var brand = color(o.brandColor, "#0F6CBD"), bg = color(o.backgroundColor, "#F3F5F8"), onBrand = isDark(brand) ? "#FFFFFF" : "#1B1B1F";
+    var title = (o.headerTitle || "").trim() || o.organizationName || "", branded = o.layout !== MINIMAL, outer = branded ? bg : "#FFFFFF";
+    var h = '<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head><body style="margin:0;padding:0;background:' + outer + ';">' +
+      '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:' + outer + ';"><tr><td align="center" style="padding:' + (branded ? "28px 12px" : "16px 12px") + ';">' +
+      '<table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="width:100%;max-width:600px;">';
+    if (o.testNotice) {
+      h += '<tr><td style="padding:10px 16px;background:#FFF4CE;border:1px solid #F1D68A;border-radius:8px;font:600 13px ' + FONT + ';color:#7A5200;">&#9888; ' + enc(o.testNotice) +
+           '</td></tr><tr><td style="height:12px;line-height:12px;font-size:0">&nbsp;</td></tr>';
+    }
+    var logo = function (px) { return isHttp(o.logoUrl) ? '<td style="padding-right:' + (px > 32 ? 14 : 12) + 'px;vertical-align:middle;"><img src="' + enc(o.logoUrl) + '" alt="' + enc(title) + '" height="' + px + '" style="display:block;height:' + px + "px;max-height:" + px + 'px;width:auto;border:0;"></td>' : ""; };
+    if (branded) {
+      h += '<tr><td style="background:' + brand + ';border-radius:12px 12px 0 0;padding:22px 32px;"><table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>' + logo(36) +
+           (title ? '<td style="vertical-align:middle;font:600 19px ' + FONT + ";color:" + onBrand + ';">' + enc(title) + "</td>" : "") + "</tr></table></td></tr>";
+    } else {
+      h += '<tr><td style="border-top:4px solid ' + brand + ';padding:18px 4px 14px;"><table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>' + logo(30) +
+           (title ? '<td style="vertical-align:middle;font:600 17px ' + FONT + ';color:#1B1B1F;">' + enc(title) + "</td>" : "") + "</tr></table></td></tr>";
+    }
+    h += '<tr><td style="background:#FFFFFF;' + (branded ? "border-radius:0 0 12px 12px;border:1px solid #E3E6EB;border-top:0;padding:32px;" : "padding:8px 4px 24px;") +
+         "font:15px/1.6 " + FONT + ';color:#24262B;">';
+    var btn = "";
+    if (showButton) {
+      btn += '<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:' + (o.recordName ? "22px 0 4px" : "22px 0 18px") + ';"><tr><td align="center" bgcolor="' + brand + '" style="border-radius:8px;background:' + brand + ';">' +
+           '<a href="' + enc(o.recordUrl) + '" target="_blank" style="display:inline-block;padding:12px 26px;font:600 15px ' + FONT + ";color:" + onBrand + ';text-decoration:none;border-radius:8px;">' + enc(label) + " &rarr;</a></td></tr></table>";
+      if (o.recordName) { btn += '<div style="font:12px ' + FONT + ';color:#6B6F78;margin:6px 0 18px;">' + enc(o.recordName) + "</div>"; }
+    }
+    h += place(body, btn);
+    h += '</td></tr><tr><td style="padding:20px 24px 4px;font:12px/1.6 ' + FONT + ';color:#6B6F78;text-align:' + (branded ? "center" : "left") + ";" + (branded ? "" : "border-top:1px solid #E3E6EB;") + '">';
+    if (o.footer) { h += '<div style="margin-bottom:8px;">' + o.footer + "</div>"; }
+    if (o.organizationName) { h += '<div style="color:#8A8E97;">&copy; ' + new Date().getFullYear() + " " + enc(o.organizationName) + "</div>"; }
+    return h + "</td></tr></table></td></tr></table></body></html>";
+  }
+
+  // ---- sample tokens ----
+  var user = (function () { try { return Xrm.Utility.getGlobalContext().userSettings.userName; } catch (e) { return "Megan Bowen"; } })();
+  function tokens(s, ctx) {
+    var map = {
+      FirstName: "Alex", LastName: "Wilber", FullName: "Alex Wilber", Email: "alex.wilber@example.com", Company: "Fabrikam", JobTitle: "Project Manager",
+      SenderName: user, SenderEmail: "you@example.com", SenderJobTitle: "Customer Success", OrganizationName: ctx.org || "Contoso",
+      Today: new Date().toLocaleDateString(), RecordName: "Prepare Q4 report", RecordUrl: "#"
+    };
+    return (s || "").replace(/\{\{\s*Record\.([\w]+)\s*\}\}/g, function (m, c) { return "<span style=\"background:#EEF4FB;border-radius:3px;padding:0 3px\">" + c + "</span>"; })
+      .replace(/\{\{\s*(\w+)\s*\}\}/g, function (m, k) { return k === "Signature" ? "" : (map[k] != null ? enc(map[k]) : m); });
+  }
+
+  function get(path) {
+    return fetch(API + path, { credentials: "same-origin", headers: { Accept: "application/json", Prefer: 'odata.include-annotations="*"' } })
+      .then(function (r) { return r.ok ? r.json() : { value: [] }; }).then(function (j) { return j.value || j; }, function () { return []; });
+  }
+
+  var state = { settings: {}, subject: "", body: "", signature: "", device: "desktop" };
+
+  function render() {
+    var s = state.settings, org = s.mb_organizationname || "Contoso";
+    var layout = s.mb_emaillayout == null ? BRANDED : s.mb_emaillayout;
+    var body = markButton(state.body);
+    var sig = state.signature;
+    if (sig) { body = body.indexOf("{{Signature}}") >= 0 ? body.replace("{{Signature}}", sig) : body + "<br/>" + sig; }
+    body = tokens(body, { org: org });
+    var rec = $("rec").checked, test = $("test").checked;
+    var html = wrap(body, {
+      layout: layout, brandColor: s.mb_brandcolor, backgroundColor: s.mb_backgroundcolor, logoUrl: s.mb_logourl, headerTitle: s.mb_headertitle,
+      organizationName: org, footer: tokens(s.mb_globalfooter || "", { org: org }), recordUrl: rec ? "https://example.com/record" : "", recordName: rec ? (payload.regarding || "Prepare Q4 report") : "",
+      showRecordButton: s.mb_showrecordbutton !== false, recordButtonLabel: s.mb_recordbuttonlabel,
+      testNotice: test ? "Test Mode: this email was addressed to alex.wilber@example.com" : ""
+    });
+    $("frame").srcdoc = html;
+    var subj = tokens(state.subject, { org: org }).replace(/<[^>]+>/g, "");
+    $("subj").textContent = (test ? "[TEST to alex.wilber@example.com] " : "") + (subj || "(no subject)");
+    $("from").textContent = user + (org ? " · " + org : "");
+    $("to").textContent = "Alex Wilber <alex.wilber@example.com>";
+    $("when").textContent = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+    var brand = color(s.mb_brandcolor, "#0F6CBD");
+    $("av").style.background = brand; $("av").textContent = (user || "?").split(" ").map(function (w) { return w[0]; }).join("").slice(0, 2).toUpperCase();
+    $("ttl").textContent = payload.mode === "mb_emailsetting" ? "Email design preview" : "Email preview";
+  }
+  function $(id) { return document.getElementById(id); }
+
+  var SAMPLE = "<p>Hi {{FirstName}},</p><p>This is how emails from <b>{{OrganizationName}}</b> look with the current design. " +
+    "Your templates appear here, personalised for each recipient.</p><ul><li>Clear header with your logo and colours</li><li>Readable content card</li><li>One-click button to the related record</li></ul>{{Signature}}";
+
+  function init() {
+    var load = [];
+    if (payload.mode === "mb_emailsetting") {
+      state.settings = payload.settings || {};
+      state.subject = "Welcome to {{OrganizationName}}, {{FirstName}}";
+      state.body = SAMPLE;
+    } else {
+      state.subject = payload.subject || "";
+      state.body = payload.body || "";
+      load.push(get("mb_emailsettings?$filter=statecode eq 0 and mb_isactive eq true&$top=1").then(function (v) { state.settings = v[0] || {}; return v[0]; }));
+    }
+    var wantSig = payload.mode === "mb_emailsetting" || payload.includeSignature !== false;
+    if (wantSig) {
+      var q = payload.signatureId ? "mb_emailsignatures(" + payload.signatureId + ")?$select=mb_signaturehtml"
+        : "mb_emailsignatures?$select=mb_signaturehtml&$filter=mb_isdefault eq true and _ownerid_value eq " + userId() + "&$top=1";
+      load.push(get(q).then(function (v) { var row = Array.isArray(v) ? v[0] : v; state.signature = (row && row.mb_signaturehtml) || ""; }));
+    }
+    render();
+    Promise.all(load).then(render);
+  }
+  function userId() { try { return Xrm.Utility.getGlobalContext().userSettings.userId.replace(/[{}]/g, ""); } catch (e) { return "00000000-0000-0000-0000-000000000000"; } }
+
+  $("device").addEventListener("click", function (e) {
+    var b = e.target.closest("button"); if (!b) { return; }
+    state.device = b.getAttribute("data-d");
+    document.querySelectorAll("#device button").forEach(function (x) { x.classList.toggle("on", x === b); });
+    $("mail").classList.toggle("mobile", state.device === "mobile");
+  });
+  // grow the frame to the email height so the page scrolls as one
+  $("frame").addEventListener("load", function () {
+    try { var d = $("frame").contentDocument; $("frame").style.height = Math.max(560, d.documentElement.scrollHeight + 8) + "px"; } catch (e) { /* keep default height */ }
+  });
+  $("rec").onchange = render; $("test").onchange = render;
+  if (payload.mode === "mb_emailsetting" && payload.settings && payload.settings.mb_testmode) { $("test").checked = true; }
+  init();
+})();
+</script>
+</body>
+</html>
