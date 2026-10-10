@@ -160,7 +160,7 @@ Always add **Basic User** as well, since it covers activities and core tables.
 
 **Overview** is the home page of the app. It reads live data from Dataverse for the chosen period
 (7 / 30 / 90 days or 1 year). The tabs sit at the top, right under the header; the key figures are on the **Overview** tab and everything else is organised in tabs
-(**Overview**, **Analytics**, **Messages**, **Rules**, **Setup & health**) so you rarely need to scroll. Tab badges
+(**Overview**, **Analytics**, **Messages**, **Rules**, **Setup & health**, **Quick actions**) so you rarely need to scroll. Tab badges
 show recent failures, active rules and items that need attention. Use the arrow keys to move between tabs; the last
 tab you opened is remembered, and `#rules`, `#setup`… in the page address open a tab directly.
 
@@ -172,9 +172,9 @@ tab you opened is remembered, and `#rules`, `#setup`… in the page address open
 - **Notification rules:** table, event, recipients, template, how often each rule fired and when it last ran.
 - **Configuration:** the active Settings at a glance (channel, sender, Test Mode, limits, external recipients…).
 - **Health checks:** settings present, Test Mode, plug-in steps enabled, rule triggers registered, cloud flows on.
-- **Quick actions:** new email, template, list or rule; signatures; delivery log.
+- **Quick actions** tab: create (email, template, list, rule, signature), browse every list, open Settings and Getting started.
 
-A **Test Mode** banner is shown while Test Mode is on. **Customize** lets each user hide sections; the choice and the
+A **Test Mode** banner is shown above the tabs while Test Mode is on. **Customize** lets each user hide sections; the choice and the
 period are remembered in that browser. Each user only sees counts for rows their security role can read; the
 engine and flow checks show *Not visible with your security role* for users without access to them.
 
