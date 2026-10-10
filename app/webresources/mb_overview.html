@@ -128,7 +128,7 @@
   .panel h3 { margin:0 0 4px; font-size:16px; }
   .panel label { display:flex; align-items:center; gap:10px; padding:8px 0; border-bottom:1px solid var(--line); cursor:pointer; }
   .panel input { accent-color:var(--accent); width:16px; height:16px; }
-  .tabs { position:sticky; top:0; z-index:5; grid-column:span 12; display:flex; gap:4px; padding:6px;
+  .tabs { position:sticky; top:8px; z-index:5; margin:0 0 16px; display:flex; gap:4px; padding:6px;
           background:color-mix(in srgb, var(--card) 88%, transparent); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
           border:1px solid var(--line); border-radius:14px; box-shadow:var(--shadow); overflow-x:auto; scrollbar-width:none; }
   .tabs::-webkit-scrollbar { display:none; }
@@ -198,12 +198,13 @@
     <button class="btn primary" id="newmsg"><svg class="i"><use href="#i-plus"/></svg>New email</button>
   </header>
 
+  <nav class="tabs" id="tabs" role="tablist" aria-label="Overview sections"><span class="tab-ind" id="tabind"></span></nav>
+
   <div id="banners"></div>
 
   <div class="grid" id="grid">
-    <section class="kpis" data-section="kpis" id="kpis"></section>
+    <section class="kpis" data-section="kpis" data-tab="overview" id="kpis"></section>
 
-    <nav class="tabs" id="tabs" role="tablist" aria-label="Overview sections"><span class="tab-ind" id="tabind"></span></nav>
 
     <section class="card s8" data-section="trend" data-tab="overview">
       <div class="head"><h2><svg class="i"><use href="#i-chart"/></svg>Delivery activity</h2><span class="sub" id="trend-sub"></span></div>
@@ -666,8 +667,7 @@
       }
     });
     // after scrolling down, bring the new tab's content up under the sticky tab bar
-    var kpis = $("kpis"), top = kpis.offsetTop + kpis.offsetHeight;
-    if (window.scrollY > top) { window.scrollTo({ top: top, behavior: "smooth" }); }
+    if (window.scrollY > 0) { window.scrollTo({ top: 0, behavior: "smooth" }); }
     document.querySelectorAll("[data-tab]").forEach(function (el) {
       var show = el.getAttribute("data-tab") === id;
       el.classList.toggle("off-tab", !show);

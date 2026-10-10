@@ -159,7 +159,7 @@ Always add **Basic User** as well, since it covers activities and core tables.
 ### 7.1a Overview page
 
 **Overview** is the home page of the app. It reads live data from Dataverse for the chosen period
-(7 / 30 / 90 days or 1 year). The key figures stay at the top; everything else is organised in tabs
+(7 / 30 / 90 days or 1 year). The tabs sit at the top, right under the header; the key figures are on the **Overview** tab and everything else is organised in tabs
 (**Overview**, **Analytics**, **Messages**, **Rules**, **Setup & health**) so you rarely need to scroll. Tab badges
 show recent failures, active rules and items that need attention. Use the arrow keys to move between tabs; the last
 tab you opened is remembered, and `#rules`, `#setup`… in the page address open a tab directly.
