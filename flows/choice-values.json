@@ -6,13 +6,16 @@
       "Sending": 100000002,
       "Sent": 100000003,
       "Partially Sent": 100000004,
-      "Failed": 100000005
+      "Failed": 100000005,
+      "Scheduled": 100000006,
+      "Awaiting Outlook": 100000007
     },
     "mb_recipienttype": {
       "Single User": 100000000,
       "Single Contact": 100000001,
       "Recipient List": 100000002,
-      "Email Addresses": 100000003
+      "Email Addresses": 100000003,
+      "Notification Rule": 100000004
     },
     "mb_deliverymode": {
       "Personalized (one email per recipient)": 100000000,
@@ -28,6 +31,10 @@
     "mb_sendmode": {
       "Flow Owner Mailbox": 100000000,
       "Shared Mailbox": 100000001
+    },
+    "mb_deliverychannel": {
+      "Office 365 Outlook (cloud flow)": 100000000,
+      "Dataverse Email (server-side sync)": 100000001
     }
   },
   "mb_recipientlistmember": {
@@ -42,7 +49,23 @@
     "mb_deliverystatus": {
       "Sent": 100000000,
       "Failed": 100000001,
-      "Skipped": 100000002
+      "Skipped": 100000002,
+      "Pending": 100000003
+    },
+    "mb_channel": {
+      "Office 365 Outlook (cloud flow)": 100000000,
+      "Dataverse Email (server-side sync)": 100000001
+    }
+  },
+  "mb_notificationrule": {
+    "mb_triggerevent": {
+      "Row is created": 100000000,
+      "Row is updated": 100000001,
+      "Row is created or updated": 100000002
+    },
+    "mb_deliverymode": {
+      "Personalized (one email per recipient)": 100000000,
+      "Single email to all recipients": 100000001
     }
   },
   "entitySets": {
@@ -50,6 +73,7 @@
     "mb_emailsetting": "mb_emailsettings",
     "mb_recipientlistmember": "mb_recipientlistmembers",
     "mb_emaildelivery": "mb_emaildeliveries",
+    "mb_notificationrule": "mb_notificationrules",
     "mb_emailsignature": "mb_emailsignatures",
     "systemuser": "systemusers",
     "contact": "contacts"

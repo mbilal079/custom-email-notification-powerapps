@@ -13,6 +13,7 @@
     <RolePrivilege name="prvAppendTomb_emailmessage" level="Basic" />
     <RolePrivilege name="prvAppendTomb_emailsignature" level="Basic" />
     <RolePrivilege name="prvAppendTomb_emailtemplate" level="Global" />
+    <RolePrivilege name="prvAppendTomb_notificationrule" level="Global" />
     <RolePrivilege name="prvAppendTomb_recipientlist" level="Global" />
     <RolePrivilege name="prvAppendTomb_recipientlistmember" level="Global" />
     <RolePrivilege name="prvAppendToTeam" level="Global" />
@@ -39,6 +40,7 @@
     <RolePrivilege name="prvReadmb_emailsetting" level="Global" />
     <RolePrivilege name="prvReadmb_emailsignature" level="Basic" />
     <RolePrivilege name="prvReadmb_emailtemplate" level="Global" />
+    <RolePrivilege name="prvReadmb_notificationrule" level="Global" />
     <RolePrivilege name="prvReadmb_recipientlist" level="Global" />
     <RolePrivilege name="prvReadmb_recipientlistmember" level="Global" />
     <RolePrivilege name="prvReadSharePointData" level="Global" />

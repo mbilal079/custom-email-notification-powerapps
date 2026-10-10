@@ -1,9 +1,9 @@
 # Email Notification Hub for Power Apps
 
-A configurable **Power Apps model-driven app + Dataverse + Power Automate** solution for sending personalized
-emails to a **single user**, a **single contact**, a **recipient list / group** (users, contacts, Dataverse teams and
-external addresses) or **ad-hoc external addresses**, with **templates**, **personalization tokens**,
-**signatures**, **delivery logging** and **security roles**.
+A configurable **Power Apps model-driven app + Dataverse + C# plug-ins + Power Automate** solution for sending
+personalized emails to a **single user**, a **single contact**, a **recipient list / group** (users, contacts,
+Dataverse teams and external addresses), **ad-hoc addresses**, or automatically through **Notification Rules** on
+**any table**. Every email is logged as a standard **Email activity** on the recipient's and related record's timeline.
 
 **Install → configure → use.** Import one solution, pick two connections, fill in a Settings record, assign roles.
 
@@ -12,46 +12,53 @@ external addresses) or **ad-hoc external addresses**, with **templates**, **pers
 | Publisher | Muhammad Bilal (`mb`) |
 | Solution | `EmailNotificationHub` — *Email Notification Hub* |
 | App | Email Notification Hub (model-driven) |
-| Sending | Office 365 Outlook connector (own mailbox or shared mailbox) |
+| Engine | `EmailHub.Plugins` (async Dataverse plug-ins) |
+| Channels | Office 365 Outlook (cloud flow, own or shared mailbox) **or** Dataverse Email (server-side sync), set in Settings |
 
 ## Features
 
-- **Recipients:** single user, single contact, recipient lists (User / Contact / Team / External Email members),
-  or typed addresses. Lists and teams are expanded, duplicates removed, opted-out members skipped.
-- **Templates** with tokens — `{{FirstName}}`, `{{LastName}}`, `{{FullName}}`, `{{Email}}`, `{{Company}}`,
-  `{{JobTitle}}`, `{{SenderName}}`, `{{SenderEmail}}`, `{{SenderJobTitle}}`, `{{OrganizationName}}`, `{{Today}}`,
-  `{{Signature}}` — resolved **per recipient**.
-- **Signatures:** personal, rich-text, with a per-user default.
-- **Delivery modes:** personalized (one email each) or a single email to everyone. Optional **Send After** scheduling.
-- **Admin settings:** sender mailbox (own or shared), reply-to, org name, global footer, **Test Mode** redirect,
-  max recipients, external-recipient switch, allowed domains, archive BCC, delivery log on/off.
-- **Delivery log** per recipient (Sent / Failed / Skipped + reason), message-level counts and last error.
-- **Security roles:** Email Hub Administrator, Email Hub Manager, Email Hub Sender.
-- **Overview dashboard** and an in-app **Getting Started** page.
+- **Recipients:** single user, single contact, recipient lists (User / Contact / Team / External Email members), typed
+  addresses. Lists and teams are expanded, duplicates removed, opted-out members skipped.
+- **Notification Rules:** "when a row in *table X* is created/updated [and matches a FetchXML condition], email the
+  owner / creator / email columns / lookup columns / a list / fixed addresses using template Y". Works for standard
+  and custom tables. Saving a rule registers its plug-in step automatically.
+- **Email activities** with **Regarding** set to the related record (timeline history) on both channels.
+- **Templates** with tokens resolved per recipient and from the related record: `{{FirstName}}`, `{{Company}}`,
+  `{{SenderName}}`, `{{OrganizationName}}`, `{{Today}}`, `{{Record.<column>}}`, `{{RecordName}}`, `{{RecordUrl}}`,
+  `{{Signature}}` …
+- **Signatures** (personal, rich text, default per user), **rich text editor** on all HTML fields.
+- **Delivery modes:** personalized (one email each) or single email; **Send After** scheduling.
+- **Admin settings:** channel, shared mailbox / queue sender, reply-to, footer, **Test Mode** redirect, max recipients,
+  external-recipient switch, allowed domains, archive BCC.
+- **Delivery log** per email (Pending / Sent / Failed / Skipped + reason) linked to its Email activity.
+- **Security roles:** Email Hub Administrator, Email Hub Manager, Email Hub Sender, plus an owner read-access check on
+  related records.
+- **Overview dashboard** and in-app **Getting Started** page.
 
 ## Repository layout
 
 | Path | Contents |
 |---|---|
 | [`docs/PLAN.md`](docs/PLAN.md) | Architecture, data model, security design |
-| [`docs/USER-GUIDE.md`](docs/USER-GUIDE.md) | Install, configure, use, troubleshoot |
-| [`app/app-spec.json`](app/app-spec.json) | App definition (tables, relationships, forms, views, charts, dashboard, sitemap, roles, sample data) built with the Power Platform `model-apps` **app-builder** |
-| [`app/webresources/`](app/webresources) | Form scripts, Getting Started page, table icons |
-| [`flows/`](flows) | Generator and definition of the *Email Hub - Process Email Message* cloud flow |
-| [`scripts/`](scripts) | Post-build helpers: choice values, rich text editor, flow deployment, solution export |
+| [`docs/USER-GUIDE.md`](docs/USER-GUIDE.md) | Install, configure, use, notification rules, troubleshooting |
+| [`app/app-spec.json`](app/app-spec.json) | App definition for the Power Platform `model-apps` **app-builder** |
+| [`app/webresources/`](app/webresources) | Form scripts, Getting Started page, icons |
+| [`plugins/EmailHub.Plugins/`](plugins/EmailHub.Plugins) | C# plug-ins: message processor, Dataverse sender, finalizer, rule manager and rule trigger |
+| [`flows/`](flows) | Generator and definitions of the two cloud flows |
+| [`scripts/`](scripts) | Deployment helpers |
 | [`solution/`](solution) | Exported solution zips (managed + unmanaged) and unpacked source |
 
-## Quick start (install the packaged solution)
+## Quick start (packaged solution)
 
-1. Import `solution/EmailNotificationHub_managed.zip` in **make.powerapps.com → Solutions → Import**.
+1. Import `solution/EmailNotificationHub_managed.zip` (**make.powerapps.com → Solutions → Import**).
 2. Bind the **Email Hub - Dataverse** and **Email Hub - Office 365 Outlook** connection references.
-3. Turn on the cloud flow **Email Hub - Process Email Message**.
-4. Open the app → **Settings** → create the *Default* record (start with **Test Mode = Yes**).
-5. Assign the security roles. Full details are in the [User Guide](docs/USER-GUIDE.md).
+3. Turn on the flows **Email Hub - Send via Outlook** and **Email Hub - Release Scheduled Messages**.
+4. Open the app → **Settings** → *Default* record: choose the **Delivery Channel**, start with **Test Mode = Yes**.
+5. Assign the security roles. Details are in the [User Guide](docs/USER-GUIDE.md).
 
-## Build from source (developers)
+## Build from source
 
-Prerequisites: Node.js LTS, [PAC CLI](https://learn.microsoft.com/power-platform/developer/cli/introduction),
+Prerequisites: Node.js LTS, .NET SDK, [PAC CLI](https://learn.microsoft.com/power-platform/developer/cli/introduction),
 Azure CLI (`az login` with the same identity as `pac auth`), and the
 [power-platform-skills](https://github.com/microsoft/power-platform-skills) `model-apps` plugin.
 
@@ -59,24 +66,26 @@ Azure CLI (`az login` with the same identity as `pac auth`), and the
 ENV=https://yourorg.crm.dynamics.com
 PLUGIN=/path/to/power-platform-skills/plugins/model-apps
 
-# 1. Tables, forms, views, charts, dashboard, app, roles (+ optional sample data)
 node $PLUGIN/scripts/lint-app-spec.js --spec @app/app-spec.json
 node $PLUGIN/scripts/build-model-app.js --env $ENV --spec @app/app-spec.json --apply --verify --publish --sample-data
+node scripts/sync-webresources.js $ENV          # push form-script / page updates
+node scripts/enable-rich-text.js $ENV           # rich text editor on HTML columns
 
-# 2. Post-build
-node scripts/enable-rich-text.js $ENV          # rich text editor on HTML columns
-node scripts/fetch-choice-values.js $ENV       # option values used by the flow
-node flows/build-flow-definition.js            # generate the flow definition
-node scripts/deploy-flow.js $ENV               # connection references + flow (add --activate once connections are bound)
-node scripts/finalize-solution.js $ENV         # add command bar buttons to the solution
+pwsh scripts/new-plugin-key.ps1                 # once: strong-name key (git-ignored; keep a backup)
+dotnet build plugins/EmailHub.Plugins -c Release
+node scripts/register-plugins.js $ENV           # assembly, types, steps
 
-# 3. Package
+node scripts/fetch-choice-values.js $ENV
+node flows/build-flow-definition.js
+node scripts/deploy-flow.js $ENV                # add --activate once the connection references are bound
+node scripts/finalize-solution.js $ENV          # command bar buttons into the solution
+
 pac solution export --name EmailNotificationHub --path solution/EmailNotificationHub_unmanaged.zip
 pac solution export --name EmailNotificationHub --path solution/EmailNotificationHub_managed.zip --managed
 ```
 
-> This is a public repository: environment URLs, tenant/org/user ids and connection ids are never committed
-> (see `.gitignore`). Scripts take them as arguments.
+> This is a public repository: environment URLs, tenant/org/user ids, connection ids and the plug-in signing key are
+> never committed (see `.gitignore`). Scripts take the environment URL as an argument.
 
 ## License
 

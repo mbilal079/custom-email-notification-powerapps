@@ -34,6 +34,22 @@
                       </cell>
                     </row>
                     <row>
+                      <cell id="82353c46-a489-44b3-87fb-3c65d75a1ad8" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="mb_deliverychannel" languagecode="1033" />
+                        </labels>
+                        <control id="c9eaf0d8-c2d1-4309-a3bc-59227961f337" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="mb_deliverychannel" disabled="false" isrequired="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="51df9ffa-081f-436e-ae7e-5051ddc0eaa2" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="mb_createactivities" languagecode="1033" />
+                        </labels>
+                        <control id="983c4966-68a0-4d1b-a328-8e3fea6af401" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="mb_createactivities" disabled="false" isrequired="false" />
+                      </cell>
+                    </row>
+                    <row>
                       <cell id="ad6ab75c-bdf4-4da5-a9ec-7d8954260964" showlabel="true" visible="true" colspan="1" rowspan="1">
                         <labels>
                           <label description="Send From" languagecode="1033" />
@@ -73,6 +89,14 @@
                           <label description="Keep Delivery Log" languagecode="1033" />
                         </labels>
                         <control id="7e904229-e028-469f-bde3-8479f4b5d4c5" classid="{67FAC785-CD58-4F9F-ABB3-4B7DDC6ED5ED}" datafieldname="mb_logdelivery" disabled="false" isrequired="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="7fe5eceb-4d30-4d06-91dc-ab114e0c2773" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="mb_fromqueueid" languagecode="1033" />
+                        </labels>
+                        <control id="23b2fe83-a642-4474-a03b-6c04021a6c3b" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="mb_fromqueueid" disabled="false" isrequired="false" />
                       </cell>
                     </row>
                   </rows>

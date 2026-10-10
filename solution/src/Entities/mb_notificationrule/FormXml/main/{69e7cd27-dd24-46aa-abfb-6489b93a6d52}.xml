@@ -1,0 +1,262 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <systemform>
+    <formid>{69e7cd27-dd24-46aa-abfb-6489b93a6d52}</formid>
+    <IntroducedVersion>1.0</IntroducedVersion>
+    <FormPresentation>0</FormPresentation>
+    <FormActivationState>1</FormActivationState>
+    <form>
+      <tabs>
+        <tab id="9c3b1c4c-2329-4b2a-afbf-e6cf6bfe4fab" name="tab_rule" expanded="true" visible="true">
+          <labels>
+            <label description="Rule" languagecode="1033" />
+          </labels>
+          <columns>
+            <column width="100%">
+              <sections>
+                <section id="61d0f16b-7007-4810-9570-e14f2f8f3fd4" name="sec_trigger" showlabel="true" visible="true" columns="11">
+                  <labels>
+                    <label description="When" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="7a9eaab3-e3b9-4e83-aade-67aff30b06b3" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Rule Name" languagecode="1033" />
+                        </labels>
+                        <control id="c589d67a-8371-479a-8e17-c11dab0cc3b0" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="mb_name" disabled="false" isrequired="true" />
+                      </cell>
+                      <cell id="c29a6bf3-fc67-4ef1-bf33-2450c39cd9f2" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Active" languagecode="1033" />
+                        </labels>
+                        <control id="aeeee50f-248e-473f-ab7c-daedb492420d" classid="{67FAC785-CD58-4F9F-ABB3-4B7DDC6ED5ED}" datafieldname="mb_isactive" disabled="false" isrequired="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="a3806157-b7c7-44f5-b3a5-6c48aca817ad" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Table (logical name)" languagecode="1033" />
+                        </labels>
+                        <control id="2bf80394-7a91-4ac7-a12f-ce8832fb0ff4" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="mb_tablename" disabled="false" isrequired="true" />
+                      </cell>
+                      <cell id="c9506859-da11-45e7-8020-8b9afd0680ee" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="When" languagecode="1033" />
+                        </labels>
+                        <control id="294f7ef1-a7b7-44db-a790-deafbb783203" classid="{3EF39988-22BB-4F0B-BBBE-64B5A3748AEE}" datafieldname="mb_triggerevent" disabled="false" isrequired="true" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="8db4f170-d6f1-49ae-8189-0564ca598a48" showlabel="true" visible="true" colspan="2" rowspan="1">
+                        <labels>
+                          <label description="Only When These Columns Change" languagecode="1033" />
+                        </labels>
+                        <control id="fc261f9f-85a0-4d42-8cb4-bb017d9a6ebf" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="mb_watchedcolumns" disabled="false" isrequired="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="584f9cef-1cde-4f0e-8c2e-5667012696a8" showlabel="true" visible="true" colspan="2" rowspan="1">
+                        <labels>
+                          <label description="Condition (FetchXML filter)" languagecode="1033" />
+                        </labels>
+                        <control id="dc039912-5a1f-4930-9fec-37bde3e7d3e1" classid="{E0DECE4B-6FC8-4A8F-A065-082708572369}" datafieldname="mb_conditionfetchxml" disabled="false" isrequired="false" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+                <section id="4e73f46d-8090-4b3e-8d62-7f1c7cc34378" name="sec_email" showlabel="true" visible="true" columns="11">
+                  <labels>
+                    <label description="Email" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="85753bad-4ba5-47d4-985d-66db1a6d8d6c" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Email Template" languagecode="1033" />
+                        </labels>
+                        <control id="06030869-e20f-4791-991b-cc563453bc58" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="mb_templateid" disabled="false" isrequired="false" />
+                      </cell>
+                      <cell id="0abcb69f-daac-4887-aff0-6ad81aed1c3d" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Signature" languagecode="1033" />
+                        </labels>
+                        <control id="84f891e6-46a6-48a0-b14d-04b0688b17b1" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="mb_signatureid" disabled="false" isrequired="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="9b99b4ec-0734-4b98-b5f9-199e08285671" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Delivery Mode" languagecode="1033" />
+                        </labels>
+                        <control id="c60eeedd-8b75-47c8-a4b1-477f9944f33c" classid="{3EF39988-22BB-4F0B-BBBE-64B5A3748AEE}" datafieldname="mb_deliverymode" disabled="false" isrequired="false" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+                <section id="25d06c98-58e8-48d1-b005-d51e673c5587" name="sec_recipients" showlabel="true" visible="true" columns="11">
+                  <labels>
+                    <label description="Recipients" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="a027e501-0243-4c72-9182-6ae661b9f4df" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Send to Record Owner" languagecode="1033" />
+                        </labels>
+                        <control id="27afb0b3-f1ec-495f-9ef4-c41da554885d" classid="{67FAC785-CD58-4F9F-ABB3-4B7DDC6ED5ED}" datafieldname="mb_sendtoowner" disabled="false" isrequired="false" />
+                      </cell>
+                      <cell id="af02097c-2ace-436f-90f8-0bd7bba6799c" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Send to Created By" languagecode="1033" />
+                        </labels>
+                        <control id="3ddd3790-7de1-4c6c-995f-c5f28fab6ae5" classid="{67FAC785-CD58-4F9F-ABB3-4B7DDC6ED5ED}" datafieldname="mb_sendtocreator" disabled="false" isrequired="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="6d969a3f-cdfa-4bdd-93f7-4fc115c95f4a" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Email Columns" languagecode="1033" />
+                        </labels>
+                        <control id="17367d60-9bab-4cf9-8aa8-99ac387e0603" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="mb_emailcolumns" disabled="false" isrequired="false" />
+                      </cell>
+                      <cell id="8cc6b8e5-a39e-4af5-b4ba-b9b1f16155af" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Lookup Columns" languagecode="1033" />
+                        </labels>
+                        <control id="832c95fe-b0e4-4009-8583-5339b55c237c" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="mb_lookupcolumns" disabled="false" isrequired="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="a1dfc3c6-7b54-449d-be1f-e0309f306ec4" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Recipient List" languagecode="1033" />
+                        </labels>
+                        <control id="04a5ec23-78d2-4116-835a-8b5e14e7bd71" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="mb_recipientlistid" disabled="false" isrequired="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="911b0aaf-d021-4658-9c26-a4cdc5c7e7bf" showlabel="true" visible="true" colspan="2" rowspan="1">
+                        <labels>
+                          <label description="Additional Addresses" languagecode="1033" />
+                        </labels>
+                        <control id="97fd1ea0-1a4a-4f87-b867-aa3277447936" classid="{E0DECE4B-6FC8-4A8F-A065-082708572369}" datafieldname="mb_additionaladdresses" disabled="false" isrequired="false" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+                <section id="812273a0-a7cf-4db0-b53f-42df0840c20e" name="sec_status" showlabel="true" visible="true" columns="111">
+                  <labels>
+                    <label description="Status" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="034b186d-8359-44af-9e1b-8f32dd397803" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Last Triggered On" languagecode="1033" />
+                        </labels>
+                        <control id="bda2bfed-d57d-43a4-8732-421662e8ca4e" classid="{5B773807-9FB2-42DB-97C3-7A91EFF8ADFF}" datafieldname="mb_lasttriggeredon" disabled="true" isrequired="false" />
+                      </cell>
+                      <cell id="d8476bbb-161d-44ae-94b4-36276dc80fba" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Times Triggered" languagecode="1033" />
+                        </labels>
+                        <control id="4a26a60e-78be-4ee5-b908-ce31625ed108" classid="{C6D124CA-7EDA-4A60-AEA9-7FB8D318B68F}" datafieldname="mb_triggercount" disabled="true" isrequired="false" />
+                      </cell>
+                      <cell id="8cc6ee6c-8432-4d36-94c3-03c8effdb8dc" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Registered Steps" languagecode="1033" />
+                        </labels>
+                        <control id="67d0cf1f-4254-466d-941f-3eca1fae6563" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="mb_registeredsteps" disabled="true" isrequired="false" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+                <section id="a8b5d674-3791-40e3-a6f1-5b74a946b993" name="sec_notes" showlabel="true" visible="true" columns="1">
+                  <labels>
+                    <label description="Description" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="7b214f10-669c-4870-9a28-f02f80ec3684" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Description" languagecode="1033" />
+                        </labels>
+                        <control id="20864885-f7de-404d-b266-1b17f2281209" classid="{E0DECE4B-6FC8-4A8F-A065-082708572369}" datafieldname="mb_description" disabled="false" isrequired="false" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+              </sections>
+            </column>
+          </columns>
+        </tab>
+      </tabs>
+      <header id="{810fb196-d09b-4bad-939c-236ae886cedd}" celllabelposition="Top" columns="111" labelwidth="115" celllabelalignment="Left">
+        <rows>
+          <row>
+            <cell id="{42ce8569-5d97-46c8-b965-69509a510f25}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{811f3105-a629-4424-8253-638117b9e192}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{2f8858af-1d79-4cf7-a983-a9418bf5817d}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+          </row>
+        </rows>
+      </header>
+      <footer id="{5e7301cc-1bd9-4760-a37f-8f3edb549d7c}" celllabelposition="Top" columns="111" labelwidth="115" celllabelalignment="Left">
+        <rows>
+          <row>
+            <cell id="{fec07bcb-fe17-4da0-886a-7fd56a48e029}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{218239f6-26fe-48cf-a181-97f2f3a1bb26}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+            <cell id="{11474673-4f11-4bae-b544-3f7250be6d90}" showlabel="false">
+              <labels>
+                <label description="" languagecode="1033" />
+              </labels>
+            </cell>
+          </row>
+        </rows>
+      </footer>
+      <DisplayConditions Order="0" FallbackForm="true">
+        <Everyone />
+      </DisplayConditions>
+      <events>
+        <event name="onload" application="false" active="false">
+          <Handlers>
+            <Handler functionName="EmailHub.Rule.onLoad" libraryName="mb_notificationrule.js" enabled="true" parameters="" passExecutionContext="true" handlerUniqueId="{d1f7e427-4e47-49af-baf3-5f0aef7e408b}" />
+          </Handlers>
+        </event>
+        <event name="onchange" application="false" active="false" attribute="mb_tablename">
+          <Handlers>
+            <Handler functionName="EmailHub.Rule.onTableChange" libraryName="mb_notificationrule.js" enabled="true" parameters="" passExecutionContext="true" handlerUniqueId="{04b586d1-6455-4823-9d07-9004d78e0708}" />
+          </Handlers>
+        </event>
+      </events>
+    </form>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>1</CanBeDeleted>
+    <LocalizedNames>
+      <LocalizedName description="Notification Rule" languagecode="1033" />
+    </LocalizedNames>
+    <Descriptions>
+      <Description description="Configure an automatic email for any table." languagecode="1033" />
+    </Descriptions>
+  </systemform>
+</forms>

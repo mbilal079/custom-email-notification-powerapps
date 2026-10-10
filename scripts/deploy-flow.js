@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Creates (or updates) the solution's connection references and the delivery cloud flow in Dataverse,
+// Creates (or updates) the solution's connection references and the Email Hub cloud flows in Dataverse,
 // inside the EmailNotificationHub solution. Idempotent.
 //
 // Usage:
@@ -12,8 +12,13 @@ const path = require("path");
 const { dv } = require("./lib/dv");
 
 const SOLUTION = "EmailNotificationHub";
-const FLOW_ID = "3b7e5f2a-9c4d-4e61-8a5f-6d2b1c0e9f47"; // fixed so re-deploys update the same flow
-const FLOW_NAME = "Email Hub - Process Email Message";
+// Fixed ids so re-deploys update the same flows.
+const FLOWS = [
+  { id: "3b7e5f2a-9c4d-4e61-8a5f-6d2b1c0e9f47", name: "Email Hub - Send via Outlook", file: "EmailHub-SendViaOutlook.json",
+    description: "Sends the deliveries the Email Hub plug-in prepared for the Office 365 Outlook channel (own or shared mailbox)." },
+  { id: "8c2d4e6f-1a3b-4c5d-9e7f-0b1a2c3d4e5f", name: "Email Hub - Release Scheduled Messages", file: "EmailHub-ReleaseScheduledMessages.json",
+    description: "Every 15 minutes, re-queues Scheduled email messages whose Send After time has passed." }
+];
 const REFERENCES = [
   { logical: "mb_emailhubdataverse", display: "Email Hub - Dataverse", api: "shared_commondataserviceforapps", arg: "--dataverse-connection",
     description: "Reads email messages, settings, lists and writes the delivery log." },
@@ -48,28 +53,26 @@ function argValue(name) {
     }
   }
 
-  const clientdata = fs.readFileSync(path.join(__dirname, "..", "flows", "EmailHub-ProcessEmailMessage.json"), "utf8");
-  const flow = {
-    name: FLOW_NAME,
-    description: "Email Notification Hub delivery engine: when an Email Message is queued it expands the recipients, renders personalization tokens, sends through Office 365 Outlook and writes the delivery log.",
-    clientdata: JSON.stringify(JSON.parse(clientdata))
-  };
-  let exists = true;
-  try { await dv(env, "GET", `workflows(${FLOW_ID})?$select=statecode`); } catch (e) { if (e.status === 404) { exists = false; } else { throw e; } }
-  if (exists) {
-    // A flow must be off to change its definition.
-    await dv(env, "PATCH", `workflows(${FLOW_ID})`, { statecode: 0, statuscode: 1 }, sol).catch(() => {});
-    await dv(env, "PATCH", `workflows(${FLOW_ID})`, flow, sol);
-    console.log(`updated flow "${FLOW_NAME}"`);
-  } else {
-    await dv(env, "POST", "workflows", { workflowid: FLOW_ID, category: 5, type: 1, primaryentity: "none", ...flow }, sol);
-    console.log(`created flow "${FLOW_NAME}"`);
+  for (const f of FLOWS) {
+    const clientdata = fs.readFileSync(path.join(__dirname, "..", "flows", f.file), "utf8");
+    const flow = { name: f.name, description: f.description, clientdata: JSON.stringify(JSON.parse(clientdata)) };
+    let exists = true;
+    try { await dv(env, "GET", `workflows(${f.id})?$select=statecode`); } catch (e) { if (e.status === 404) { exists = false; } else { throw e; } }
+    if (exists) {
+      // A flow must be off to change its definition.
+      await dv(env, "PATCH", `workflows(${f.id})`, { statecode: 0, statuscode: 1 }, sol).catch(() => {});
+      await dv(env, "PATCH", `workflows(${f.id})`, flow, sol);
+      console.log(`updated flow "${f.name}"`);
+    } else {
+      await dv(env, "POST", "workflows", { workflowid: f.id, category: 5, type: 1, primaryentity: "none", ...flow }, sol);
+      console.log(`created flow "${f.name}"`);
+    }
+    if (process.argv.includes("--activate")) {
+      await dv(env, "PATCH", `workflows(${f.id})`, { statecode: 1, statuscode: 2 });
+      console.log(`  turned on`);
+    }
   }
-
-  if (process.argv.includes("--activate")) {
-    await dv(env, "PATCH", `workflows(${FLOW_ID})`, { statecode: 1, statuscode: 2 });
-    console.log("flow turned on");
-  } else {
-    console.log("flow left off - bind the connection references, then turn it on (or re-run with --activate)");
+  if (!process.argv.includes("--activate")) {
+    console.log("flows left off - bind the connection references, then turn them on (or re-run with --activate)");
   }
 })().catch((e) => { console.error(e.message); process.exit(1); });

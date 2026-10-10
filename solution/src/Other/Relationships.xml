@@ -5,6 +5,7 @@
   <EntityRelationship Name="business_unit_mb_emailsetting" />
   <EntityRelationship Name="business_unit_mb_emailsignature" />
   <EntityRelationship Name="business_unit_mb_emailtemplate" />
+  <EntityRelationship Name="business_unit_mb_notificationrule" />
   <EntityRelationship Name="business_unit_mb_recipientlist" />
   <EntityRelationship Name="business_unit_mb_recipientlistmember" />
   <EntityRelationship Name="lk_mb_emaildelivery_createdby" />
@@ -17,17 +18,25 @@
   <EntityRelationship Name="lk_mb_emailsignature_modifiedby" />
   <EntityRelationship Name="lk_mb_emailtemplate_createdby" />
   <EntityRelationship Name="lk_mb_emailtemplate_modifiedby" />
+  <EntityRelationship Name="lk_mb_notificationrule_createdby" />
+  <EntityRelationship Name="lk_mb_notificationrule_modifiedby" />
   <EntityRelationship Name="lk_mb_recipientlist_createdby" />
   <EntityRelationship Name="lk_mb_recipientlist_modifiedby" />
   <EntityRelationship Name="lk_mb_recipientlistmember_createdby" />
   <EntityRelationship Name="lk_mb_recipientlistmember_modifiedby" />
   <EntityRelationship Name="mb_contact_emailmessage" />
   <EntityRelationship Name="mb_contact_recipientlistmember" />
+  <EntityRelationship Name="mb_email_emaildelivery" />
   <EntityRelationship Name="mb_emailmessage_mb_emaildelivery" />
   <EntityRelationship Name="mb_emailsignature_mb_emailmessage" />
   <EntityRelationship Name="mb_emailsignature_mb_emailsetting" />
+  <EntityRelationship Name="mb_emailsignature_mb_notificationrule" />
   <EntityRelationship Name="mb_emailtemplate_mb_emailmessage" />
+  <EntityRelationship Name="mb_emailtemplate_mb_notificationrule" />
+  <EntityRelationship Name="mb_notificationrule_mb_emailmessage" />
+  <EntityRelationship Name="mb_queue_emailsetting" />
   <EntityRelationship Name="mb_recipientlist_mb_emailmessage" />
+  <EntityRelationship Name="mb_recipientlist_mb_notificationrule" />
   <EntityRelationship Name="mb_recipientlist_mb_recipientlistmember" />
   <EntityRelationship Name="mb_systemuser_emailmessage" />
   <EntityRelationship Name="mb_systemuser_recipientlistmember" />
@@ -37,6 +46,7 @@
   <EntityRelationship Name="owner_mb_emailsetting" />
   <EntityRelationship Name="owner_mb_emailsignature" />
   <EntityRelationship Name="owner_mb_emailtemplate" />
+  <EntityRelationship Name="owner_mb_notificationrule" />
   <EntityRelationship Name="owner_mb_recipientlist" />
   <EntityRelationship Name="owner_mb_recipientlistmember" />
   <EntityRelationship Name="team_mb_emaildelivery" />
@@ -44,6 +54,7 @@
   <EntityRelationship Name="team_mb_emailsetting" />
   <EntityRelationship Name="team_mb_emailsignature" />
   <EntityRelationship Name="team_mb_emailtemplate" />
+  <EntityRelationship Name="team_mb_notificationrule" />
   <EntityRelationship Name="team_mb_recipientlist" />
   <EntityRelationship Name="team_mb_recipientlistmember" />
   <EntityRelationship Name="user_mb_emaildelivery" />
@@ -51,6 +62,7 @@
   <EntityRelationship Name="user_mb_emailsetting" />
   <EntityRelationship Name="user_mb_emailsignature" />
   <EntityRelationship Name="user_mb_emailtemplate" />
+  <EntityRelationship Name="user_mb_notificationrule" />
   <EntityRelationship Name="user_mb_recipientlist" />
   <EntityRelationship Name="user_mb_recipientlistmember" />
 </EntityRelationships>

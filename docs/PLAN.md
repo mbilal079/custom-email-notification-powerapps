@@ -1,20 +1,21 @@
 # Email Notification Hub — Solution Plan
 
 > Publisher: **Muhammad Bilal** (prefix `mb`) · Solution unique name: `EmailNotificationHub`
-> Type: Power Apps **model-driven app** + Dataverse + Power Automate cloud flow, shipped as one solution.
+> Type: Power Apps **model-driven app** + Dataverse + **C# plug-ins** + Power Automate cloud flows, shipped as one solution.
 
 ## 1. Goal
 
-A solution anyone can **install → configure → use** to send emails from Dataverse to:
+A solution anyone can **install → configure → use** to email:
 
-- a **single internal user** (Dataverse `systemuser`),
-- a **single contact** (Dataverse `contact`),
+- a **single internal user**, a **single contact**,
 - a **recipient list / group** (users, contacts, Dataverse teams and external addresses mixed),
-- **ad-hoc external addresses** (typed in, `;` separated).
+- **ad-hoc external addresses**,
+- and — through **Notification Rules** — whoever is related to a row in **any table** (standard or custom) when it
+  is created or updated: the owner, the creator, any email column, any lookup column, a list, fixed addresses.
 
-Users manage **reusable templates** with **personalization tokens** (`{{FirstName}}`, `{{Company}}` …) that are
-filled in **per recipient** at send time, keep **personal signatures**, and see a **delivery log** per recipient.
-Admins control everything from a **Settings** record (sender mailbox, test mode, footer, limits, allowed domains).
+Every email is recorded as a standard **Email activity** linked to the recipient and the **related (regarding)
+record**, so it shows on timelines. Templates use **personalization tokens** filled per recipient and from the
+related record. Admins choose the **delivery channel** and guard rails in **Email Settings**.
 
 ### Name options considered
 
@@ -28,112 +29,110 @@ Admins control everything from a **Settings** record (sender mailbox, test mode,
 ## 2. Architecture
 
 ```
- ┌──────────────── Model-driven app: "Email Notification Hub" ────────────────┐
- │ Overview dashboard · Email Messages · Delivery Log · Templates · Lists ·   │
- │ List Members · Signatures · Settings · Getting Started (HTML web resource) │
- └───────────────┬────────────────────────────────────────────────────────────┘
-                 │ user composes an Email Message and clicks "Send Now"
-                 │ (form JS validates → Delivery Status = Queued → save)
-                 ▼
- ┌──────────── Dataverse (mb_ tables, row-level security via roles) ──────────┐
- │ mb_emailmessage ──► mb_emaildelivery (one row per recipient)               │
- │   │   ├─► mb_emailtemplate      ├─► mb_emailsignature                     │
- │   │   └─► mb_recipientlist ──► mb_recipientlistmember ─► systemuser /     │
- │   │                                                      contact / team    │
- │   └─ mb_emailsetting (active configuration, read by the flow)              │
- └───────────────┬────────────────────────────────────────────────────────────┘
-                 │ Dataverse trigger: mb_emailmessage modified, status = Queued
-                 ▼
- ┌──────── Cloud flow "Email Hub - Process Email Message" (in solution) ──────┐
- │ load settings → wait until "Send After" → resolve signature + sender →     │
- │ expand recipients (user/contact/list/team/external) → de-duplicate →       │
- │ enforce limits / allowed domains / test mode → render tokens per recipient │
- │ → send via Office 365 Outlook (own or shared mailbox) → log each delivery  │
- │ → set message status Sent / Partially Sent / Failed + counts               │
- └────────────────────────────────────────────────────────────────────────────┘
-   Connection references (bound by the installer on import):
-     mb_EmailHubDataverse  (Microsoft Dataverse)
-     mb_EmailHubOutlook    (Office 365 Outlook)
+ ┌────────────── Model-driven app "Email Notification Hub" ──────────────┐
+ │ Overview · Getting Started · Email Messages · Delivery Log · Templates │
+ │ Recipient Lists · List Members · Signatures · Settings · Rules         │
+ └──────────┬──────────────────────────────────────────────┬─────────────┘
+            │ Send Now (form JS) → status Queued            │ Notification Rule saved
+            ▼                                              ▼
+   mb_emailmessage ◄──── NotificationRuleTrigger ◄── step on <any table>
+            │            (async plug-in, registered automatically by
+            │             NotificationRuleManager when a rule is saved)
+            ▼ ProcessEmailMessage (async plug-in)
+   ┌──────────────────────────────────────────────────────────────────┐
+   │ settings · signature · related record ({{Record.x}}) · recipients│
+   │ expand lists/teams/lookups · de-duplicate · guard rails          │
+   │ render tokens · create Email activity (Regarding = related row)  │
+   │ create one mb_emaildelivery (Pending) per email                  │
+   └───────────────┬──────────────────────────────┬───────────────────┘
+     Dataverse channel                     Outlook channel
+            ▼                                     ▼  status "Awaiting Outlook"
+   SendDelivery (async plug-in,         Cloud flow "Email Hub - Send via Outlook"
+   one job per email: SendEmail via     (Office 365 Outlook: own or shared mailbox)
+   server-side sync)                              │
+            └──────────────┬──────────────────────┘
+                           ▼ delivery status Sent / Failed
+              FinalizeDelivery (async plug-in): closes the Email activity,
+              settles the message (Sent / Partially Sent / Failed + counts)
+
+   Cloud flow "Email Hub - Release Scheduled Messages" (every 15 min):
+   Scheduled messages whose Send After passed → Queued
 ```
 
-**Why a cloud flow (not a plug-in or Dataverse email activity)?** Office 365 Outlook works in every tenant without
-server-side sync or mailbox approval, supports shared mailboxes, and sends to any external address. The flow and its
-connection references travel inside the solution, so the installer only has to pick connections.
+**Why plug-ins?** Recipient expansion, token rendering, activity creation and status handling run server-side in
+Dataverse. They're fast, transactional, retried by the platform, and need no connector licence. Every email on the Dataverse channel
+is its own async job, so large sends run in parallel.
 
-**Why a classic dashboard (not a generative page)?** Generative pages are environment-gated; a classic dashboard
-installs everywhere the solution can be imported.
+**Why still cloud flows?** A plug-in cannot use the Office 365 Outlook connector (the channel that works without
+mailbox approval or server-side sync), and cannot wake itself up for scheduled sends.
+
+**Configurable engine.** `Email Settings → Delivery Channel`:
+
+| Channel | Sends with | Needs |
+|---|---|---|
+| **Office 365 Outlook (cloud flow)** — default | Outlook connector, own or shared mailbox | Two connection references |
+| **Dataverse Email (server-side sync)** | `SendEmail` on the Email activity | Approved mailboxes; *allow unresolved recipients* for external addresses |
 
 ## 3. Data model
 
 | Table | Purpose | Key columns |
 |---|---|---|
-| `mb_emailsetting` **Email Setting** | Admin configuration. The flow reads the first row with *Active Configuration = Yes*. Defaults apply when none exists. | Send From (Flow owner mailbox / Shared mailbox), Shared Mailbox Address, Organization Name, Default Signature, Global Footer (HTML), Max Recipients Per Send, Allow External Recipients, Allowed External Domains, Test Mode, Test Mode Recipient, Archive BCC Address, Keep Delivery Log |
-| `mb_emailsignature` **Email Signature** | Personal (user-owned) HTML signatures. | Signature (HTML), My Default |
-| `mb_emailtemplate` **Email Template** | Reusable subject + HTML body with tokens. | Subject, Body (HTML), Category, Importance, Include Signature, Usage Notes |
-| `mb_recipientlist` **Recipient List** | A named group of recipients. | Description, List Type |
-| `mb_recipientlistmember` **List Member** | One member of a list. | List, Member Type (User / Contact / Team / External Email), User, Contact, Team, Email Address, First/Last Name, Company, Opted Out |
-| `mb_emailmessage` **Email Message** | One send request (draft → queued → sent). | Send To (Single User / Single Contact / Recipient List / Email Addresses), To User, To Contact, Recipient List, Email Addresses, CC, BCC, Template, Signature, Include Signature, Subject, Body (HTML), Importance, Delivery Mode (Personalized / Single email), Send After, Delivery Status, Sent On, Total / Sent / Failed counts, Last Error |
-| `mb_emaildelivery` **Email Delivery** | Per-recipient delivery log, owned by the message owner. | Email Message, Recipient Name, Email Address, Delivery Status (Sent / Failed / Skipped), Subject Sent, Error Detail, Sent At |
+| `mb_emailsetting` **Email Setting** | Admin configuration (first active row wins; defaults when none) | Delivery Channel, Create Email Activities, Send From (owner / shared mailbox), Shared Mailbox, Send From Queue, Reply-To, Organization Name, Default Signature, Global Footer, Max Recipients, Allow External, Allowed Domains, Test Mode + Recipient, Archive BCC, Keep Delivery Log |
+| `mb_emailsignature` **Email Signature** | Personal HTML signatures (user-owned) | Signature, My Default |
+| `mb_emailtemplate` **Email Template** | Reusable subject + HTML body with tokens | Subject, Body, Category, Importance, Include Signature, Usage Notes |
+| `mb_recipientlist` / `mb_recipientlistmember` | Email groups | Member Type (User / Contact / Team / External Email), lookups, address, names, company, Opted Out |
+| `mb_emailmessage` **Email Message** | One send request | Send To (Single User / Single Contact / Recipient List / Email Addresses / Notification Rule), recipients, CC/BCC, Template, Signature, Subject, Body, Importance, Delivery Mode, Send After, **Regarding Table / Id / Name**, Notification Rule, Delivery Status, counts, Last Error |
+| `mb_emaildelivery` **Email Delivery** | One row per email sent (per recipient in personalized mode) | To, CC, BCC, Subject Sent, Body Sent, Channel, Delivery Status (Pending / Sent / Failed / Skipped), Error, **Email Activity** |
+| `mb_notificationrule` **Notification Rule** | Automatic email for any table | Table, When (create / update / both), Only When These Columns Change, Condition (FetchXML filter), Template, Signature, Delivery Mode, recipients (owner, created by, email columns, lookup columns, list, addresses), Registered Steps, Last Triggered On, Times Triggered |
+| `email` (standard) | Timeline record of every email | Regarding = related record, To = recipient parties |
+
+Message lifecycle: `Draft → Queued → (Scheduled →) Sending → [Awaiting Outlook →] Sent | Partially Sent | Failed`.
 
 ## 4. Personalization tokens
 
-Resolved per recipient in *Personalized* mode (recipient tokens are blank in *Single email* mode):
-
 | Token | Value |
 |---|---|
-| `{{FirstName}}` `{{LastName}}` `{{FullName}}` | Recipient name (user/contact record or list member fields) |
-| `{{Email}}` | Recipient email |
-| `{{Company}}` `{{JobTitle}}` | Contact's account / user's job title / list member's company |
-| `{{SenderName}}` `{{SenderEmail}}` `{{SenderJobTitle}}` | Owner of the Email Message |
-| `{{OrganizationName}}` | From Settings |
-| `{{Today}}` | Send date (yyyy-MM-dd) |
-| `{{Signature}}` | Where to place the signature; when absent the signature is appended to the end |
+| `{{FirstName}}` `{{LastName}}` `{{FullName}}` `{{Email}}` `{{Company}}` `{{JobTitle}}` | Recipient (blank in single-email mode) |
+| `{{SenderName}}` `{{SenderEmail}}` `{{SenderJobTitle}}` | Owner of the message (rule owner for rule emails) |
+| `{{OrganizationName}}` `{{Today}}` | Settings / send date |
+| `{{Record.<column>}}` | Any column of the related record, formatted (e.g. `{{Record.subject}}`, `{{Record.scheduledend}}`) |
+| `{{RecordName}}` `{{RecordUrl}}` | Related record's name and a link to open it |
+| `{{Signature}}` | Signature position (else appended) |
 
-## 5. User experience
+Values inserted into the HTML body are HTML-encoded.
 
-- **Email Message form**: choose *Send To* → only the relevant recipient field is shown; choose a template → subject,
-  body, importance and *Include Signature* are filled in (asks before overwriting); body and signature use the
-  **rich text editor**; **Send Now** command validates and queues; the record locks once queued; a *Delivery* tab shows
-  counts and the per-recipient log.
-- **List Member form**: choose *Member Type* → only the matching field is shown; picking a user/contact fills
-  email and names automatically.
-- **Overview dashboard**: messages by status, deliveries by status, failed deliveries, my recent messages.
-- **Getting Started** page in the app: quick setup checklist and token reference.
-
-## 6. Security model
-
-Three roles ship in the solution (assign alongside the platform's *Basic User* role):
+## 5. Security model
 
 | Area | Email Hub Administrator | Email Hub Manager | Email Hub Sender |
 |---|---|---|---|
 | Settings | Full (org) | Read | Read |
-| Templates | Full (org) | Full (org) | Create/edit own · read all |
-| Recipient Lists & Members | Full (org) | Full (org) | Create/edit own · read all |
-| Signatures | Full (org) | Own only | Own only |
-| Email Messages | Full (org) | Read all · edit own | Own only |
+| Notification Rules | Full (org) | Read | — |
+| Templates, Lists, Members | Full (org) | Full (org) | Read all · manage own |
+| Signatures | Full (org) | Own | Own |
+| Email Messages | Full (org) | Read all · manage own | Own |
 | Email Deliveries | Full (org) | Read all | Read own |
-| Users / Contacts / Teams | Read | Read | Read |
 
-The flow runs under the **connection owner** (a service account or admin with *Email Hub Administrator*), so it can
-update any message and create delivery rows; delivery rows are assigned to the message owner so senders see their own log.
+The plug-ins run as **SYSTEM** for their writes, and assign activities and deliveries to the message owner. Before
+reading a related record, the engine checks that the **message owner can read it**
+(`RetrievePrincipalAccess`), so tokens can't leak data. Rule steps are registered by the plug-in as SYSTEM, so
+Email Hub Administrators don't need System Customizer.
 
-## 7. Guard rails
+## 6. Guard rails
 
-- **Test Mode** (on by default in the sample settings): every email is redirected to the *Test Mode Recipient*.
-- **Max Recipients Per Send** (default 500), **Allow External Recipients**, **Allowed External Domains**.
-- Invalid or blank addresses, duplicates and opted-out members are **skipped** and logged.
-- Sent messages are read-only; failures are recorded per recipient and on the message (*Last Error*).
+Test Mode redirect, Max Recipients Per Send, Allow External Recipients, Allowed External Domains, opted-out members,
+disabled users, invalid/duplicate addresses (skipped and logged), owner read-access check on the related record,
+rules can't watch Email Hub's own tables, recursion depth guards.
 
-## 8. Build & delivery steps
+## 7. Build & delivery steps
 
-1. Author `app/app-spec.json` (tables, relationships, forms, views, charts, dashboard, sitemap, roles, web resources).
-2. Lint → dry run → build with the Power Platform `model-apps` **app-builder** into the dev environment.
-3. Post-build: bind the rich text editor to HTML columns, create connection references and the cloud flow
-   (`scripts/`), add them to the solution.
-4. Export **unmanaged** and **managed** solution zips plus an unpacked source tree to `solution/`.
-5. Documentation: `docs/USER-GUIDE.md` (install, configure, use, security, troubleshooting).
+1. `app/app-spec.json` → model-apps **app-builder** (tables, forms, views, charts, dashboard, sitemap, roles).
+2. `scripts/enable-rich-text.js` — rich text editor on HTML columns.
+3. `plugins/EmailHub.Plugins` → `dotnet build -c Release` → `scripts/register-plugins.js`.
+4. `scripts/fetch-choice-values.js` → `flows/build-flow-definition.js` → `scripts/deploy-flow.js`.
+5. `scripts/finalize-solution.js` — command buttons into the solution.
+6. Export managed + unmanaged solution, unpack to `solution/src`.
 
-## 9. Repository hygiene (public repo)
+## 8. Repository hygiene (public repo)
 
 Never committed: environment URLs, tenant / org / user ids, connection ids, tokens, build workspaces
-(`.maker-workspace/`), build logs, `.env` files. See `.gitignore`. Scripts take the environment URL as an argument.
+(`.maker-workspace/`), build logs, the plug-in signing key (`*.snk`). Scripts take the environment URL as an argument.

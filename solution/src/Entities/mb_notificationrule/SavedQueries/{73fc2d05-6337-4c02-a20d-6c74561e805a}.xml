@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedqueries xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>0</CanBeDeleted>
+    <isquickfindquery>0</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>1</isdefault>
+    <savedqueryid>{73fc2d05-6337-4c02-a20d-6c74561e805a}</savedqueryid>
+    <layoutxml>
+      <grid name="resultset" jump="mb_name" select="1" icon="1" preview="1">
+        <row name="result" id="mb_notificationruleid">
+          <cell name="mb_name" width="300" />
+          <cell name="mb_isactive" width="150" />
+          <cell name="mb_tablename" width="150" />
+          <cell name="mb_triggerevent" width="150" />
+          <cell name="mb_templateid" width="150" />
+          <cell name="mb_signatureid" width="150" />
+          <cell name="mb_recipientlistid" width="150" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>0</querytype>
+    <fetchxml>
+      <fetch version="1.0" mapping="logical">
+        <entity name="mb_notificationrule">
+          <attribute name="mb_notificationruleid" />
+          <attribute name="mb_name" />
+          <attribute name="mb_isactive" />
+          <attribute name="mb_tablename" />
+          <attribute name="mb_triggerevent" />
+          <attribute name="mb_templateid" />
+          <attribute name="mb_signatureid" />
+          <attribute name="mb_recipientlistid" />
+          <order attribute="mb_name" descending="false" />
+          <filter type="and">
+            <condition attribute="statecode" operator="eq" value="0" />
+          </filter>
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>1.0</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="Active Notification Rules" languagecode="1033" />
+    </LocalizedNames>
+  </savedquery>
+</savedqueries>

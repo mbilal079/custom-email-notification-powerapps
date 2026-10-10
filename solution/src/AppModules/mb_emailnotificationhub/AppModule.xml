@@ -15,9 +15,11 @@
     <AppModuleComponent type="1" schemaName="mb_emailsetting" />
     <AppModuleComponent type="1" schemaName="mb_emailsignature" />
     <AppModuleComponent type="1" schemaName="mb_emailtemplate" />
+    <AppModuleComponent type="1" schemaName="mb_notificationrule" />
     <AppModuleComponent type="1" schemaName="mb_recipientlist" />
     <AppModuleComponent type="1" schemaName="mb_recipientlistmember" />
     <AppModuleComponent type="26" id="{16267d96-73e4-4047-99ae-0222aa6daaba}" />
+    <AppModuleComponent type="26" id="{fac66324-0e47-46b4-950e-14f2ad6373c1}" />
     <AppModuleComponent type="26" id="{8f1b78fc-3456-4387-bce8-1bdfb8c4f2be}" />
     <AppModuleComponent type="26" id="{4ba5cc2d-aa47-4bb9-b067-1c4ea31c4fd3}" />
     <AppModuleComponent type="26" id="{b3e860ec-fb08-4806-9b0a-20a214417b2a}" />
@@ -35,18 +37,21 @@
     <AppModuleComponent type="26" id="{40c86dcc-a24d-42b1-b58d-65563317b98c}" />
     <AppModuleComponent type="26" id="{aeca0e4c-24b5-4bf5-ad4d-658b205309d8}" />
     <AppModuleComponent type="26" id="{fb2597bf-c278-4370-9180-6c1b91d683b0}" />
+    <AppModuleComponent type="26" id="{73fc2d05-6337-4c02-a20d-6c74561e805a}" />
     <AppModuleComponent type="26" id="{8d700e68-bd76-47c2-be12-7792cc59ee4b}" />
     <AppModuleComponent type="26" id="{b95481ab-2246-41d0-a886-7d8f4d3eb411}" />
     <AppModuleComponent type="26" id="{b348b0b0-07ea-4246-8979-9be46665f1ef}" />
     <AppModuleComponent type="26" id="{01c1ae68-39bd-4185-9d09-aaad03b74cd6}" />
     <AppModuleComponent type="26" id="{6e097ff5-3ae7-498a-8845-b0b0e63d5dbf}" />
     <AppModuleComponent type="26" id="{3b933c5b-f27e-4230-83b8-bb37e041005a}" />
+    <AppModuleComponent type="26" id="{0b465695-a7b0-4e6b-9e07-ca99076f0a17}" />
     <AppModuleComponent type="26" id="{3a90995c-3434-4eb3-af32-cefc7f05d1f4}" />
     <AppModuleComponent type="26" id="{831bab56-f717-4126-9696-d51e37ede6d3}" />
     <AppModuleComponent type="26" id="{e96dbf0c-70d8-4442-b4d4-d6952239d00e}" />
     <AppModuleComponent type="26" id="{a9b16fb9-b2f0-48b3-9b96-dffc50efcee5}" />
     <AppModuleComponent type="26" id="{96185898-e09b-4d28-b17d-f222fdca75df}" />
     <AppModuleComponent type="26" id="{10957397-de34-41e7-be59-f57a5b0b8b0e}" />
+    <AppModuleComponent type="26" id="{67007d8b-2e0e-4afe-a243-fe5227343a04}" />
     <AppModuleComponent type="26" id="{7b957370-9780-42fd-9b29-ffdbe88e60f2}" />
     <AppModuleComponent type="59" id="{4bbd3031-e83c-47dc-b213-53781c3321d1}" />
     <AppModuleComponent type="59" id="{8fed2b23-e474-4360-b8d6-6c82f6975c4b}" />
@@ -58,8 +63,10 @@
     <AppModuleComponent type="60" id="{687154db-f49f-45d7-bc9e-2ac28d2bbf6f}" />
     <AppModuleComponent type="60" id="{11370a3c-efb7-4659-af3d-479b4a6fbe99}" />
     <AppModuleComponent type="60" id="{86a01af7-d79b-4456-9ab5-49502ed9092a}" />
+    <AppModuleComponent type="60" id="{1972805b-8bde-4f49-a601-525f27c06bbc}" />
     <AppModuleComponent type="60" id="{bc8997dd-4110-4ab6-b442-531747a8f6fe}" />
     <AppModuleComponent type="60" id="{2c1f42db-3f28-477e-af68-5e76cb71ab4c}" />
+    <AppModuleComponent type="60" id="{69e7cd27-dd24-46aa-abfb-6489b93a6d52}" />
     <AppModuleComponent type="60" id="{e63f048e-ed6c-428c-aacb-7058ba7d6771}" />
     <AppModuleComponent type="60" id="{ad5d34c4-25bb-4a34-88b2-804d6917b84f}" />
     <AppModuleComponent type="60" id="{e8b7107c-a025-448b-b92e-99650cd213c3}" />

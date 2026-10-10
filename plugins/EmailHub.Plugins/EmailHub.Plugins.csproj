@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net462</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <AssemblyVersion>1.0.0.2</AssemblyVersion>
+    <FileVersion>1.0.0.2</FileVersion>
+    <RootNamespace>EmailHub.Plugins</RootNamespace>
+    <Authors>Muhammad Bilal</Authors>
+    <Company>Muhammad Bilal</Company>
+    <Product>Email Notification Hub</Product>
+    <Description>Email Notification Hub delivery engine and notification rules for Dataverse.</Description>
+    <!-- Strong-name key is generated locally by scripts/new-plugin-key.ps1 and never committed. -->
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>EmailHub.Plugins.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CrmSdk.CoreAssemblies" Version="9.0.2.*" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.*" PrivateAssets="All" />
+  </ItemGroup>
+</Project>

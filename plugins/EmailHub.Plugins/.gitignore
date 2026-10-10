@@ -1,0 +1,5 @@
+/bin
+/obj
+/.vs
+*.binlog
+*.snk

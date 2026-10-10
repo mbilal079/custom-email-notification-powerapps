@@ -12,11 +12,11 @@
         <row name="result" id="mb_emailsettingid">
           <cell name="mb_name" width="300" />
           <cell name="mb_isactive" width="150" />
+          <cell name="mb_deliverychannel" width="150" />
+          <cell name="mb_createactivities" width="150" />
           <cell name="mb_sendmode" width="150" />
-          <cell name="mb_sharedmailbox" width="150" />
-          <cell name="mb_replyto" width="150" />
-          <cell name="mb_organizationname" width="150" />
           <cell name="mb_defaultsignatureid" width="150" />
+          <cell name="mb_fromqueueid" width="150" />
         </row>
       </grid>
     </layoutxml>
@@ -28,10 +28,10 @@
           <attribute name="mb_name" />
           <attribute name="mb_isactive" />
           <attribute name="mb_sendmode" />
-          <attribute name="mb_sharedmailbox" />
-          <attribute name="mb_replyto" />
-          <attribute name="mb_organizationname" />
           <attribute name="mb_defaultsignatureid" />
+          <attribute name="mb_deliverychannel" />
+          <attribute name="mb_createactivities" />
+          <attribute name="mb_fromqueueid" />
           <order attribute="mb_name" descending="false" />
           <filter type="and">
             <condition attribute="statecode" operator="eq" value="0" />

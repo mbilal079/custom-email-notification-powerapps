@@ -16,6 +16,7 @@
           <cell name="mb_subjectsent" width="150" />
           <cell name="mb_sentat" width="150" />
           <cell name="mb_emailmessageid" width="150" />
+          <cell name="mb_emailactivityid" width="150" />
         </row>
       </grid>
     </layoutxml>
@@ -30,6 +31,7 @@
           <attribute name="mb_subjectsent" />
           <attribute name="mb_sentat" />
           <attribute name="mb_emailmessageid" />
+          <attribute name="mb_emailactivityid" />
           <order attribute="mb_name" descending="false" />
           <filter type="and">
             <condition attribute="statecode" operator="eq" value="0" />

@@ -11,12 +11,12 @@
       <grid name="resultset" jump="mb_name" select="1" icon="1" preview="1">
         <row name="result" id="mb_emailmessageid">
           <cell name="mb_name" width="300" />
-          <cell name="mb_recipienttype" width="150" />
           <cell name="mb_touserid" width="150" />
           <cell name="mb_tocontactid" width="150" />
           <cell name="mb_recipientlistid" width="150" />
           <cell name="mb_templateid" width="150" />
           <cell name="mb_signatureid" width="150" />
+          <cell name="mb_notificationruleid" width="150" />
         </row>
       </grid>
     </layoutxml>
@@ -26,12 +26,12 @@
         <entity name="mb_emailmessage">
           <attribute name="mb_emailmessageid" />
           <attribute name="mb_name" />
-          <attribute name="mb_recipienttype" />
           <attribute name="mb_touserid" />
           <attribute name="mb_tocontactid" />
           <attribute name="mb_recipientlistid" />
           <attribute name="mb_templateid" />
           <attribute name="mb_signatureid" />
+          <attribute name="mb_notificationruleid" />
           <order attribute="mb_name" descending="false" />
           <filter type="and">
             <condition attribute="statecode" operator="eq" value="0" />

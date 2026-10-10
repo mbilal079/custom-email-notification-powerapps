@@ -13,11 +13,13 @@ EmailHub.Message = (function () {
     "Single User": "mb_touserid",
     "Single Contact": "mb_tocontactid",
     "Recipient List": "mb_recipientlistid",
-    "Email Addresses": "mb_toaddresses"
+    "Email Addresses": "mb_toaddresses",
+    "Notification Rule": "mb_notificationruleid"
   };
   var EDITABLE_STATUSES = ["Draft", "Failed", "Partially Sent"];
   // Maintained by the delivery flow - never editable by users.
-  var SYSTEM_FIELDS = ["mb_status", "mb_senton", "mb_totalrecipients", "mb_sentcount", "mb_failedcount", "mb_lasterror"];
+  var SYSTEM_FIELDS = ["mb_status", "mb_senton", "mb_totalrecipients", "mb_sentcount", "mb_failedcount", "mb_lasterror",
+    "mb_regardingname", "mb_regardingtable", "mb_regardingid", "mb_notificationruleid"];
 
   function attr(fc, name) { return fc.getAttribute(name); }
 
@@ -193,7 +195,7 @@ EmailHub.Message = (function () {
   function resetToDraft(primaryControl) {
     var fc = primaryControl;
     var s = choiceText(fc, STATUS);
-    if (s === "Queued" || s === "Sending") {
+    if (s === "Queued" || s === "Sending" || s === "Awaiting Outlook") {
       Xrm.Navigation.openAlertDialog({ text: "The message is being processed; wait until it finishes." });
       return;
     }

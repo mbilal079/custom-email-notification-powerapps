@@ -74,6 +74,11 @@
             <Title LCID="1033" Title="Settings" />
           </Titles>
         </SubArea>
+        <SubArea Id="sub_0_3_1" Entity="mb_notificationrule" ResourceId="SitemapDesigner.NewSubArea" Client="All,Outlook,OutlookLaptopClient,OutlookWorkstationClient,Web" Sku="All,OnPremise,Live,SPLA" AvailableOffline="true" PassParams="false">
+          <Titles>
+            <Title LCID="1033" Title="Notification Rules" />
+          </Titles>
+        </SubArea>
       </Group>
     </Area>
   </SiteMap>

@@ -9,6 +9,7 @@
     <RolePrivilege name="prvAppendmb_emailsetting" level="Global" />
     <RolePrivilege name="prvAppendmb_emailsignature" level="Global" />
     <RolePrivilege name="prvAppendmb_emailtemplate" level="Global" />
+    <RolePrivilege name="prvAppendmb_notificationrule" level="Global" />
     <RolePrivilege name="prvAppendmb_recipientlist" level="Global" />
     <RolePrivilege name="prvAppendmb_recipientlistmember" level="Global" />
     <RolePrivilege name="prvAppendToContact" level="Global" />
@@ -17,8 +18,10 @@
     <RolePrivilege name="prvAppendTomb_emailsetting" level="Global" />
     <RolePrivilege name="prvAppendTomb_emailsignature" level="Global" />
     <RolePrivilege name="prvAppendTomb_emailtemplate" level="Global" />
+    <RolePrivilege name="prvAppendTomb_notificationrule" level="Global" />
     <RolePrivilege name="prvAppendTomb_recipientlist" level="Global" />
     <RolePrivilege name="prvAppendTomb_recipientlistmember" level="Global" />
+    <RolePrivilege name="prvAppendToQueue" level="Global" />
     <RolePrivilege name="prvAppendToTeam" level="Global" />
     <RolePrivilege name="prvAppendToUser" level="Global" />
     <RolePrivilege name="prvAssignmb_emaildelivery" level="Global" />
@@ -26,6 +29,7 @@
     <RolePrivilege name="prvAssignmb_emailsetting" level="Global" />
     <RolePrivilege name="prvAssignmb_emailsignature" level="Global" />
     <RolePrivilege name="prvAssignmb_emailtemplate" level="Global" />
+    <RolePrivilege name="prvAssignmb_notificationrule" level="Global" />
     <RolePrivilege name="prvAssignmb_recipientlist" level="Global" />
     <RolePrivilege name="prvAssignmb_recipientlistmember" level="Global" />
     <RolePrivilege name="prvCreatemb_emaildelivery" level="Global" />
@@ -33,6 +37,7 @@
     <RolePrivilege name="prvCreatemb_emailsetting" level="Global" />
     <RolePrivilege name="prvCreatemb_emailsignature" level="Global" />
     <RolePrivilege name="prvCreatemb_emailtemplate" level="Global" />
+    <RolePrivilege name="prvCreatemb_notificationrule" level="Global" />
     <RolePrivilege name="prvCreatemb_recipientlist" level="Global" />
     <RolePrivilege name="prvCreatemb_recipientlistmember" level="Global" />
     <RolePrivilege name="prvCreateSharePointData" level="Global" />
@@ -41,6 +46,7 @@
     <RolePrivilege name="prvDeletemb_emailsetting" level="Global" />
     <RolePrivilege name="prvDeletemb_emailsignature" level="Global" />
     <RolePrivilege name="prvDeletemb_emailtemplate" level="Global" />
+    <RolePrivilege name="prvDeletemb_notificationrule" level="Global" />
     <RolePrivilege name="prvDeletemb_recipientlist" level="Global" />
     <RolePrivilege name="prvDeletemb_recipientlistmember" level="Global" />
     <RolePrivilege name="prvReadAppModule" level="Global" />
@@ -50,8 +56,10 @@
     <RolePrivilege name="prvReadmb_emailsetting" level="Global" />
     <RolePrivilege name="prvReadmb_emailsignature" level="Global" />
     <RolePrivilege name="prvReadmb_emailtemplate" level="Global" />
+    <RolePrivilege name="prvReadmb_notificationrule" level="Global" />
     <RolePrivilege name="prvReadmb_recipientlist" level="Global" />
     <RolePrivilege name="prvReadmb_recipientlistmember" level="Global" />
+    <RolePrivilege name="prvReadQueue" level="Global" />
     <RolePrivilege name="prvReadSharePointData" level="Global" />
     <RolePrivilege name="prvReadSharePointDocument" level="Global" />
     <RolePrivilege name="prvReadTeam" level="Global" />
@@ -61,6 +69,7 @@
     <RolePrivilege name="prvSharemb_emailsetting" level="Global" />
     <RolePrivilege name="prvSharemb_emailsignature" level="Global" />
     <RolePrivilege name="prvSharemb_emailtemplate" level="Global" />
+    <RolePrivilege name="prvSharemb_notificationrule" level="Global" />
     <RolePrivilege name="prvSharemb_recipientlist" level="Global" />
     <RolePrivilege name="prvSharemb_recipientlistmember" level="Global" />
     <RolePrivilege name="prvWritemb_emaildelivery" level="Global" />
@@ -68,6 +77,7 @@
     <RolePrivilege name="prvWritemb_emailsetting" level="Global" />
     <RolePrivilege name="prvWritemb_emailsignature" level="Global" />
     <RolePrivilege name="prvWritemb_emailtemplate" level="Global" />
+    <RolePrivilege name="prvWritemb_notificationrule" level="Global" />
     <RolePrivilege name="prvWritemb_recipientlist" level="Global" />
     <RolePrivilege name="prvWritemb_recipientlistmember" level="Global" />
     <RolePrivilege name="prvWriteSharePointData" level="Global" />
