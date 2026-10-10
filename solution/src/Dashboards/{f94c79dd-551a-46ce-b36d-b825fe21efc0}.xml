@@ -26,7 +26,7 @@
                     </labels>
                     <rows>
                       <row>
-                        <cell id="{4bcf885e-3c5d-4fbe-9405-7b987996710f}" colspan="1" rowspan="1" showlabel="true">
+                        <cell id="{4bcf885e-3c5d-4fbe-9405-7b987996710f}" colspan="1" rowspan="12" showlabel="true">
                           <labels>
                             <label description="Messages by Delivery Status" languagecode="1033" />
                           </labels>
@@ -39,7 +39,7 @@
                             </parameters>
                           </control>
                         </cell>
-                        <cell id="{f4118865-ff17-44cb-b24e-28c634c8dc9a}" colspan="1" rowspan="1" showlabel="true">
+                        <cell id="{f4118865-ff17-44cb-b24e-28c634c8dc9a}" colspan="1" rowspan="12" showlabel="true">
                           <labels>
                             <label description="Deliveries by Status" languagecode="1033" />
                           </labels>
@@ -53,22 +53,33 @@
                           </control>
                         </cell>
                       </row>
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
                       <row>
-                        <cell id="{41905d20-c37b-4799-9120-b66d054bb50e}" colspan="1" rowspan="1" showlabel="true">
+                        <cell id="{41905d20-c37b-4799-9120-b66d054bb50e}" colspan="1" rowspan="14" showlabel="true">
                           <labels>
-                            <label description="My Email Messages" languagecode="1033" />
+                            <label description="My Messages" languagecode="1033" />
                           </labels>
                           <control id="{2f85771f-2f13-46b9-9d00-6171fcdc16e6}" classid="{E7A81278-8635-4D9E-8D4D-59480B391C5B}">
                             <parameters>
                               <TargetEntityType>mb_emailmessage</TargetEntityType>
-                              <ViewId>fb2597bf-c278-4370-9180-6c1b91d683b0</ViewId>
+                              <ViewId>16267d96-73e4-4047-99ae-0222aa6daaba</ViewId>
                               <IsUserView>false</IsUserView>
                               <ChartGridMode>Grid</ChartGridMode>
                               <RecordsPerPage>10</RecordsPerPage>
                             </parameters>
                           </control>
                         </cell>
-                        <cell id="{7beb0918-f381-4732-8222-ce25a7ad470f}" colspan="1" rowspan="1" showlabel="true">
+                        <cell id="{7beb0918-f381-4732-8222-ce25a7ad470f}" colspan="1" rowspan="14" showlabel="true">
                           <labels>
                             <label description="Failed Deliveries" languagecode="1033" />
                           </labels>
@@ -83,8 +94,21 @@
                           </control>
                         </cell>
                       </row>
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
                       <row>
-                        <cell id="{816a320b-b1cd-4ca2-a4c9-1352210a9d99}" colspan="1" rowspan="1" showlabel="true">
+                        <cell id="{816a320b-b1cd-4ca2-a4c9-1352210a9d99}" colspan="1" rowspan="14" showlabel="true">
                           <labels>
                             <label description="Queued and Sending" languagecode="1033" />
                           </labels>
@@ -98,7 +122,7 @@
                             </parameters>
                           </control>
                         </cell>
-                        <cell id="{4a835f3a-fdb1-485f-827c-34acbdb9d1a4}" colspan="1" rowspan="1" showlabel="true">
+                        <cell id="{4a835f3a-fdb1-485f-827c-34acbdb9d1a4}" colspan="1" rowspan="14" showlabel="true">
                           <labels>
                             <label description="Templates by Category" languagecode="1033" />
                           </labels>
@@ -112,6 +136,19 @@
                           </control>
                         </cell>
                       </row>
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
+                      <row />
                     </rows>
                   </section>
                 </sections>
