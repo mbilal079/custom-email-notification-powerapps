@@ -201,6 +201,27 @@
           "format": "Email",
           "maxLength": 320,
           "description": "The address emails are sent from. Outlook channel: sent as this address from the connection account (needs Send As or Send on Behalf), or the shared mailbox when Send Mode is Shared Mailbox. Dataverse channel: a queue or user mailbox with this address. Empty: the connection owner / message owner mailbox."
+        },
+        {
+          "schemaName": "mb_textcolor",
+          "displayName": "Body Text Color",
+          "type": "Text",
+          "maxLength": 7,
+          "description": "Hex colour of the email text. Empty: dark gray."
+        },
+        {
+          "schemaName": "mb_headertextcolor",
+          "displayName": "Header Text Color",
+          "type": "Text",
+          "maxLength": 7,
+          "description": "Hex colour of the header title. Empty: white or dark, whichever contrasts with the brand colour."
+        },
+        {
+          "schemaName": "mb_buttontextcolor",
+          "displayName": "Button Text Color",
+          "type": "Text",
+          "maxLength": 7,
+          "description": "Hex colour of the Open record button label. Empty: automatic contrast."
         }
       ]
     },
@@ -1976,7 +1997,10 @@
                 {
                   "name": "mb_logourl",
                   "colspan": 2
-                }
+                },
+                "mb_textcolor",
+                "mb_headertextcolor",
+                "mb_buttontextcolor"
               ]
             },
             {

@@ -142,6 +142,9 @@ namespace EmailHub.Plugins.Engine
                     BackgroundColor = settings.BackgroundColor,
                     LogoUrl = settings.LogoUrl,
                     HeaderTitle = settings.HeaderTitle,
+                    TextColor = settings.TextColor,
+                    HeaderTextColor = settings.HeaderTextColor,
+                    ButtonTextColor = settings.ButtonTextColor,
                     OrganizationName = settings.OrganizationName,
                     FooterHtml = renderer.Render(settings.Footer ?? "", one, true),
                     RecordUrl = renderer.RecordUrl ?? "",
@@ -259,7 +262,7 @@ namespace EmailHub.Plugins.Engine
                 }
                 foreach (var col in Text.SplitNames(rule.GetAttributeValue<string>("mb_emailcolumns")))
                 {
-                    foreach (var a in Text.SplitAddresses(ColumnText(record, col))) { yield return RecipientResolver.Address(a); }
+                    foreach (var r in ColumnRecipients(record, col)) { yield return r; }
                 }
                 foreach (var col in Text.SplitNames(rule.GetAttributeValue<string>("mb_lookupcolumns")))
                 {
@@ -309,15 +312,37 @@ namespace EmailHub.Plugins.Engine
         /// Text of a column on the record, or of a column on a related row: "emailaddress1" or "lookup.column",
         /// e.g. "parentcustomerid.emailaddress2" on contact reads the account's (or parent contact's) column.
         /// </summary>
-        private string ColumnText(Entity record, string path)
+        private IEnumerable<Recipient> ColumnRecipients(Entity record, string path)
         {
             var dot = path.IndexOf('.');
-            if (dot < 0) { return record.GetAttributeValue<string>(path) ?? ""; }
+            if (dot < 0)
+            {
+                foreach (var a in Text.SplitAddresses(record.GetAttributeValue<string>(path) ?? "")) { yield return RecipientResolver.Address(a); }
+                yield break;
+            }
             var lookup = path.Substring(0, dot);
             var column = path.Substring(dot + 1);
-            if (!(record.Attributes.Contains(lookup) && record[lookup] is EntityReference target)) { return ""; }
-            if (!_resolver.Metadata(target.LogicalName).Attributes.Any(x => x.LogicalName == column)) { return ""; } // e.g. a customer lookup pointing at the other table
-            return _svc.Retrieve(target.LogicalName, target.Id, new ColumnSet(column)).GetAttributeValue<string>(column) ?? "";
+            if (!(record.Attributes.Contains(lookup) && record[lookup] is EntityReference target)) { yield break; }
+            var md = _resolver.Metadata(target.LogicalName);
+            if (!md.Attributes.Any(x => x.LogicalName == column)) { yield break; } // e.g. a customer lookup pointing at the other table
+            // the related row's name and details personalise the email ({{FirstName}}, {{Company}}...)
+            var cols = new List<string> { column };
+            foreach (var extra in new[] { md.PrimaryNameAttribute, "firstname", "lastname", "jobtitle" })
+            {
+                if (!string.IsNullOrEmpty(extra) && !cols.Contains(extra) && md.Attributes.Any(x => x.LogicalName == extra)) { cols.Add(extra); }
+            }
+            var row = _svc.Retrieve(target.LogicalName, target.Id, new ColumnSet(cols.ToArray()));
+            var name = md.PrimaryNameAttribute != null ? row.GetAttributeValue<string>(md.PrimaryNameAttribute) ?? "" : "";
+            foreach (var a in Text.SplitAddresses(row.GetAttributeValue<string>(column) ?? ""))
+            {
+                var r = RecipientResolver.Address(a);
+                r.FirstName = row.GetAttributeValue<string>("firstname") ?? "";
+                r.LastName = row.GetAttributeValue<string>("lastname") ?? "";
+                r.FullName = name;
+                r.JobTitle = row.GetAttributeValue<string>("jobtitle") ?? "";
+                if (target.LogicalName == "account") { r.Company = name; }
+                yield return r;
+            }
         }
 
         private static (List<Recipient> ok, List<Recipient> skipped) Validate(IEnumerable<Recipient> candidates, HubSettings s)

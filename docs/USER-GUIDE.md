@@ -114,10 +114,12 @@ The **Email Design** tab of Settings controls how every email looks. It opens on
 - **Brand color** and **Background color**: preset swatches (blue, light blue, sky, navy, teal, green, red, orange,
   purple, pink, graphite… and light tints for the background), a **colour picker**, or a hex code. The studio tells you
   whether text on the brand colour will be white or dark.
+- **Text colors** for the **body text**, **header text** and **button text**: *Default/Auto* (automatic contrast with
+  the brand colour), a preset, or the colour picker.
 - **Header** title and logo URL, and the **Open record button** switch and label.
 - A **live preview** (desktop or mobile) that updates as you change anything.
 
-The studio writes into the record's fields; press **Save** to apply. **Preview Email Design** on the command bar also
+The studio writes into the record's fields and shows *Unsaved changes* until you press **Save**. **Preview Email Design** on the command bar also
 shows the Test Mode notice and lets you switch the related record on and off.
 
 | Setting | Effect |
@@ -270,7 +272,11 @@ Deactivating or deleting the rule removes the step. When the rule fires it creat
 On contact, use **`parentcustomerid`** (*Company Name*), not `accountid`: `accountid` is maintained by the system,
 cannot be set on the form and is normally empty, so `accountid.emailaddress1` would find no address. The rule form
 warns you when you use it. When a recipient is an account (or any row without a first name), `{{FirstName}}` uses its
-name, e.g. *Hi Fourth Coffee*.
+name, e.g. *Hi Fourth Coffee*; with `lookup.column` the related row's name and details are used too. For a plain
+address with no name, `{{FirstName}}` is empty (never the email address).
+
+**Test Mode:** while it is on, rule emails go to the Test Mode Recipient, not to the account or contact. The subject
+starts with `[TEST to <real recipient>]` and a yellow notice at the top shows who it was meant for.
 
 **Open record button per template.** A template's **Open Record Button** (*Use Settings default* / *Show* / *Hide*)
 is copied to the messages created from it, including rule emails; a message can also change it before sending.

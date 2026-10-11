@@ -32,6 +32,9 @@ namespace EmailHub.Plugins.Engine
         public string BackgroundColor = EmailLayout.DefaultBackground;
         public string LogoUrl = "";
         public string HeaderTitle = "";
+        public string TextColor = "";
+        public string HeaderTextColor = "";
+        public string ButtonTextColor = "";
         public bool ShowRecordButton = true;
         public string RecordButtonLabel = "Open record";
 
@@ -67,6 +70,9 @@ namespace EmailHub.Plugins.Engine
             s.BackgroundColor = EmailLayout.Color(row.GetAttributeValue<string>("mb_backgroundcolor"), EmailLayout.DefaultBackground);
             s.LogoUrl = (row.GetAttributeValue<string>("mb_logourl") ?? "").Trim();
             s.HeaderTitle = (row.GetAttributeValue<string>("mb_headertitle") ?? "").Trim();
+            s.TextColor = EmailLayout.Color(row.GetAttributeValue<string>("mb_textcolor"), "");
+            s.HeaderTextColor = EmailLayout.Color(row.GetAttributeValue<string>("mb_headertextcolor"), "");
+            s.ButtonTextColor = EmailLayout.Color(row.GetAttributeValue<string>("mb_buttontextcolor"), "");
             s.ShowRecordButton = row.GetAttributeValue<bool?>("mb_showrecordbutton") ?? true;
             s.RecordButtonLabel = (row.GetAttributeValue<string>("mb_recordbuttonlabel") ?? "").Trim();
             return s;

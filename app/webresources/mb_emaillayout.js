@@ -29,7 +29,8 @@
       return (o.testNotice ? '<p style="color:#8a5300"><b>' + enc(o.testNotice) + "</b></p>" : "") +
         place(body, showButton ? '<p><a href="' + enc(o.recordUrl) + '">' + enc(label) + "</a></p>" : "") + (o.footer ? "<br/>" + o.footer : "");
     }
-    var brand = color(o.brandColor, "#0F6CBD"), bg = color(o.backgroundColor, "#F3F5F8"), onBrand = isDark(brand) ? "#FFFFFF" : "#1B1B1F";
+    var brand = color(o.brandColor, "#0F6CBD"), bg = color(o.backgroundColor, "#F3F5F8"), auto = isDark(brand) ? "#FFFFFF" : "#1B1B1F";
+    var headerText = color(o.headerTextColor, o.layout === MINIMAL ? "#1B1B1F" : auto), buttonText = color(o.buttonTextColor, auto), bodyText = color(o.textColor, "#24262B");
     var title = (o.headerTitle || "").trim() || o.organizationName || "", branded = o.layout !== MINIMAL, outer = branded ? bg : "#FFFFFF";
     var h = '<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head><body style="margin:0;padding:0;background:' + outer + ';">' +
       '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:' + outer + ';"><tr><td align="center" style="padding:' + (branded ? "28px 12px" : "16px 12px") + ';">' +
@@ -41,17 +42,17 @@
     var logo = function (px) { return isHttp(o.logoUrl) ? '<td style="padding-right:' + (px > 32 ? 14 : 12) + 'px;vertical-align:middle;"><img src="' + enc(o.logoUrl) + '" alt="' + enc(title) + '" height="' + px + '" style="display:block;height:' + px + "px;max-height:" + px + 'px;width:auto;border:0;"></td>' : ""; };
     if (branded) {
       h += '<tr><td style="background:' + brand + ';border-radius:12px 12px 0 0;padding:22px 32px;"><table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>' + logo(36) +
-           (title ? '<td style="vertical-align:middle;font:600 19px ' + FONT + ";color:" + onBrand + ';">' + enc(title) + "</td>" : "") + "</tr></table></td></tr>";
+           (title ? '<td style="vertical-align:middle;font:600 19px ' + FONT + ";color:" + headerText + ';">' + enc(title) + "</td>" : "") + "</tr></table></td></tr>";
     } else {
       h += '<tr><td style="border-top:4px solid ' + brand + ';padding:18px 4px 14px;"><table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>' + logo(30) +
-           (title ? '<td style="vertical-align:middle;font:600 17px ' + FONT + ';color:#1B1B1F;">' + enc(title) + "</td>" : "") + "</tr></table></td></tr>";
+           (title ? '<td style="vertical-align:middle;font:600 17px ' + FONT + ";color:" + headerText + ';">' + enc(title) + "</td>" : "") + "</tr></table></td></tr>";
     }
     h += '<tr><td style="background:#FFFFFF;' + (branded ? "border-radius:0 0 12px 12px;border:1px solid #E3E6EB;border-top:0;padding:32px;" : "padding:8px 4px 24px;") +
-         "font:15px/1.6 " + FONT + ';color:#24262B;">';
+         "font:15px/1.6 " + FONT + ";color:" + bodyText + ';">';
     var btn = "";
     if (showButton) {
       btn += '<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:' + (o.recordName ? "22px 0 4px" : "22px 0 18px") + ';"><tr><td align="center" bgcolor="' + brand + '" style="border-radius:8px;background:' + brand + ';">' +
-           '<a href="' + enc(o.recordUrl) + '" target="_blank" style="display:inline-block;padding:12px 26px;font:600 15px ' + FONT + ";color:" + onBrand + ';text-decoration:none;border-radius:8px;">' + enc(label) + " &rarr;</a></td></tr></table>";
+           '<a href="' + enc(o.recordUrl) + '" target="_blank" style="display:inline-block;padding:12px 26px;font:600 15px ' + FONT + ";color:" + buttonText + ';text-decoration:none;border-radius:8px;">' + enc(label) + " &rarr;</a></td></tr></table>";
       if (o.recordName) { btn += '<div style="font:12px ' + FONT + ';color:#6B6F78;margin:6px 0 18px;">' + enc(o.recordName) + "</div>"; }
     }
     h += place(body, btn);

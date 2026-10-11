@@ -391,6 +391,46 @@
             <Description description="Hex colour for the header and buttons, e.g. #0F6CBD. Text colour on it is chosen automatically for contrast." languagecode="1033" />
           </Descriptions>
         </attribute>
+        <attribute PhysicalName="mb_buttontextcolor">
+          <Type>nvarchar</Type>
+          <Name>mb_buttontextcolor</Name>
+          <LogicalName>mb_buttontextcolor</LogicalName>
+          <RequiredLevel>none</RequiredLevel>
+          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+          <ImeMode>auto</ImeMode>
+          <ValidForUpdateApi>1</ValidForUpdateApi>
+          <ValidForReadApi>1</ValidForReadApi>
+          <ValidForCreateApi>1</ValidForCreateApi>
+          <IsCustomField>1</IsCustomField>
+          <IsAuditEnabled>1</IsAuditEnabled>
+          <IsSecured>0</IsSecured>
+          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+          <IsCustomizable>1</IsCustomizable>
+          <IsRenameable>1</IsRenameable>
+          <CanModifySearchSettings>1</CanModifySearchSettings>
+          <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+          <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+          <SourceType>0</SourceType>
+          <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+          <IsSortableEnabled>0</IsSortableEnabled>
+          <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+          <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+          <IsDataSourceSecret>0</IsDataSourceSecret>
+          <AutoNumberFormat></AutoNumberFormat>
+          <IsSearchable>0</IsSearchable>
+          <IsFilterable>0</IsFilterable>
+          <IsRetrievable>0</IsRetrievable>
+          <IsLocalizable>0</IsLocalizable>
+          <Format>text</Format>
+          <MaxLength>7</MaxLength>
+          <Length>14</Length>
+          <displaynames>
+            <displayname description="Button Text Color" languagecode="1033" />
+          </displaynames>
+          <Descriptions>
+            <Description description="Hex colour of the Open record button label. Empty: automatic contrast." languagecode="1033" />
+          </Descriptions>
+        </attribute>
         <attribute PhysicalName="mb_createactivities">
           <Type>bit</Type>
           <Name>mb_createactivities</Name>
@@ -761,6 +801,46 @@
           </displaynames>
           <Descriptions>
             <Description description="HTML appended to every email after the signature, e.g. a disclaimer or unsubscribe note." languagecode="1033" />
+          </Descriptions>
+        </attribute>
+        <attribute PhysicalName="mb_headertextcolor">
+          <Type>nvarchar</Type>
+          <Name>mb_headertextcolor</Name>
+          <LogicalName>mb_headertextcolor</LogicalName>
+          <RequiredLevel>none</RequiredLevel>
+          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+          <ImeMode>auto</ImeMode>
+          <ValidForUpdateApi>1</ValidForUpdateApi>
+          <ValidForReadApi>1</ValidForReadApi>
+          <ValidForCreateApi>1</ValidForCreateApi>
+          <IsCustomField>1</IsCustomField>
+          <IsAuditEnabled>1</IsAuditEnabled>
+          <IsSecured>0</IsSecured>
+          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+          <IsCustomizable>1</IsCustomizable>
+          <IsRenameable>1</IsRenameable>
+          <CanModifySearchSettings>1</CanModifySearchSettings>
+          <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+          <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+          <SourceType>0</SourceType>
+          <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+          <IsSortableEnabled>0</IsSortableEnabled>
+          <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+          <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+          <IsDataSourceSecret>0</IsDataSourceSecret>
+          <AutoNumberFormat></AutoNumberFormat>
+          <IsSearchable>0</IsSearchable>
+          <IsFilterable>0</IsFilterable>
+          <IsRetrievable>0</IsRetrievable>
+          <IsLocalizable>0</IsLocalizable>
+          <Format>text</Format>
+          <MaxLength>7</MaxLength>
+          <Length>14</Length>
+          <displaynames>
+            <displayname description="Header Text Color" languagecode="1033" />
+          </displaynames>
+          <Descriptions>
+            <Description description="Hex colour of the header title. Empty: white or dark, whichever contrasts with the brand colour." languagecode="1033" />
           </Descriptions>
         </attribute>
         <attribute PhysicalName="mb_headertitle">
@@ -1422,6 +1502,46 @@
           </displaynames>
           <Descriptions>
             <Description description="Receives all emails while Test Mode is on." languagecode="1033" />
+          </Descriptions>
+        </attribute>
+        <attribute PhysicalName="mb_textcolor">
+          <Type>nvarchar</Type>
+          <Name>mb_textcolor</Name>
+          <LogicalName>mb_textcolor</LogicalName>
+          <RequiredLevel>none</RequiredLevel>
+          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+          <ImeMode>auto</ImeMode>
+          <ValidForUpdateApi>1</ValidForUpdateApi>
+          <ValidForReadApi>1</ValidForReadApi>
+          <ValidForCreateApi>1</ValidForCreateApi>
+          <IsCustomField>1</IsCustomField>
+          <IsAuditEnabled>1</IsAuditEnabled>
+          <IsSecured>0</IsSecured>
+          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+          <IsCustomizable>1</IsCustomizable>
+          <IsRenameable>1</IsRenameable>
+          <CanModifySearchSettings>1</CanModifySearchSettings>
+          <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+          <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+          <SourceType>0</SourceType>
+          <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+          <IsSortableEnabled>0</IsSortableEnabled>
+          <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+          <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+          <IsDataSourceSecret>0</IsDataSourceSecret>
+          <AutoNumberFormat></AutoNumberFormat>
+          <IsSearchable>0</IsSearchable>
+          <IsFilterable>0</IsFilterable>
+          <IsRetrievable>0</IsRetrievable>
+          <IsLocalizable>0</IsLocalizable>
+          <Format>text</Format>
+          <MaxLength>7</MaxLength>
+          <Length>14</Length>
+          <displaynames>
+            <displayname description="Body Text Color" languagecode="1033" />
+          </displaynames>
+          <Descriptions>
+            <Description description="Hex colour of the email text. Empty: dark gray." languagecode="1033" />
           </Descriptions>
         </attribute>
         <attribute PhysicalName="ModifiedBy">

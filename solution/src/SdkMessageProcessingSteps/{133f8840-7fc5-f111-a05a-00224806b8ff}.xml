@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<SdkMessageProcessingStep Name="Email Hub: prepare queued message (create)" SdkMessageProcessingStepId="{a9ff7d43-72c5-f111-a05a-00224806b8ff}" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<SdkMessageProcessingStep Name="Email Hub: send delivery (Dataverse channel)" SdkMessageProcessingStepId="{133f8840-7fc5-f111-a05a-00224806b8ff}" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <SdkMessageId>9ebdbb1b-ea3e-db11-86a7-000a3a5473e8</SdkMessageId>
-  <PluginTypeName>EmailHub.Plugins.ProcessEmailMessage, EmailHub.Plugins, Version=1.0.0.9, Culture=neutral, PublicKeyToken=167b1d5ffc6d5ccb</PluginTypeName>
-  <PluginTypeId>8fff7d43-72c5-f111-a05a-00224806b8ff</PluginTypeId>
-  <PrimaryEntity>mb_emailmessage</PrimaryEntity>
+  <PluginTypeName>EmailHub.Plugins.SendDelivery, EmailHub.Plugins, Version=1.0.0.10, Culture=neutral, PublicKeyToken=167b1d5ffc6d5ccb</PluginTypeName>
+  <PluginTypeId>0533673a-7fc5-f111-a05a-00224806b8ff</PluginTypeId>
+  <PrimaryEntity>mb_emaildelivery</PrimaryEntity>
   <AsyncAutoDelete>1</AsyncAutoDelete>
-  <Description>Email Hub: prepare queued message (create)</Description>
+  <Description>Email Hub: send delivery (Dataverse channel)</Description>
   <FilteringAttributes></FilteringAttributes>
   <InvocationSource>1</InvocationSource>
   <Mode>1</Mode>

@@ -36,6 +36,9 @@ namespace EmailHub.Plugins.Engine
             public string RecordName = "";
             public bool ShowRecordButton = true;
             public string RecordButtonLabel = "Open record";
+            public string TextColor = "";           // body text; empty = default dark gray
+            public string HeaderTextColor = "";     // header title; empty = automatic contrast
+            public string ButtonTextColor = "";     // button label; empty = automatic contrast
             public string TestNotice = "";          // e.g. "Test Mode: originally addressed to a@b.com"
             public string Preheader = "";           // hidden inbox preview text
         }
@@ -66,7 +69,10 @@ namespace EmailHub.Plugins.Engine
 
             var brand = Color(o.BrandColor, DefaultBrand);
             var bg = Color(o.BackgroundColor, DefaultBackground);
-            var onBrand = IsDark(brand) ? "#FFFFFF" : "#1B1B1F";
+            var auto = IsDark(brand) ? "#FFFFFF" : "#1B1B1F";
+            var headerText = Color(o.HeaderTextColor, o.Layout == Minimal ? "#1B1B1F" : auto);
+            var buttonText = Color(o.ButtonTextColor, auto);
+            var bodyText = Color(o.TextColor, "#24262B");
             var title = string.IsNullOrWhiteSpace(o.HeaderTitle) ? o.OrganizationName : o.HeaderTitle;
             var branded = o.Layout != Minimal;
             var outerBg = branded ? bg : "#FFFFFF";
@@ -102,7 +108,7 @@ namespace EmailHub.Plugins.Engine
                 }
                 if (!string.IsNullOrWhiteSpace(title))
                 {
-                    h.Append("<td style=\"vertical-align:middle;font:600 19px ").Append(Font).Append(";color:").Append(onBrand).Append(";\">").Append(Enc(title)).Append("</td>");
+                    h.Append("<td style=\"vertical-align:middle;font:600 19px ").Append(Font).Append(";color:").Append(headerText).Append(";\">").Append(Enc(title)).Append("</td>");
                 }
                 h.Append("</tr></table></td></tr>");
             }
@@ -117,15 +123,15 @@ namespace EmailHub.Plugins.Engine
                 }
                 if (!string.IsNullOrWhiteSpace(title))
                 {
-                    h.Append("<td style=\"vertical-align:middle;font:600 17px ").Append(Font).Append(";color:#1B1B1F;\">").Append(Enc(title)).Append("</td>");
+                    h.Append("<td style=\"vertical-align:middle;font:600 17px ").Append(Font).Append(";color:").Append(headerText).Append(";\">").Append(Enc(title)).Append("</td>");
                 }
                 h.Append("</tr></table></td></tr>");
             }
 
             // body card
             h.Append("<tr><td style=\"background:#FFFFFF;").Append(branded ? "border-radius:0 0 12px 12px;border:1px solid #E3E6EB;border-top:0;padding:32px;" : "padding:8px 4px 24px;")
-             .Append("font:15px/1.6 ").Append(Font).Append(";color:#24262B;\">")
-             .Append(ButtonHtml(bodyHtml, showButton, brand, onBrand, o));
+             .Append("font:15px/1.6 ").Append(Font).Append(";color:").Append(bodyText).Append(";\">")
+             .Append(ButtonHtml(bodyHtml, showButton, brand, buttonText, o));
             h.Append("</td></tr>");
             AppendFooter(h, o, branded);
             return h.ToString();

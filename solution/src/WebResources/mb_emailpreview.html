@@ -86,6 +86,7 @@
     var html = wrap(body, {
       layout: layout, brandColor: s.mb_brandcolor, backgroundColor: s.mb_backgroundcolor, logoUrl: s.mb_logourl, headerTitle: s.mb_headertitle,
       organizationName: org, footer: tokens(s.mb_globalfooter || "", { org: org }), recordUrl: rec ? "https://example.com/record" : "", recordName: rec ? (payload.regarding || "Prepare Q4 report") : "",
+      textColor: s.mb_textcolor, headerTextColor: s.mb_headertextcolor, buttonTextColor: s.mb_buttontextcolor,
       showRecordButton: payload.recordButton === "Show" ? true : payload.recordButton === "Hide" ? false : s.mb_showrecordbutton !== false, recordButtonLabel: s.mb_recordbuttonlabel,
       testNotice: test ? "Test Mode: this email was addressed to alex.wilber@example.com" : ""
     });

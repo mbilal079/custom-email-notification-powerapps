@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<PluginAssembly FullName="EmailHub.Plugins, Version=1.0.0.10, Culture=neutral, PublicKeyToken=167b1d5ffc6d5ccb" PluginAssemblyId="0133673a-7fc5-f111-a05a-00224806b8ff" CustomizationLevel="1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Description>Email Notification Hub engine</Description>
+  <IsolationMode>2</IsolationMode>
+  <SourceType>0</SourceType>
+  <IntroducedVersion>1.0.0.0</IntroducedVersion>
+  <FileName>/PluginAssemblies/EmailHubPlugins-0133673A-7FC5-F111-A05A-00224806B8FF/EmailHubPlugins.dll</FileName>
+  <PluginTypes>
+    <PluginType AssemblyQualifiedName="EmailHub.Plugins.FinalizeDelivery, EmailHub.Plugins, Version=1.0.0.10, Culture=neutral, PublicKeyToken=167b1d5ffc6d5ccb" PluginTypeId="0633673a-7fc5-f111-a05a-00224806b8ff" Name="EmailHub.Plugins.FinalizeDelivery">
+      <Description>Email Notification Hub - FinalizeDelivery</Description>
+      <FriendlyName>FinalizeDelivery</FriendlyName>
+    </PluginType>
+    <PluginType AssemblyQualifiedName="EmailHub.Plugins.NotificationRuleManager, EmailHub.Plugins, Version=1.0.0.10, Culture=neutral, PublicKeyToken=167b1d5ffc6d5ccb" PluginTypeId="0733673a-7fc5-f111-a05a-00224806b8ff" Name="EmailHub.Plugins.NotificationRuleManager">
+      <Description>Email Notification Hub - NotificationRuleManager</Description>
+      <FriendlyName>NotificationRuleManager</FriendlyName>
+    </PluginType>
+    <PluginType AssemblyQualifiedName="EmailHub.Plugins.NotificationRuleTrigger, EmailHub.Plugins, Version=1.0.0.10, Culture=neutral, PublicKeyToken=167b1d5ffc6d5ccb" PluginTypeId="0833673a-7fc5-f111-a05a-00224806b8ff" Name="EmailHub.Plugins.NotificationRuleTrigger">
+      <Description>Email Notification Hub - NotificationRuleTrigger</Description>
+      <FriendlyName>NotificationRuleTrigger</FriendlyName>
+    </PluginType>
+    <PluginType AssemblyQualifiedName="EmailHub.Plugins.ProcessEmailMessage, EmailHub.Plugins, Version=1.0.0.10, Culture=neutral, PublicKeyToken=167b1d5ffc6d5ccb" PluginTypeId="0433673a-7fc5-f111-a05a-00224806b8ff" Name="EmailHub.Plugins.ProcessEmailMessage">
+      <Description>Email Notification Hub - ProcessEmailMessage</Description>
+      <FriendlyName>ProcessEmailMessage</FriendlyName>
+    </PluginType>
+    <PluginType AssemblyQualifiedName="EmailHub.Plugins.SendDelivery, EmailHub.Plugins, Version=1.0.0.10, Culture=neutral, PublicKeyToken=167b1d5ffc6d5ccb" PluginTypeId="0533673a-7fc5-f111-a05a-00224806b8ff" Name="EmailHub.Plugins.SendDelivery">
+      <Description>Email Notification Hub - SendDelivery</Description>
+      <FriendlyName>SendDelivery</FriendlyName>
+    </PluginType>
+  </PluginTypes>
+</PluginAssembly>

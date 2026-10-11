@@ -26,7 +26,7 @@ namespace EmailHub.Plugins.Engine
             if (string.IsNullOrEmpty(template)) { return ""; }
             string Enc(string v) => html ? WebUtility.HtmlEncode(v ?? "") : (v ?? "");
             var s = template
-                .Replace("{{FirstName}}", Enc(string.IsNullOrWhiteSpace(r?.FirstName) ? r?.FullName : r.FirstName)) // accounts and other non-person rows: their name
+                .Replace("{{FirstName}}", Enc(FirstNameOf(r)))
                 .Replace("{{LastName}}", Enc(r?.LastName))
                 .Replace("{{FullName}}", Enc(r?.FullName))
                 .Replace("{{Email}}", Enc(r?.Email))
@@ -63,6 +63,14 @@ namespace EmailHub.Plugins.Engine
         }
 
         /// <summary>Places the signature at {{Signature}} (or appends it) and appends the global footer.</summary>
+        /// <summary>First name; for accounts and other non-person rows their name; never an email address.</summary>
+        private static string FirstNameOf(Recipient r)
+        {
+            if (r == null) { return ""; }
+            if (!string.IsNullOrWhiteSpace(r.FirstName)) { return r.FirstName; }
+            return string.IsNullOrWhiteSpace(r.FullName) || r.FullName.Contains("@") ? "" : r.FullName;
+        }
+
         public static string Assemble(string body, string signature, string footer)
         {
             body = body ?? "";

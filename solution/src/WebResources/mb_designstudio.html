@@ -46,6 +46,14 @@
   .switch input:checked + span::before { transform:translateX(18px); }
   .switch input:focus-visible + span { outline:2px solid var(--accent); outline-offset:2px; }
 
+  .tc { display:grid; gap:10px; }
+  .tcrow { display:grid; grid-template-columns:92px 1fr; align-items:center; gap:8px; }
+  .tcrow > span { font-weight:600; font-size:12.5px; }
+  .tcctl { display:flex; align-items:center; gap:6px; flex-wrap:wrap; }
+  .chip { border:1px solid var(--line); background:var(--bg); color:var(--fg); border-radius:99px; padding:3px 10px; font:inherit; font-size:12px; cursor:pointer; }
+  .chip[aria-pressed="true"] { border-color:var(--accent); color:var(--accent); font-weight:600; box-shadow:0 0 0 2px var(--accent-soft); }
+  .tcctl .sw { width:22px; height:22px; aspect-ratio:auto; }
+  .tcctl input[type=color] { width:28px; height:24px; border:1px solid var(--line); border-radius:6px; padding:1px; background:var(--bg); cursor:pointer; }
   .preview { display:flex; flex-direction:column; min-width:0; border:1px solid var(--line); border-radius:12px; overflow:hidden; background:var(--soft); }
   .pbar { display:flex; align-items:center; gap:10px; padding:8px 12px; background:var(--bg); border-bottom:1px solid var(--line); }
   .pbar b { font-weight:600; margin-right:auto; }
@@ -84,6 +92,11 @@
       <h3>Background color <span class="val" id="bg-val"></span></h3>
       <div class="swatches" id="bg-sw"></div>
       <div class="custom"><input type="color" id="bg-pick" aria-label="Pick a background color"><input type="text" id="bg-hex" maxlength="7" aria-label="Background color hex" placeholder="#F3F5F8"><span class="hint">Behind the card (Branded layout)</span></div>
+    </div>
+
+    <div class="group">
+      <h3>Text colors</h3>
+      <div class="tc" id="tc"></div>
     </div>
 
     <div class="group">
@@ -130,11 +143,16 @@
     ["Light teal", "#E6F4F4"], ["Cream", "#FBF7EE"], ["Peach", "#FDF1E7"], ["Light pink", "#FCEEF3"], ["Lavender", "#F1EEF8"], ["Charcoal", "#2B2D31"]
   ];
   var FIELDS = { layout: "mb_emaillayout", brand: "mb_brandcolor", bg: "mb_backgroundcolor", title: "mb_headertitle", logo: "mb_logourl",
-                 btnOn: "mb_showrecordbutton", btnLabel: "mb_recordbuttonlabel" };
+                 btnOn: "mb_showrecordbutton", btnLabel: "mb_recordbuttonlabel",
+                 text: "mb_textcolor", headerText: "mb_headertextcolor", buttonText: "mb_buttontextcolor" };
+  var TEXT_ROWS = [["text", "Body text", "Default"], ["headerText", "Header text", "Auto"], ["buttonText", "Button text", "Auto"]];
+  var TEXT_SWATCHES = [["Black", "#1B1B1F"], ["Dark gray", "#24262B"], ["Gray", "#605E5C"], ["White", "#FFFFFF"], ["Blue", "#0F6CBD"],
+                       ["Navy", "#1F3864"], ["Green", "#107C10"], ["Red", "#C4314B"], ["Gold", "#986F0B"]];
   var READ_ONLY = ["mb_organizationname", "mb_globalfooter"];
 
   var fc = null;          // form context, when hosted on the Email Settings form
-  var state = { layout: L.BRANDED, brand: "#0F6CBD", bg: "#F3F5F8", title: "", logo: "", btnOn: true, btnLabel: "Open record", org: "Contoso", footer: "" };
+  var state = { layout: L.BRANDED, brand: "#0F6CBD", bg: "#F3F5F8", title: "", logo: "", btnOn: true, btnLabel: "Open record", org: "Contoso", footer: "",
+                text: "", headerText: "", buttonText: "" };
 
   function $(id) { return document.getElementById(id); }
 
@@ -150,6 +168,9 @@
     state.logo = v(FIELDS.logo) || "";
     state.btnOn = v(FIELDS.btnOn) !== false;
     state.btnLabel = v(FIELDS.btnLabel) || "";
+    state.text = L.color(v(FIELDS.text), "");
+    state.headerText = L.color(v(FIELDS.headerText), "");
+    state.buttonText = L.color(v(FIELDS.buttonText), "");
     state.org = v("mb_organizationname") || "";
     state.footer = v("mb_globalfooter") || "";
   }
@@ -167,9 +188,18 @@
       Object.keys(FIELDS).map(function (k) { return FIELDS[k]; }).concat(READ_ONLY).forEach(function (n) {
         var a = attr(n); if (a) { a.addOnChange(function () { readForm(); sync(); render(); }); }
       });
+      try { fc.data.entity.addOnPostSave(function () { setTimeout(status, 0); }); } catch (e) { /* older clients */ }
+      setInterval(status, 1500); // the form can be saved or refreshed without any design column changing
       readForm(); sync(); render();
     }
   };
+
+  function status() {
+    var dirty = false;
+    try { dirty = !!fc && fc.data.entity.getIsDirty(); } catch (e) { /* form closing */ }
+    $("status").innerHTML = fc ? (dirty ? '<span class="dirty">Unsaved changes</span> — save the record to apply them.' : "All changes saved.")
+      : "Preview only: open this from Email Settings to edit.";
+  }
 
   // ---------- controls ----------
   function swatches(el, list, key) {
@@ -195,9 +225,28 @@
     $("btn-on").checked = state.btnOn;
     if (document.activeElement !== $("btn-label")) { $("btn-label").value = state.btnLabel; }
     $("btn-label").disabled = !state.btnOn;
-    $("status").innerHTML = fc ? (fc.data.entity.getIsDirty() ? '<span class="dirty">Unsaved changes</span> — save the record to apply them.' : "Changes are written to the form. Save the record to apply them.")
-      : "Preview only: open this from Email Settings to edit.";
+    TEXT_ROWS.forEach(function (r) {
+      var cur = (state[r[0]] || "").toUpperCase();
+      document.querySelectorAll('[data-tc="' + r[0] + '"] [data-c]').forEach(function (b) { b.setAttribute("aria-pressed", b.getAttribute("data-c").toUpperCase() === cur ? "true" : "false"); });
+      var pick = document.querySelector('[data-tc="' + r[0] + '"] input[type=color]');
+      if (pick) { pick.value = cur.length === 7 ? cur.toLowerCase() : (r[0] === "text" ? "#24262b" : "#ffffff"); }
+    });
+    status();
   }
+
+  // text colour rows: Auto/Default chip, swatches, picker
+  $("tc").innerHTML = TEXT_ROWS.map(function (r) {
+    return '<div class="tcrow" data-tc="' + r[0] + '"><span>' + r[1] + '</span><div class="tcctl"><button class="chip" data-c="">' + r[2] + "</button>" +
+      TEXT_SWATCHES.map(function (c) { return '<button class="sw" style="background:' + c[1] + '" data-c="' + c[1] + '" title="' + c[0] + " " + c[1] + '" aria-label="' + c[0] + '"></button>'; }).join("") +
+      '<input type="color" aria-label="' + r[1] + ' color"></div></div>';
+  }).join("");
+  $("tc").addEventListener("click", function (e) {
+    var b = e.target.closest("[data-c]"); if (!b) { return; }
+    write(b.closest("[data-tc]").getAttribute("data-tc"), b.getAttribute("data-c"));
+  });
+  $("tc").addEventListener("input", function (e) {
+    if (e.target.type === "color") { write(e.target.closest("[data-tc]").getAttribute("data-tc"), e.target.value.toUpperCase()); }
+  });
 
   swatches($("brand-sw"), BRANDS, "brand");
   swatches($("bg-sw"), BACKGROUNDS, "bg");
@@ -234,7 +283,8 @@
     $("frame").srcdoc = L.wrap(body, {
       layout: state.layout, brandColor: state.brand, backgroundColor: state.bg, logoUrl: state.logo, headerTitle: state.title,
       organizationName: state.org, footer: L.tokens(state.footer, { org: org }), recordUrl: "https://example.com/record", recordName: "Prepare Q4 report",
-      showRecordButton: state.btnOn, recordButtonLabel: state.btnLabel
+      showRecordButton: state.btnOn, recordButtonLabel: state.btnLabel,
+      textColor: state.text, headerTextColor: state.headerText, buttonTextColor: state.buttonText
     });
   }
 

@@ -259,6 +259,28 @@
                         <control id="bda036e8-f329-482a-9de5-7bdc1543af5b" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="mb_logourl" disabled="false" isrequired="false" />
                       </cell>
                     </row>
+                    <row>
+                      <cell id="2530bd43-699b-4c18-9742-0274945ff0c1" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Body Text Color" languagecode="1033" />
+                        </labels>
+                        <control id="91bad059-e204-43de-867d-3d6b5faa4bad" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="mb_textcolor" disabled="false" isrequired="false" />
+                      </cell>
+                      <cell id="b521520d-97fd-43ab-b827-98a4fddfd805" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Header Text Color" languagecode="1033" />
+                        </labels>
+                        <control id="b25b4491-2b7c-4c44-9d8a-040006a58e1d" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="mb_headertextcolor" disabled="false" isrequired="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="2f2c899c-f0db-44d4-9f0b-ac2e72855eca" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Button Text Color" languagecode="1033" />
+                        </labels>
+                        <control id="03ffb788-a1e2-4a01-b64b-bd635800c7be" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="mb_buttontextcolor" disabled="false" isrequired="false" />
+                      </cell>
+                    </row>
                   </rows>
                 </section>
                 <section id="1e8e9bb4-1b2d-4c94-bb05-93f27386a49c" name="sec_button" showlabel="true" visible="true" columns="11">
