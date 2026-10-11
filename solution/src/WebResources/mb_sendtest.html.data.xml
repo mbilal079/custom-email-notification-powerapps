@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<WebResource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <WebResourceId>{9cbeb742-82c5-f111-a05a-00224806b8ff}</WebResourceId>
+  <Name>mb_sendtest.html</Name>
+  <DisplayName>Email Hub - Send test</DisplayName>
+  <Description>Send a test of a template, personalised with any record, to your own address.</Description>
+  <WebResourceType>1</WebResourceType>
+  <IntroducedVersion>1.0</IntroducedVersion>
+  <IsEnabledForMobileClient>0</IsEnabledForMobileClient>
+  <IsAvailableForMobileOffline>0</IsAvailableForMobileOffline>
+  <IsCustomizable>1</IsCustomizable>
+  <CanBeDeleted>1</CanBeDeleted>
+  <IsHidden>0</IsHidden>
+  <FileName>/WebResources/mb_sendtesthtml9CBEB742-82C5-F111-A05A-00224806B8FF</FileName>
+</WebResource>

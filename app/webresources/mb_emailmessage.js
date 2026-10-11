@@ -106,7 +106,7 @@ EmailHub.Message = (function () {
     var tpl = attr(fc, "mb_templateid").getValue();
     if (!tpl || !tpl.length) { return; }
     Xrm.WebApi.retrieveRecord("mb_emailtemplate", cleanId(tpl[0].id),
-      "?$select=mb_subject,mb_body,mb_includesignature,mb_importance,mb_recordbutton")
+      "?$select=mb_subject,mb_body,mb_includesignature,mb_importance,mb_recordbutton,mb_fromaddress")
       .then(function (t) {
         var hasContent = !!(attr(fc, "mb_name").getValue() || attr(fc, "mb_body").getValue());
         var apply = function () {
@@ -119,6 +119,7 @@ EmailHub.Message = (function () {
           if (imp) { setChoiceByLabel(fc, "mb_importance", imp); }
           var rb = t["mb_recordbutton@OData.Community.Display.V1.FormattedValue"];
           if (rb && attr(fc, "mb_recordbutton")) { setChoiceByLabel(fc, "mb_recordbutton", rb); }
+          if (t.mb_fromaddress && attr(fc, "mb_fromaddress")) { attr(fc, "mb_fromaddress").setValue(t.mb_fromaddress); }
         };
         if (!hasContent) { apply(); return; }
         Xrm.Navigation.openConfirmDialog({

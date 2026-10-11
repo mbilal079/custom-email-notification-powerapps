@@ -91,18 +91,18 @@ const sendViaOutlook = wrap([DV, O365], {
   }
 }, {
   List_Settings: op(DV, "ListRecords", { entityName: SETS.mb_emailsetting, $filter: "mb_isactive eq true and statecode eq 0", $orderby: "createdon asc", $top: 1 }),
-  Settings: { type: "Compose", runAfter: after("List_Settings"), inputs: {
+  Get_Message: op(DV, "GetItem", { entityName: SETS.mb_emailmessage, recordId: "@triggerOutputs()?['body/mb_emailmessageid']", $select: "mb_importance,mb_fromaddress" }, after("List_Settings")),
+  Settings: { type: "Compose", runAfter: after("Get_Message"), inputs: {
     shared: `@equals(coalesce(${first}?['mb_sendmode'], ${SEND_FROM["Flow Owner Mailbox"]}), ${SEND_FROM["Shared Mailbox"]})`,
-    sharedMailbox: `@coalesce(${first}?['mb_sharedmailbox'], ${first}?['mb_fromaddress'], '')`,
-    sendFrom: `@coalesce(${first}?['mb_fromaddress'], '')`,
+    sharedMailbox: `@coalesce(outputs('Get_Message')?['body/mb_fromaddress'], ${first}?['mb_sharedmailbox'], ${first}?['mb_fromaddress'], '')`,
+    sendFrom: `@coalesce(outputs('Get_Message')?['body/mb_fromaddress'], ${first}?['mb_fromaddress'], '')`,
     replyTo: `@coalesce(${first}?['mb_replyto'], '')`
   } },
-  Get_Message: op(DV, "GetItem", { entityName: SETS.mb_emailmessage, recordId: "@triggerOutputs()?['body/mb_emailmessageid']", $select: "mb_importance" }, after("Settings")),
   List_Pending_Deliveries: op(DV, "ListRecords", {
     entityName: SETS.mb_emaildelivery,
     $select: "mb_emaildeliveryid,mb_toaddresses,mb_subjectsent,mb_bodysent,mb_ccaddresses,mb_bccaddresses",
     $filter: `_mb_emailmessageid_value eq @{triggerOutputs()?['body/mb_emailmessageid']} and mb_deliverystatus eq ${DELIVERY.Pending} and mb_channel eq ${CHANNEL["Office 365 Outlook (cloud flow)"]}`
-  }, after("Get_Message"), { runtimeConfiguration: { paginationPolicy: { minimumItemCount: 5000 } } }),
+  }, after("Settings"), { runtimeConfiguration: { paginationPolicy: { minimumItemCount: 5000 } } }),
   For_Each_Delivery: {
     type: "Foreach", runAfter: after("List_Pending_Deliveries"),
     foreach: "@outputs('List_Pending_Deliveries')?['body/value']",

@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<SdkMessageProcessingStep Name="Email Hub: settle delivery and message" SdkMessageProcessingStepId="{163f8840-7fc5-f111-a05a-00224806b8ff}" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<SdkMessageProcessingStep Name="Email Hub: settle delivery and message" SdkMessageProcessingStepId="{757cb219-84c5-f111-a05a-00224806b8ff}" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <SdkMessageId>20bebb1b-ea3e-db11-86a7-000a3a5473e8</SdkMessageId>
-  <PluginTypeName>EmailHub.Plugins.FinalizeDelivery, EmailHub.Plugins, Version=1.0.0.10, Culture=neutral, PublicKeyToken=167b1d5ffc6d5ccb</PluginTypeName>
-  <PluginTypeId>0633673a-7fc5-f111-a05a-00224806b8ff</PluginTypeId>
+  <PluginTypeName>EmailHub.Plugins.FinalizeDelivery, EmailHub.Plugins, Version=1.0.0.13, Culture=neutral, PublicKeyToken=167b1d5ffc6d5ccb</PluginTypeName>
+  <PluginTypeId>59b6ab13-84c5-f111-a05a-00224806b8ff</PluginTypeId>
   <PrimaryEntity>mb_emaildelivery</PrimaryEntity>
   <AsyncAutoDelete>1</AsyncAutoDelete>
   <Description>Email Hub: settle delivery and message</Description>

@@ -79,6 +79,14 @@
                         <control id="f73bedd7-951c-442a-a2fc-ddbe3f99580b" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="mb_bccaddresses" disabled="false" isrequired="false" />
                       </cell>
                     </row>
+                    <row>
+                      <cell id="b19d4b9c-a672-46dd-a543-95bc9e181e11" showlabel="true" visible="true" colspan="2" rowspan="1">
+                        <labels>
+                          <label description="Send From Address" languagecode="1033" />
+                        </labels>
+                        <control id="eeec9f6b-d3e2-4b78-b23b-d4cd6ffda930" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="mb_fromaddress" disabled="false" isrequired="false" />
+                      </cell>
+                    </row>
                   </rows>
                 </section>
                 <section id="7a0c39e5-994a-4286-ba78-ceaf43f31482" name="sec_content" showlabel="true" visible="true" columns="11">
@@ -281,6 +289,14 @@
                           <label description="Notification Rule" languagecode="1033" />
                         </labels>
                         <control id="92e44c44-a653-4269-a78a-02cbb3efb915" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="mb_notificationruleid" disabled="true" isrequired="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="e2abe925-dab5-4f48-a719-531c32eac35d" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Test Send" languagecode="1033" />
+                        </labels>
+                        <control id="fc8e120f-0b01-434b-bef9-4ea470de8438" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="mb_testsend" disabled="true" isrequired="false" />
                       </cell>
                     </row>
                   </rows>

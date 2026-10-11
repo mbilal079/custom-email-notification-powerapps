@@ -66,6 +66,13 @@ namespace EmailHub.Plugins.Common
         public const int SharedMailbox = 100000001;
     }
 
+    /// <summary>mb_designmode on templates.</summary>
+    public static class DesignMode
+    {
+        public const int Settings = 100000000;
+        public const int Custom = 100000001;
+    }
+
     /// <summary>mb_recordbutton on templates and messages.</summary>
     public static class RecordButton
     {

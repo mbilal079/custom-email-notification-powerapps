@@ -171,6 +171,46 @@
             <Description description="Sequence number of the import that created this record." languagecode="1033" />
           </Descriptions>
         </attribute>
+        <attribute PhysicalName="mb_backgroundcolor">
+          <Type>nvarchar</Type>
+          <Name>mb_backgroundcolor</Name>
+          <LogicalName>mb_backgroundcolor</LogicalName>
+          <RequiredLevel>none</RequiredLevel>
+          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+          <ImeMode>auto</ImeMode>
+          <ValidForUpdateApi>1</ValidForUpdateApi>
+          <ValidForReadApi>1</ValidForReadApi>
+          <ValidForCreateApi>1</ValidForCreateApi>
+          <IsCustomField>1</IsCustomField>
+          <IsAuditEnabled>1</IsAuditEnabled>
+          <IsSecured>0</IsSecured>
+          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+          <IsCustomizable>1</IsCustomizable>
+          <IsRenameable>1</IsRenameable>
+          <CanModifySearchSettings>1</CanModifySearchSettings>
+          <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+          <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+          <SourceType>0</SourceType>
+          <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+          <IsSortableEnabled>0</IsSortableEnabled>
+          <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+          <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+          <IsDataSourceSecret>0</IsDataSourceSecret>
+          <AutoNumberFormat></AutoNumberFormat>
+          <IsSearchable>0</IsSearchable>
+          <IsFilterable>0</IsFilterable>
+          <IsRetrievable>0</IsRetrievable>
+          <IsLocalizable>0</IsLocalizable>
+          <Format>text</Format>
+          <MaxLength>7</MaxLength>
+          <Length>14</Length>
+          <displaynames>
+            <displayname description="Background Color" languagecode="1033" />
+          </displaynames>
+          <Descriptions>
+            <Description description="Hex colour behind the email card (Branded layout), e.g. #F3F5F8. (Custom design only; empty = Settings value.)" languagecode="1033" />
+          </Descriptions>
+        </attribute>
         <attribute PhysicalName="mb_body">
           <Type>ntext</Type>
           <Name>mb_body</Name>
@@ -208,6 +248,86 @@
           </displaynames>
           <Descriptions>
             <Description description="Email body (HTML, edited with the rich text editor); may contain tokens." languagecode="1033" />
+          </Descriptions>
+        </attribute>
+        <attribute PhysicalName="mb_brandcolor">
+          <Type>nvarchar</Type>
+          <Name>mb_brandcolor</Name>
+          <LogicalName>mb_brandcolor</LogicalName>
+          <RequiredLevel>none</RequiredLevel>
+          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+          <ImeMode>auto</ImeMode>
+          <ValidForUpdateApi>1</ValidForUpdateApi>
+          <ValidForReadApi>1</ValidForReadApi>
+          <ValidForCreateApi>1</ValidForCreateApi>
+          <IsCustomField>1</IsCustomField>
+          <IsAuditEnabled>1</IsAuditEnabled>
+          <IsSecured>0</IsSecured>
+          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+          <IsCustomizable>1</IsCustomizable>
+          <IsRenameable>1</IsRenameable>
+          <CanModifySearchSettings>1</CanModifySearchSettings>
+          <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+          <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+          <SourceType>0</SourceType>
+          <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+          <IsSortableEnabled>0</IsSortableEnabled>
+          <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+          <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+          <IsDataSourceSecret>0</IsDataSourceSecret>
+          <AutoNumberFormat></AutoNumberFormat>
+          <IsSearchable>0</IsSearchable>
+          <IsFilterable>0</IsFilterable>
+          <IsRetrievable>0</IsRetrievable>
+          <IsLocalizable>0</IsLocalizable>
+          <Format>text</Format>
+          <MaxLength>7</MaxLength>
+          <Length>14</Length>
+          <displaynames>
+            <displayname description="Brand Color" languagecode="1033" />
+          </displaynames>
+          <Descriptions>
+            <Description description="Hex colour for the header and buttons, e.g. #0F6CBD. Text colour on it is chosen automatically for contrast. (Custom design only; empty = Settings value.)" languagecode="1033" />
+          </Descriptions>
+        </attribute>
+        <attribute PhysicalName="mb_buttontextcolor">
+          <Type>nvarchar</Type>
+          <Name>mb_buttontextcolor</Name>
+          <LogicalName>mb_buttontextcolor</LogicalName>
+          <RequiredLevel>none</RequiredLevel>
+          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+          <ImeMode>auto</ImeMode>
+          <ValidForUpdateApi>1</ValidForUpdateApi>
+          <ValidForReadApi>1</ValidForReadApi>
+          <ValidForCreateApi>1</ValidForCreateApi>
+          <IsCustomField>1</IsCustomField>
+          <IsAuditEnabled>1</IsAuditEnabled>
+          <IsSecured>0</IsSecured>
+          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+          <IsCustomizable>1</IsCustomizable>
+          <IsRenameable>1</IsRenameable>
+          <CanModifySearchSettings>1</CanModifySearchSettings>
+          <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+          <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+          <SourceType>0</SourceType>
+          <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+          <IsSortableEnabled>0</IsSortableEnabled>
+          <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+          <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+          <IsDataSourceSecret>0</IsDataSourceSecret>
+          <AutoNumberFormat></AutoNumberFormat>
+          <IsSearchable>0</IsSearchable>
+          <IsFilterable>0</IsFilterable>
+          <IsRetrievable>0</IsRetrievable>
+          <IsLocalizable>0</IsLocalizable>
+          <Format>text</Format>
+          <MaxLength>7</MaxLength>
+          <Length>14</Length>
+          <displaynames>
+            <displayname description="Button Text Color" languagecode="1033" />
+          </displaynames>
+          <Descriptions>
+            <Description description="Hex colour of the Open record button label. Empty: automatic contrast. (Custom design only; empty = Settings value.)" languagecode="1033" />
           </Descriptions>
         </attribute>
         <attribute PhysicalName="mb_category">
@@ -329,6 +449,131 @@
             <Description description="When and how to use the template." languagecode="1033" />
           </Descriptions>
         </attribute>
+        <attribute PhysicalName="mb_designmode">
+          <Type>picklist</Type>
+          <Name>mb_designmode</Name>
+          <LogicalName>mb_designmode</LogicalName>
+          <RequiredLevel>none</RequiredLevel>
+          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+          <ImeMode>auto</ImeMode>
+          <ValidForUpdateApi>1</ValidForUpdateApi>
+          <ValidForReadApi>1</ValidForReadApi>
+          <ValidForCreateApi>1</ValidForCreateApi>
+          <IsCustomField>1</IsCustomField>
+          <IsAuditEnabled>1</IsAuditEnabled>
+          <IsSecured>0</IsSecured>
+          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+          <IsCustomizable>1</IsCustomizable>
+          <IsRenameable>1</IsRenameable>
+          <CanModifySearchSettings>1</CanModifySearchSettings>
+          <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+          <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+          <SourceType>0</SourceType>
+          <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+          <IsSortableEnabled>0</IsSortableEnabled>
+          <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+          <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+          <IsDataSourceSecret>0</IsDataSourceSecret>
+          <AutoNumberFormat></AutoNumberFormat>
+          <IsSearchable>0</IsSearchable>
+          <IsFilterable>0</IsFilterable>
+          <IsRetrievable>0</IsRetrievable>
+          <IsLocalizable>0</IsLocalizable>
+          <optionset Name="mb_emailtemplate_mb_designmode">
+            <OptionSetType>picklist</OptionSetType>
+            <IntroducedVersion>1.0.0.0</IntroducedVersion>
+            <IsCustomizable>1</IsCustomizable>
+            <displaynames>
+              <displayname description="Design" languagecode="1033" />
+            </displaynames>
+            <Descriptions>
+              <Description description="Use Settings design: emails from this template look like all others. Custom design: this template has its own layout, colours, header, button label and footer." languagecode="1033" />
+            </Descriptions>
+            <options>
+              <option value="100000000" ExternalValue="" IsHidden="0">
+                <labels>
+                  <label description="Use Settings design" languagecode="1033" />
+                </labels>
+              </option>
+              <option value="100000001" ExternalValue="" IsHidden="0">
+                <labels>
+                  <label description="Custom design" languagecode="1033" />
+                </labels>
+              </option>
+            </options>
+          </optionset>
+          <displaynames>
+            <displayname description="Design" languagecode="1033" />
+          </displaynames>
+          <Descriptions>
+            <Description description="Use Settings design: emails from this template look like all others. Custom design: this template has its own layout, colours, header, button label and footer." languagecode="1033" />
+          </Descriptions>
+        </attribute>
+        <attribute PhysicalName="mb_emaillayout">
+          <Type>picklist</Type>
+          <Name>mb_emaillayout</Name>
+          <LogicalName>mb_emaillayout</LogicalName>
+          <RequiredLevel>none</RequiredLevel>
+          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+          <ImeMode>auto</ImeMode>
+          <ValidForUpdateApi>1</ValidForUpdateApi>
+          <ValidForReadApi>1</ValidForReadApi>
+          <ValidForCreateApi>1</ValidForCreateApi>
+          <IsCustomField>1</IsCustomField>
+          <IsAuditEnabled>1</IsAuditEnabled>
+          <IsSecured>0</IsSecured>
+          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+          <IsCustomizable>1</IsCustomizable>
+          <IsRenameable>1</IsRenameable>
+          <CanModifySearchSettings>1</CanModifySearchSettings>
+          <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+          <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+          <SourceType>0</SourceType>
+          <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+          <IsSortableEnabled>0</IsSortableEnabled>
+          <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+          <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+          <IsDataSourceSecret>0</IsDataSourceSecret>
+          <AutoNumberFormat></AutoNumberFormat>
+          <IsSearchable>0</IsSearchable>
+          <IsFilterable>0</IsFilterable>
+          <IsRetrievable>0</IsRetrievable>
+          <IsLocalizable>0</IsLocalizable>
+          <optionset Name="mb_emailtemplate_mb_emaillayout">
+            <OptionSetType>picklist</OptionSetType>
+            <IntroducedVersion>1.0.0.0</IntroducedVersion>
+            <IsCustomizable>1</IsCustomizable>
+            <displaynames>
+              <displayname description="Email Layout" languagecode="1033" />
+            </displaynames>
+            <Descriptions>
+              <Description description="How every email is framed. Branded: coloured header with logo, white content card, footer. Minimal: accent line, logo and title, simple footer. Plain: the body only. (Custom design only; empty = Settings value.)" languagecode="1033" />
+            </Descriptions>
+            <options>
+              <option value="100000000" ExternalValue="" IsHidden="0">
+                <labels>
+                  <label description="Branded (header, card and footer)" languagecode="1033" />
+                </labels>
+              </option>
+              <option value="100000001" ExternalValue="" IsHidden="0">
+                <labels>
+                  <label description="Minimal (clean, accent line)" languagecode="1033" />
+                </labels>
+              </option>
+              <option value="100000002" ExternalValue="" IsHidden="0">
+                <labels>
+                  <label description="Plain (no layout)" languagecode="1033" />
+                </labels>
+              </option>
+            </options>
+          </optionset>
+          <displaynames>
+            <displayname description="Email Layout" languagecode="1033" />
+          </displaynames>
+          <Descriptions>
+            <Description description="How every email is framed. Branded: coloured header with logo, white content card, footer. Minimal: accent line, logo and title, simple footer. Plain: the body only. (Custom design only; empty = Settings value.)" languagecode="1033" />
+          </Descriptions>
+        </attribute>
         <attribute PhysicalName="mb_emailtemplateId">
           <Type>primarykey</Type>
           <Name>mb_emailtemplateid</Name>
@@ -364,6 +609,165 @@
           </displaynames>
           <Descriptions>
             <Description description="Unique identifier for entity instances" languagecode="1033" />
+          </Descriptions>
+        </attribute>
+        <attribute PhysicalName="mb_footer">
+          <Type>ntext</Type>
+          <Name>mb_footer</Name>
+          <LogicalName>mb_footer</LogicalName>
+          <RequiredLevel>none</RequiredLevel>
+          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+          <ImeMode>auto</ImeMode>
+          <ValidForUpdateApi>1</ValidForUpdateApi>
+          <ValidForReadApi>1</ValidForReadApi>
+          <ValidForCreateApi>1</ValidForCreateApi>
+          <IsCustomField>1</IsCustomField>
+          <IsAuditEnabled>1</IsAuditEnabled>
+          <IsSecured>0</IsSecured>
+          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+          <IsCustomizable>1</IsCustomizable>
+          <IsRenameable>1</IsRenameable>
+          <CanModifySearchSettings>1</CanModifySearchSettings>
+          <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+          <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+          <SourceType>0</SourceType>
+          <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+          <IsSortableEnabled>0</IsSortableEnabled>
+          <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+          <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+          <IsDataSourceSecret>0</IsDataSourceSecret>
+          <AutoNumberFormat></AutoNumberFormat>
+          <IsSearchable>0</IsSearchable>
+          <IsFilterable>0</IsFilterable>
+          <IsRetrievable>0</IsRetrievable>
+          <IsLocalizable>0</IsLocalizable>
+          <Format>textarea</Format>
+          <MaxLength>100000</MaxLength>
+          <displaynames>
+            <displayname description="Footer (HTML)" languagecode="1033" />
+          </displaynames>
+          <Descriptions>
+            <Description description="Footer for emails from this template (Custom design). Empty = the Global Footer from Settings." languagecode="1033" />
+          </Descriptions>
+        </attribute>
+        <attribute PhysicalName="mb_fromaddress">
+          <Type>nvarchar</Type>
+          <Name>mb_fromaddress</Name>
+          <LogicalName>mb_fromaddress</LogicalName>
+          <RequiredLevel>none</RequiredLevel>
+          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+          <ImeMode>auto</ImeMode>
+          <ValidForUpdateApi>1</ValidForUpdateApi>
+          <ValidForReadApi>1</ValidForReadApi>
+          <ValidForCreateApi>1</ValidForCreateApi>
+          <IsCustomField>1</IsCustomField>
+          <IsAuditEnabled>1</IsAuditEnabled>
+          <IsSecured>0</IsSecured>
+          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+          <IsCustomizable>1</IsCustomizable>
+          <IsRenameable>1</IsRenameable>
+          <CanModifySearchSettings>1</CanModifySearchSettings>
+          <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+          <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+          <SourceType>0</SourceType>
+          <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+          <IsSortableEnabled>0</IsSortableEnabled>
+          <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+          <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+          <IsDataSourceSecret>0</IsDataSourceSecret>
+          <AutoNumberFormat></AutoNumberFormat>
+          <IsSearchable>0</IsSearchable>
+          <IsFilterable>0</IsFilterable>
+          <IsRetrievable>0</IsRetrievable>
+          <IsLocalizable>0</IsLocalizable>
+          <Format>email</Format>
+          <MaxLength>320</MaxLength>
+          <Length>640</Length>
+          <displaynames>
+            <displayname description="Send From Address" languagecode="1033" />
+          </displaynames>
+          <Descriptions>
+            <Description description="Address emails from this template are sent from; overrides Email Settings. Copied to each message." languagecode="1033" />
+          </Descriptions>
+        </attribute>
+        <attribute PhysicalName="mb_headertextcolor">
+          <Type>nvarchar</Type>
+          <Name>mb_headertextcolor</Name>
+          <LogicalName>mb_headertextcolor</LogicalName>
+          <RequiredLevel>none</RequiredLevel>
+          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+          <ImeMode>auto</ImeMode>
+          <ValidForUpdateApi>1</ValidForUpdateApi>
+          <ValidForReadApi>1</ValidForReadApi>
+          <ValidForCreateApi>1</ValidForCreateApi>
+          <IsCustomField>1</IsCustomField>
+          <IsAuditEnabled>1</IsAuditEnabled>
+          <IsSecured>0</IsSecured>
+          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+          <IsCustomizable>1</IsCustomizable>
+          <IsRenameable>1</IsRenameable>
+          <CanModifySearchSettings>1</CanModifySearchSettings>
+          <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+          <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+          <SourceType>0</SourceType>
+          <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+          <IsSortableEnabled>0</IsSortableEnabled>
+          <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+          <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+          <IsDataSourceSecret>0</IsDataSourceSecret>
+          <AutoNumberFormat></AutoNumberFormat>
+          <IsSearchable>0</IsSearchable>
+          <IsFilterable>0</IsFilterable>
+          <IsRetrievable>0</IsRetrievable>
+          <IsLocalizable>0</IsLocalizable>
+          <Format>text</Format>
+          <MaxLength>7</MaxLength>
+          <Length>14</Length>
+          <displaynames>
+            <displayname description="Header Text Color" languagecode="1033" />
+          </displaynames>
+          <Descriptions>
+            <Description description="Hex colour of the header title. Empty: white or dark, whichever contrasts with the brand colour. (Custom design only; empty = Settings value.)" languagecode="1033" />
+          </Descriptions>
+        </attribute>
+        <attribute PhysicalName="mb_headertitle">
+          <Type>nvarchar</Type>
+          <Name>mb_headertitle</Name>
+          <LogicalName>mb_headertitle</LogicalName>
+          <RequiredLevel>none</RequiredLevel>
+          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+          <ImeMode>auto</ImeMode>
+          <ValidForUpdateApi>1</ValidForUpdateApi>
+          <ValidForReadApi>1</ValidForReadApi>
+          <ValidForCreateApi>1</ValidForCreateApi>
+          <IsCustomField>1</IsCustomField>
+          <IsAuditEnabled>1</IsAuditEnabled>
+          <IsSecured>0</IsSecured>
+          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+          <IsCustomizable>1</IsCustomizable>
+          <IsRenameable>1</IsRenameable>
+          <CanModifySearchSettings>1</CanModifySearchSettings>
+          <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+          <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+          <SourceType>0</SourceType>
+          <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+          <IsSortableEnabled>0</IsSortableEnabled>
+          <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+          <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+          <IsDataSourceSecret>0</IsDataSourceSecret>
+          <AutoNumberFormat></AutoNumberFormat>
+          <IsSearchable>0</IsSearchable>
+          <IsFilterable>0</IsFilterable>
+          <IsRetrievable>0</IsRetrievable>
+          <IsLocalizable>0</IsLocalizable>
+          <Format>text</Format>
+          <MaxLength>200</MaxLength>
+          <Length>400</Length>
+          <displaynames>
+            <displayname description="Header Title" languagecode="1033" />
+          </displaynames>
+          <Descriptions>
+            <Description description="Text next to the logo. Defaults to the Organization Name. (Custom design only; empty = Settings value.)" languagecode="1033" />
           </Descriptions>
         </attribute>
         <attribute PhysicalName="mb_importance">
@@ -492,6 +896,46 @@
             <Description description="Whether messages using this template include the sender signature." languagecode="1033" />
           </Descriptions>
         </attribute>
+        <attribute PhysicalName="mb_logourl">
+          <Type>nvarchar</Type>
+          <Name>mb_logourl</Name>
+          <LogicalName>mb_logourl</LogicalName>
+          <RequiredLevel>none</RequiredLevel>
+          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+          <ImeMode>auto</ImeMode>
+          <ValidForUpdateApi>1</ValidForUpdateApi>
+          <ValidForReadApi>1</ValidForReadApi>
+          <ValidForCreateApi>1</ValidForCreateApi>
+          <IsCustomField>1</IsCustomField>
+          <IsAuditEnabled>1</IsAuditEnabled>
+          <IsSecured>0</IsSecured>
+          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+          <IsCustomizable>1</IsCustomizable>
+          <IsRenameable>1</IsRenameable>
+          <CanModifySearchSettings>1</CanModifySearchSettings>
+          <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+          <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+          <SourceType>0</SourceType>
+          <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+          <IsSortableEnabled>0</IsSortableEnabled>
+          <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+          <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+          <IsDataSourceSecret>0</IsDataSourceSecret>
+          <AutoNumberFormat></AutoNumberFormat>
+          <IsSearchable>0</IsSearchable>
+          <IsFilterable>0</IsFilterable>
+          <IsRetrievable>0</IsRetrievable>
+          <IsLocalizable>0</IsLocalizable>
+          <Format>url</Format>
+          <MaxLength>1000</MaxLength>
+          <Length>2000</Length>
+          <displaynames>
+            <displayname description="Logo URL" languagecode="1033" />
+          </displaynames>
+          <Descriptions>
+            <Description description="Public https URL of a logo image (PNG or JPG, about 36px high). Leave empty for a text-only header. (Custom design only; empty = Settings value.)" languagecode="1033" />
+          </Descriptions>
+        </attribute>
         <attribute PhysicalName="mb_name">
           <Type>nvarchar</Type>
           <Name>mb_name</Name>
@@ -594,6 +1038,46 @@
             <Description description="Show or hide the Open record button (emails about a record). Use Settings default follows Email Settings." languagecode="1033" />
           </Descriptions>
         </attribute>
+        <attribute PhysicalName="mb_recordbuttonlabel">
+          <Type>nvarchar</Type>
+          <Name>mb_recordbuttonlabel</Name>
+          <LogicalName>mb_recordbuttonlabel</LogicalName>
+          <RequiredLevel>none</RequiredLevel>
+          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+          <ImeMode>auto</ImeMode>
+          <ValidForUpdateApi>1</ValidForUpdateApi>
+          <ValidForReadApi>1</ValidForReadApi>
+          <ValidForCreateApi>1</ValidForCreateApi>
+          <IsCustomField>1</IsCustomField>
+          <IsAuditEnabled>1</IsAuditEnabled>
+          <IsSecured>0</IsSecured>
+          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+          <IsCustomizable>1</IsCustomizable>
+          <IsRenameable>1</IsRenameable>
+          <CanModifySearchSettings>1</CanModifySearchSettings>
+          <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+          <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+          <SourceType>0</SourceType>
+          <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+          <IsSortableEnabled>0</IsSortableEnabled>
+          <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+          <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+          <IsDataSourceSecret>0</IsDataSourceSecret>
+          <AutoNumberFormat></AutoNumberFormat>
+          <IsSearchable>0</IsSearchable>
+          <IsFilterable>0</IsFilterable>
+          <IsRetrievable>0</IsRetrievable>
+          <IsLocalizable>0</IsLocalizable>
+          <Format>text</Format>
+          <MaxLength>100</MaxLength>
+          <Length>200</Length>
+          <displaynames>
+            <displayname description="Open Record Button Label" languagecode="1033" />
+          </displaynames>
+          <Descriptions>
+            <Description description="Button text, e.g. View task. Defaults to Open record. (Custom design only; empty = Settings value.)" languagecode="1033" />
+          </Descriptions>
+        </attribute>
         <attribute PhysicalName="mb_subject">
           <Type>nvarchar</Type>
           <Name>mb_subject</Name>
@@ -632,6 +1116,46 @@
           </displaynames>
           <Descriptions>
             <Description description="Email subject; may contain tokens." languagecode="1033" />
+          </Descriptions>
+        </attribute>
+        <attribute PhysicalName="mb_textcolor">
+          <Type>nvarchar</Type>
+          <Name>mb_textcolor</Name>
+          <LogicalName>mb_textcolor</LogicalName>
+          <RequiredLevel>none</RequiredLevel>
+          <DisplayMask>ValidForAdvancedFind|ValidForForm|ValidForGrid</DisplayMask>
+          <ImeMode>auto</ImeMode>
+          <ValidForUpdateApi>1</ValidForUpdateApi>
+          <ValidForReadApi>1</ValidForReadApi>
+          <ValidForCreateApi>1</ValidForCreateApi>
+          <IsCustomField>1</IsCustomField>
+          <IsAuditEnabled>1</IsAuditEnabled>
+          <IsSecured>0</IsSecured>
+          <IntroducedVersion>1.0.0.0</IntroducedVersion>
+          <IsCustomizable>1</IsCustomizable>
+          <IsRenameable>1</IsRenameable>
+          <CanModifySearchSettings>1</CanModifySearchSettings>
+          <CanModifyRequirementLevelSettings>1</CanModifyRequirementLevelSettings>
+          <CanModifyAdditionalSettings>1</CanModifyAdditionalSettings>
+          <SourceType>0</SourceType>
+          <IsGlobalFilterEnabled>0</IsGlobalFilterEnabled>
+          <IsSortableEnabled>0</IsSortableEnabled>
+          <CanModifyGlobalFilterSettings>1</CanModifyGlobalFilterSettings>
+          <CanModifyIsSortableSettings>1</CanModifyIsSortableSettings>
+          <IsDataSourceSecret>0</IsDataSourceSecret>
+          <AutoNumberFormat></AutoNumberFormat>
+          <IsSearchable>0</IsSearchable>
+          <IsFilterable>0</IsFilterable>
+          <IsRetrievable>0</IsRetrievable>
+          <IsLocalizable>0</IsLocalizable>
+          <Format>text</Format>
+          <MaxLength>7</MaxLength>
+          <Length>14</Length>
+          <displaynames>
+            <displayname description="Body Text Color" languagecode="1033" />
+          </displaynames>
+          <Descriptions>
+            <Description description="Hex colour of the email text. Empty: dark gray. (Custom design only; empty = Settings value.)" languagecode="1033" />
           </Descriptions>
         </attribute>
         <attribute PhysicalName="ModifiedBy">

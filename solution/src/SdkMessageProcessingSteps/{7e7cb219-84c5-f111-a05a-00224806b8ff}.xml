@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<SdkMessageProcessingStep Name="Email Hub: unregister rule (delete)" SdkMessageProcessingStepId="{1f3f8840-7fc5-f111-a05a-00224806b8ff}" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<SdkMessageProcessingStep Name="Email Hub: unregister rule (delete)" SdkMessageProcessingStepId="{7e7cb219-84c5-f111-a05a-00224806b8ff}" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <SdkMessageId>a1bdbb1b-ea3e-db11-86a7-000a3a5473e8</SdkMessageId>
-  <PluginTypeName>EmailHub.Plugins.NotificationRuleManager, EmailHub.Plugins, Version=1.0.0.10, Culture=neutral, PublicKeyToken=167b1d5ffc6d5ccb</PluginTypeName>
-  <PluginTypeId>0733673a-7fc5-f111-a05a-00224806b8ff</PluginTypeId>
+  <PluginTypeName>EmailHub.Plugins.NotificationRuleManager, EmailHub.Plugins, Version=1.0.0.13, Culture=neutral, PublicKeyToken=167b1d5ffc6d5ccb</PluginTypeName>
+  <PluginTypeId>5ab6ab13-84c5-f111-a05a-00224806b8ff</PluginTypeId>
   <PrimaryEntity>mb_notificationrule</PrimaryEntity>
   <AsyncAutoDelete>0</AsyncAutoDelete>
   <Description>Email Hub: unregister rule (delete)</Description>

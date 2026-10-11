@@ -2,8 +2,8 @@
 // Post-build fixes for the Email Hub forms. Run after build-model-app.js (idempotent):
 //  - field labels: a column created in the same build can get its logical name as the form label
 //    (e.g. "mb_brandcolor"); those are replaced with the column's display name
-//  - Email Settings: inserts the Design studio (web resource mb_designstudio.html) at the top of the
-//    Email Design tab; the form script mb_emailsetting.js connects it to the record
+//  - Email Settings and Email Templates: inserts the Design studio (web resource mb_designstudio.html) at the
+//    top of the design tab (tab_design); the form scripts mb_emailsetting.js / mb_template.js connect it
 //
 // Usage: node scripts/finalize-forms.js https://yourorg.crm.dynamics.com
 "use strict";
@@ -48,7 +48,7 @@ function studioSection() {
         return cell.replace(new RegExp(`<label description="${field}" languagecode="(\\d+)" />`), (m, lc) => { fixed++; return `<label description="${esc(label[field])}" languagecode="${lc}" />`; });
       });
       let studio = false;
-      if (table === "mb_emailsetting" && !xml.includes("WebResource_mb_designstudio")) {
+      if ((table === "mb_emailsetting" || table === "mb_emailtemplate") && f.name !== "Information" && !xml.includes("WebResource_mb_designstudio")) {
         const tab = xml.indexOf('name="tab_design"');
         const at = tab < 0 ? -1 : xml.indexOf("<sections>", tab);
         if (at > 0) { xml = xml.slice(0, at + "<sections>".length) + studioSection() + xml.slice(at + "<sections>".length); studio = true; }

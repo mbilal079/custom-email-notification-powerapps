@@ -329,6 +329,99 @@
             "Hide"
           ],
           "description": "Show or hide the Open record button (emails about a record). Use Settings default follows Email Settings."
+        },
+        {
+          "schemaName": "mb_designmode",
+          "displayName": "Design",
+          "type": "Choice",
+          "options": [
+            "Use Settings design",
+            "Custom design"
+          ],
+          "description": "Use Settings design: emails from this template look like all others. Custom design: this template has its own layout, colours, header, button label and footer."
+        },
+        {
+          "schemaName": "mb_emaillayout",
+          "displayName": "Email Layout",
+          "type": "Choice",
+          "options": [
+            "Branded (header, card and footer)",
+            "Minimal (clean, accent line)",
+            "Plain (no layout)"
+          ],
+          "description": "How every email is framed. Branded: coloured header with logo, white content card, footer. Minimal: accent line, logo and title, simple footer. Plain: the body only. (Custom design only; empty = Settings value.)"
+        },
+        {
+          "schemaName": "mb_brandcolor",
+          "displayName": "Brand Color",
+          "type": "Text",
+          "maxLength": 7,
+          "description": "Hex colour for the header and buttons, e.g. #0F6CBD. Text colour on it is chosen automatically for contrast. (Custom design only; empty = Settings value.)"
+        },
+        {
+          "schemaName": "mb_backgroundcolor",
+          "displayName": "Background Color",
+          "type": "Text",
+          "maxLength": 7,
+          "description": "Hex colour behind the email card (Branded layout), e.g. #F3F5F8. (Custom design only; empty = Settings value.)"
+        },
+        {
+          "schemaName": "mb_textcolor",
+          "displayName": "Body Text Color",
+          "type": "Text",
+          "maxLength": 7,
+          "description": "Hex colour of the email text. Empty: dark gray. (Custom design only; empty = Settings value.)"
+        },
+        {
+          "schemaName": "mb_headertextcolor",
+          "displayName": "Header Text Color",
+          "type": "Text",
+          "maxLength": 7,
+          "description": "Hex colour of the header title. Empty: white or dark, whichever contrasts with the brand colour. (Custom design only; empty = Settings value.)"
+        },
+        {
+          "schemaName": "mb_buttontextcolor",
+          "displayName": "Button Text Color",
+          "type": "Text",
+          "maxLength": 7,
+          "description": "Hex colour of the Open record button label. Empty: automatic contrast. (Custom design only; empty = Settings value.)"
+        },
+        {
+          "schemaName": "mb_headertitle",
+          "displayName": "Header Title",
+          "type": "Text",
+          "maxLength": 200,
+          "description": "Text next to the logo. Defaults to the Organization Name. (Custom design only; empty = Settings value.)"
+        },
+        {
+          "schemaName": "mb_logourl",
+          "displayName": "Logo URL",
+          "type": "Text",
+          "format": "Url",
+          "maxLength": 1000,
+          "description": "Public https URL of a logo image (PNG or JPG, about 36px high). Leave empty for a text-only header. (Custom design only; empty = Settings value.)"
+        },
+        {
+          "schemaName": "mb_recordbuttonlabel",
+          "displayName": "Open Record Button Label",
+          "type": "Text",
+          "maxLength": 100,
+          "description": "Button text, e.g. View task. Defaults to Open record. (Custom design only; empty = Settings value.)"
+        },
+        {
+          "schemaName": "mb_footer",
+          "displayName": "Footer (HTML)",
+          "type": "Memo",
+          "maxLength": 100000,
+          "description": "Footer for emails from this template (Custom design). Empty = the Global Footer from Settings."
+        },
+        {
+          "schemaName": "mb_fromaddress",
+          "displayName": "Send From Address",
+          "type": "Text",
+          "format": "Email",
+          "maxLength": 320,
+          "description": "Address emails from this template are sent from; overrides Email Settings. Copied to each message."
         }
       ]
     },
@@ -602,6 +695,21 @@
             "Hide"
           ],
           "description": "Show or hide the Open record button (emails about a record). Use Settings default follows Email Settings."
+        },
+        {
+          "schemaName": "mb_fromaddress",
+          "displayName": "Send From Address",
+          "type": "Text",
+          "format": "Email",
+          "maxLength": 320,
+          "description": "Address this email is sent from; overrides Email Settings. Filled from the template."
+        },
+        {
+          "schemaName": "mb_testsend",
+          "displayName": "Test Send",
+          "type": "Boolean",
+          "defaultValue": false,
+          "description": "A test sent from a template: personalised with the related record, delivered only to the To addresses, not logged on the record."
         }
       ]
     },
@@ -1038,6 +1146,20 @@
       "type": "js",
       "contentPath": "webresources/mb_emaillayout.js",
       "description": "Shared email layout used by the Preview dialog and the Design studio; mirrors EmailLayout.cs."
+    },
+    {
+      "name": "mb_sendtest.html",
+      "displayName": "Email Hub - Send test",
+      "type": "html",
+      "contentPath": "webresources/mb_sendtest.html",
+      "description": "Send a test of a template, personalised with any record, to your own address."
+    },
+    {
+      "name": "mb_template.js",
+      "displayName": "Email Hub - Email Template form",
+      "type": "js",
+      "contentPath": "webresources/mb_template.js",
+      "description": "Template form: Design studio connection and the Send Test command."
     },
     {
       "name": "mb_gettingstarted.html",
@@ -1571,7 +1693,11 @@
                       "colspan": 2
                     },
                     "mb_ccaddresses",
-                    "mb_bccaddresses"
+                    "mb_bccaddresses",
+                    {
+                      "name": "mb_fromaddress",
+                      "colspan": 2
+                    }
                   ]
                 },
                 {
@@ -1651,6 +1777,10 @@
                     {
                       "name": "mb_notificationruleid",
                       "readOnly": true
+                    },
+                    {
+                      "name": "mb_testsend",
+                      "readOnly": true
                     }
                   ]
                 }
@@ -1713,6 +1843,7 @@
                   "name": "mb_body",
                   "colspan": 2
                 },
+                "mb_fromaddress",
                 "mb_importance",
                 "mb_includesignature",
                 "mb_recordbutton",
@@ -1723,6 +1854,54 @@
               ]
             }
           ]
+        },
+        {
+          "name": "tab_design",
+          "label": "Design",
+          "sections": [
+            {
+              "name": "sec_designmode",
+              "label": "Design",
+              "columns": 2,
+              "fields": [
+                "mb_designmode"
+              ]
+            },
+            {
+              "name": "sec_layout",
+              "label": "Layout and colours",
+              "columns": 2,
+              "fields": [
+                "mb_emaillayout",
+                "mb_headertitle",
+                "mb_brandcolor",
+                "mb_backgroundcolor",
+                {
+                  "name": "mb_logourl",
+                  "colspan": 2
+                },
+                "mb_textcolor",
+                "mb_headertextcolor",
+                "mb_buttontextcolor",
+                "mb_recordbuttonlabel"
+              ]
+            },
+            {
+              "name": "sec_footer",
+              "label": "Footer",
+              "columns": 1,
+              "fields": [
+                "mb_footer"
+              ]
+            }
+          ]
+        }
+      ],
+      "events": [
+        {
+          "event": "onload",
+          "library": "mb_template.js",
+          "function": "EmailHub.Template.onLoad"
         }
       ]
     },
@@ -2177,6 +2356,13 @@
       "location": "MainTab",
       "library": "mb_preview.js",
       "function": "EmailHub.Preview.open"
+    },
+    {
+      "entity": "mb_emailtemplate",
+      "label": "Send Test",
+      "location": "MainTab",
+      "library": "mb_template.js",
+      "function": "EmailHub.Template.sendTest"
     }
   ],
   "dashboards": [

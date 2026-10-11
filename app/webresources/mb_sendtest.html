@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Send Test</title>
+<style>
+  :root { --bg:#ffffff; --fg:#1b1b1f; --muted:#64666e; --line:#e3e6eb; --soft:#f5f6f8; --accent:#0f6cbd; --accent-soft:#e8f1fb;
+          --ok:#1a7f4b; --ok-soft:#e5f4ec; --bad:#c4314b; --bad-soft:#fbe9ec; --warn:#8a5300; --warn-soft:#fff4ce; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) { --bg:#1d1f23; --fg:#ececf0; --muted:#a0a3ab; --line:#2e3036; --soft:#25272c; --accent:#4ea1f0; --accent-soft:#1c2b3c;
+      --ok:#3fbf7f; --ok-soft:#173026; --bad:#f06a80; --bad-soft:#3a1c22; --warn:#f0c060; --warn-soft:#3a2f17; }
+  }
+  * { box-sizing:border-box; }
+  html, body { margin:0; background:var(--bg); color:var(--fg); font:14px/1.45 "Segoe UI",system-ui,sans-serif; }
+  main { padding:18px 20px 20px; display:flex; flex-direction:column; gap:16px; }
+  .tpl { padding:12px 14px; border-radius:10px; background:var(--soft); }
+  .tpl .k { font-size:12px; color:var(--muted); }
+  .tpl b { display:block; overflow-wrap:anywhere; }
+  label.l { display:block; font-weight:600; margin-bottom:6px; }
+  .hint { color:var(--muted); font-size:12.5px; margin-top:4px; }
+  .tables { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:8px; }
+  .tables button { border:1px solid var(--line); background:var(--bg); color:var(--fg); border-radius:99px; padding:4px 12px; font:inherit; font-size:13px; cursor:pointer; }
+  .tables button[aria-pressed="true"] { border-color:var(--accent); color:var(--accent); font-weight:600; background:var(--accent-soft); }
+  .pick { display:flex; gap:8px; align-items:center; }
+  input[type=text] { border:1px solid var(--line); border-radius:8px; padding:8px 10px; font:inherit; color:var(--fg); background:var(--bg); width:100%; }
+  input[type=text]:focus { outline:2px solid var(--accent); outline-offset:-1px; }
+  .chosen { flex:1; min-width:0; padding:8px 10px; border:1px dashed var(--line); border-radius:8px; color:var(--muted); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .chosen.set { border-style:solid; color:var(--fg); font-weight:600; }
+  button.btn { border:1px solid var(--line); background:var(--bg); color:var(--fg); border-radius:8px; padding:8px 14px; font:inherit; cursor:pointer; white-space:nowrap; }
+  button.btn:hover { border-color:var(--accent); color:var(--accent); }
+  button.primary { border:0; background:var(--accent); color:#fff; font-weight:600; padding:10px 18px; border-radius:8px; font:inherit; cursor:pointer; }
+  button.primary:disabled { opacity:.5; cursor:default; }
+  .note { padding:10px 12px; border-radius:8px; font-size:13px; }
+  .note.warn { background:var(--warn-soft); color:var(--warn); }
+  .note.ok { background:var(--ok-soft); color:var(--ok); }
+  .note.bad { background:var(--bad-soft); color:var(--bad); }
+  .note.info { background:var(--accent-soft); color:var(--accent); }
+  .actions { display:flex; gap:10px; align-items:center; }
+  .spin { width:16px; height:16px; border:2px solid currentColor; border-right-color:transparent; border-radius:50%; display:inline-block; animation:r .8s linear infinite; vertical-align:-3px; margin-right:6px; }
+  @keyframes r { to { transform:rotate(360deg); } }
+  a { color:var(--accent); }
+</style>
+</head>
+<body>
+<main>
+  <div class="tpl"><div class="k">Template</div><b id="tpl-name">Loading…</b><div class="hint" id="tpl-subject"></div></div>
+
+  <div>
+    <label class="l">Personalise with</label>
+    <div class="tables" id="tables">
+      <button data-t="contact" aria-pressed="true">Contact</button>
+      <button data-t="account">Account</button>
+      <button data-t="lead">Lead</button>
+      <button data-t="systemuser">User</button>
+      <button data-t="">Other table…</button>
+    </div>
+    <input type="text" id="other" placeholder="Table logical name, e.g. task or new_project" hidden>
+    <div class="pick" style="margin-top:8px">
+      <div class="chosen" id="chosen">No record: tokens use your own details</div>
+      <button class="btn" id="choose">Choose record</button>
+    </div>
+    <div class="hint">Tokens such as {{FirstName}}, {{Company}} and {{Record.column}} use this record. It is never emailed and nothing is logged on it.</div>
+  </div>
+
+  <div>
+    <label class="l" for="to">Send the test to</label>
+    <input type="text" id="to" placeholder="you@example.com; colleague@example.com">
+    <div class="hint">One or more addresses, separated by ; or ,</div>
+  </div>
+
+  <div id="testmode"></div>
+  <div class="actions"><button class="primary" id="send" disabled>Send test</button><span id="result"></span></div>
+</main>
+
+<script>
+(function () {
+  "use strict";
+  // fixed choice values (flows/choice-values.json)
+  var EMAIL_ADDRESSES = 100000003, QUEUED = 100000001, SENT = 100000003, PARTIAL = 100000004, FAILED = 100000005;
+  var Xrm = (function () { try { return window.parent.Xrm || window.Xrm; } catch (e) { return window.Xrm; } })();
+  var root = (function () { try { return Xrm.Utility.getGlobalContext().getClientUrl(); } catch (e) { return location.origin; } })();
+  var templateId = (new URLSearchParams(location.search).get("data") || "").replace(/[{}]/g, "");
+  var table = "contact", record = null, tpl = null;
+
+  function $(id) { return document.getElementById(id); }
+  function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+  function api(method, path, body) {
+    return fetch(root + "/api/data/v9.2/" + path, {
+      method: method, credentials: "same-origin", body: body ? JSON.stringify(body) : undefined,
+      headers: { Accept: "application/json", "Content-Type": "application/json; charset=utf-8", "OData-Version": "4.0", "OData-MaxVersion": "4.0",
+                 Prefer: 'return=representation,odata.include-annotations="*"' }
+    }).then(function (r) {
+      if (r.status === 204) { return {}; }
+      return r.json().then(function (j) { if (!r.ok) { throw new Error((j.error && j.error.message) || ("HTTP " + r.status)); } return j; });
+    });
+  }
+
+  // template, my address, Test Mode
+  Promise.all([
+    api("GET", "mb_emailtemplates(" + templateId + ")?$select=mb_name,mb_subject,mb_body,mb_includesignature,mb_importance,mb_recordbutton,mb_fromaddress"),
+    api("GET", "WhoAmI").then(function (w) { return api("GET", "systemusers(" + w.UserId + ")?$select=internalemailaddress"); }),
+    api("GET", "mb_emailsettings?$select=mb_testmode,mb_testrecipient&$filter=statecode eq 0 and mb_isactive eq true&$top=1")
+  ]).then(function (r) {
+    tpl = r[0];
+    $("tpl-name").textContent = tpl.mb_name || "(untitled template)";
+    $("tpl-subject").textContent = tpl.mb_subject ? "Subject: " + tpl.mb_subject : "";
+    $("to").value = r[1].internalemailaddress || "";
+    var s = (r[2].value || [])[0];
+    if (s && s.mb_testmode) {
+      $("testmode").innerHTML = '<div class="note warn">Test Mode is on: the test goes to <b>' + esc(s.mb_testrecipient || "the Test Mode Recipient") + "</b>.</div>";
+    }
+    $("send").disabled = false;
+  }, function (e) { $("tpl-name").textContent = "Could not load the template: " + e.message; });
+
+  // personalise-with table + record
+  $("tables").addEventListener("click", function (e) {
+    var b = e.target.closest("button"); if (!b) { return; }
+    document.querySelectorAll("#tables button").forEach(function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
+    table = b.getAttribute("data-t");
+    $("other").hidden = table !== "";
+    if (!table) { $("other").focus(); }
+    setRecord(null);
+  });
+  $("other").addEventListener("input", function () { setRecord(null); });
+  function currentTable() { return table || $("other").value.trim().toLowerCase(); }
+  function setRecord(r) {
+    record = r;
+    $("chosen").textContent = r ? r.name + " (" + r.entityType + ")" : "No record: tokens use your own details";
+    $("chosen").classList.toggle("set", !!r);
+  }
+  $("choose").addEventListener("click", function () {
+    var t = currentTable(); if (!t) { $("other").focus(); return; }
+    Xrm.Utility.lookupObjects({ entityTypes: [t], defaultEntityType: t, allowMultiSelect: false }).then(function (sel) {
+      if (sel && sel.length) { setRecord({ id: sel[0].id.replace(/[{}]/g, ""), name: sel[0].name, entityType: sel[0].entityType }); }
+    }, function (e) { $("result").innerHTML = '<span class="note bad">' + esc(e.message || "Table not found") + "</span>"; });
+  });
+
+  // send: an Email Message marked as a test, regarding the chosen record
+  $("send").addEventListener("click", function () {
+    var to = $("to").value.trim();
+    if (!to) { $("to").focus(); return; }
+    $("send").disabled = true;
+    $("result").innerHTML = '<span class="spin"></span>Sending…';
+    var msg = {
+      mb_name: tpl.mb_subject || tpl.mb_name, mb_body: tpl.mb_body, mb_includesignature: tpl.mb_includesignature !== false,
+      mb_recipienttype: EMAIL_ADDRESSES, mb_toaddresses: to, mb_testsend: true, mb_status: QUEUED,
+      "mb_TemplateId@odata.bind": "/mb_emailtemplates(" + templateId + ")"
+    };
+    if (tpl.mb_importance != null) { msg.mb_importance = tpl.mb_importance; }
+    if (tpl.mb_recordbutton != null) { msg.mb_recordbutton = tpl.mb_recordbutton; }
+    if (tpl.mb_fromaddress) { msg.mb_fromaddress = tpl.mb_fromaddress; }
+    if (record) { msg.mb_regardingtable = record.entityType; msg.mb_regardingid = record.id; }
+    api("POST", "mb_emailmessages", msg).then(function (m) { watch(m.mb_emailmessageid, 0); }, fail);
+  });
+  function watch(id, n) {
+    api("GET", "mb_emailmessages(" + id + ")?$select=mb_status,mb_lasterror").then(function (m) {
+      var link = ' <a href="#" id="openmsg">Open message</a>';
+      if (m.mb_status === SENT || m.mb_status === PARTIAL) {
+        $("result").innerHTML = '<span class="note ok">Test sent to ' + esc($("to").value) + ".</span>" + link;
+      } else if (m.mb_status === FAILED) {
+        $("result").innerHTML = '<span class="note bad">' + esc(m.mb_lasterror || "The test failed.") + "</span>" + link;
+      } else if (n < 45) {
+        $("result").innerHTML = '<span class="spin"></span>' + esc(m["mb_status@OData.Community.Display.V1.FormattedValue"] || "Sending") + "…";
+        setTimeout(function () { watch(id, n + 1); }, 2000); return;
+      } else {
+        $("result").innerHTML = '<span class="note info">Still sending; check the message later.</span>' + link;
+      }
+      $("send").disabled = false;
+      var o = $("openmsg"); if (o) { o.onclick = function (e) { e.preventDefault(); Xrm.Navigation.openForm({ entityName: "mb_emailmessage", entityId: id, openInNewWindow: true }); }; }
+    }, fail);
+  }
+  function fail(e) { $("result").innerHTML = '<span class="note bad">' + esc(e.message) + "</span>"; $("send").disabled = false; }
+})();
+</script>
+</body>
+</html>

@@ -200,6 +200,30 @@ messages. Tokens like `{{SenderName}}` work in signatures.
 **Templates → New**: name, category, **Subject**, **Body** (rich text, tokens), importance, *Include Signature*.
 Put `{{Signature}}` where the signature goes; otherwise it is appended.
 
+- **Send From Address** (optional): emails from this template are sent from it instead of the Settings address. It is
+  copied to each message (and rule email), where it can still be changed.
+- **Open Record Button**: *Use Settings default*, *Show* or *Hide* for emails from this template.
+
+**Design tab.** The Design studio shows **this template's subject, body and your signature** in the live preview.
+
+- By default a template **uses the Settings design**: the studio is read-only and shows how its emails will look.
+- **Customise design** gives the template its own layout, colours, text colours, header title, logo, button label
+  and **footer**. It starts from the Settings design; anything left empty still follows Settings, except **header and button text colours**, which sit on the brand colour: empty means *Auto* contrast with the template's brand colour. **Use the Settings
+  design** switches back.
+- **Click the header title or the footer in the preview to edit them in place.** Tokens such as
+  `{{OrganizationName}}` stay as tokens. Enter or clicking elsewhere finishes; Escape cancels. This works on the
+  Email Settings design tab too.
+
+**Send Test** (command bar) sends the saved template to you, like a marketing test send:
+
+1. **Personalise with**: choose Contact, Account, Lead, User or any other table, then **Choose record**. Tokens
+   (`{{FirstName}}`, `{{Company}}`, `{{Record.column}}`, the Open record button) use that record. Without a record,
+   your own details are used.
+2. **Send the test to**: your address is filled in; add others separated by `;`.
+3. **Send test**: the dialog shows progress and the result. The subject starts with `[TEST]`, a notice in the email
+   says who it was personalised as, and **nothing is sent to or logged on the chosen record**. Test Mode still
+   applies.
+
 ### 7.4 Recipient list (email group)
 
 **Recipient Lists → New → Save → Members → + New**:

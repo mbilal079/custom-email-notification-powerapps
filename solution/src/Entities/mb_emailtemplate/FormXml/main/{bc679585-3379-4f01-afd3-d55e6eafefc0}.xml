@@ -50,6 +50,14 @@
                       </cell>
                     </row>
                     <row>
+                      <cell id="b6342e75-0305-4b53-a00a-cee57a84fb89" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Send From Address" languagecode="1033" />
+                        </labels>
+                        <control id="81750d42-0a7a-4355-9b86-46b7ccf5eaf5" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="mb_fromaddress" disabled="false" isrequired="false" />
+                      </cell>
+                    </row>
+                    <row>
                       <cell id="cf9d40b2-5048-4196-b8c4-c4c50800a5d7" showlabel="true" visible="true" colspan="1" rowspan="1">
                         <labels>
                           <label description="Importance" languagecode="1033" />
@@ -77,6 +85,167 @@
                           <label description="Usage Notes" languagecode="1033" />
                         </labels>
                         <control id="6572beb4-5ec0-4a77-b8c4-b4cf023e3528" classid="{E0DECE4B-6FC8-4A8F-A065-082708572369}" datafieldname="mb_description" disabled="false" isrequired="false" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+              </sections>
+            </column>
+          </columns>
+        </tab>
+        <tab id="ef938541-b170-4e55-8ae1-ef5cc0125bdb" name="tab_design" expanded="true" visible="true">
+          <labels>
+            <label description="Design" languagecode="1033" />
+          </labels>
+          <columns>
+            <column width="100%">
+              <sections>
+                <section id="{aac7e025-83e3-4f1e-b2b9-c44af8803158}" name="sec_studio" showlabel="false" showbar="false" visible="true" columns="1">
+                  <labels>
+                    <label description="Design studio" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{2126fc58-5aaa-4af5-a08f-d4bf664a972a}" showlabel="false" visible="true" colspan="1" rowspan="26">
+                        <labels>
+                          <label description="Design studio" languagecode="1033" />
+                        </labels>
+                        <control id="WebResource_mb_designstudio" classid="{9FDF5F91-88B1-47f4-AD53-C11EFC01A01D}">
+                          <parameters>
+                            <Url>mb_designstudio.html</Url>
+                            <PassParameters>false</PassParameters>
+                            <Security>false</Security>
+                            <Scrolling>auto</Scrolling>
+                            <Border>false</Border>
+                            <ShowOnMobileClient>true</ShowOnMobileClient>
+                          </parameters>
+                        </control>
+                      </cell>
+                    </row>
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                    <row />
+                  </rows>
+                </section>
+                <section id="8e060118-80fd-438e-abfe-5d1fe4dafb48" name="sec_designmode" showlabel="true" visible="true" columns="11">
+                  <labels>
+                    <label description="Design" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="e6994f4b-9cf3-4729-b135-134544e3dfa2" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Design" languagecode="1033" />
+                        </labels>
+                        <control id="dc176576-84a8-44ef-b1aa-72ce3c7f86ab" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="mb_designmode" disabled="false" isrequired="false" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+                <section id="2b9214a1-9bda-4a36-8d20-70eba9bf75d6" name="sec_layout" showlabel="true" visible="true" columns="11">
+                  <labels>
+                    <label description="Layout and colours" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="6e95ee31-48b3-43a4-8a86-6c76874586f4" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Email Layout" languagecode="1033" />
+                        </labels>
+                        <control id="13578188-c317-4f31-a928-602716a26873" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="mb_emaillayout" disabled="false" isrequired="false" />
+                      </cell>
+                      <cell id="f8916780-1eb6-46b7-936c-24732629a535" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Header Title" languagecode="1033" />
+                        </labels>
+                        <control id="47350471-1e97-48d0-9c3d-92f1143441af" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="mb_headertitle" disabled="false" isrequired="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="c2fb8909-df39-48b6-8bd9-f7f7e6e177d4" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Brand Color" languagecode="1033" />
+                        </labels>
+                        <control id="c9726b34-073c-4e9e-a478-19ce35851379" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="mb_brandcolor" disabled="false" isrequired="false" />
+                      </cell>
+                      <cell id="a6c11b82-554d-49f6-9d43-b8d0d31578c2" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Background Color" languagecode="1033" />
+                        </labels>
+                        <control id="45ca2c3c-fa92-4f62-aadf-eac6fc28af2e" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="mb_backgroundcolor" disabled="false" isrequired="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="767455de-be5e-4602-a2e3-734163ec9013" showlabel="true" visible="true" colspan="2" rowspan="1">
+                        <labels>
+                          <label description="Logo URL" languagecode="1033" />
+                        </labels>
+                        <control id="0c9a459b-df23-482a-991a-97fefef6817a" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="mb_logourl" disabled="false" isrequired="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="7c3003dd-82bd-432b-aac4-0e74d1a204c1" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Body Text Color" languagecode="1033" />
+                        </labels>
+                        <control id="bf9adba8-0622-4e0e-9e70-8745ad59a37a" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="mb_textcolor" disabled="false" isrequired="false" />
+                      </cell>
+                      <cell id="0a09c728-296c-4efa-94bd-fcd5f1318b1f" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Header Text Color" languagecode="1033" />
+                        </labels>
+                        <control id="c8b12515-91e7-40fe-9de1-531d302b1c4d" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="mb_headertextcolor" disabled="false" isrequired="false" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="b45f9912-8287-4a99-8bc5-6570f203c192" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Button Text Color" languagecode="1033" />
+                        </labels>
+                        <control id="49cbb607-ad97-454e-adc3-8ca054154550" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="mb_buttontextcolor" disabled="false" isrequired="false" />
+                      </cell>
+                      <cell id="b9ed9e1b-c201-4c5e-8877-97df45c5284a" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Open Record Button Label" languagecode="1033" />
+                        </labels>
+                        <control id="6e82d666-3475-4de6-bc9e-4cb0d27dac5c" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="mb_recordbuttonlabel" disabled="false" isrequired="false" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+                <section id="0aec8f45-1f2c-4368-bedc-e0e989847a2d" name="sec_footer" showlabel="true" visible="true" columns="1">
+                  <labels>
+                    <label description="Footer" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="57b18c9e-5ef9-4cde-b489-e5987d8e636a" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="Footer (HTML)" languagecode="1033" />
+                        </labels>
+                        <control uniqueid="{aa585f78-cf94-4875-ba1c-7daf307c02ad}" id="4fa8e211-0765-470f-ab14-81086d2b7c66" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="mb_footer" disabled="false" isrequired="false" />
                       </cell>
                     </row>
                   </rows>
@@ -151,10 +320,39 @@
             </parameters>
           </customControl>
         </controlDescription>
+        <controlDescription forControl="{aa585f78-cf94-4875-ba1c-7daf307c02ad}">
+          <customControl id="{E0DECE4B-6FC8-4a8f-A065-082708572369}">
+            <parameters>
+              <datafieldname>mb_footer</datafieldname>
+            </parameters>
+          </customControl>
+          <customControl formFactor="0" name="MscrmControls.RichTextEditor.RichTextEditorControl">
+            <parameters>
+              <datafieldname>mb_footer</datafieldname>
+            </parameters>
+          </customControl>
+          <customControl formFactor="1" name="MscrmControls.RichTextEditor.RichTextEditorControl">
+            <parameters>
+              <datafieldname>mb_footer</datafieldname>
+            </parameters>
+          </customControl>
+          <customControl formFactor="2" name="MscrmControls.RichTextEditor.RichTextEditorControl">
+            <parameters>
+              <datafieldname>mb_footer</datafieldname>
+            </parameters>
+          </customControl>
+        </controlDescription>
       </controlDescriptions>
       <DisplayConditions Order="0" FallbackForm="true">
         <Everyone />
       </DisplayConditions>
+      <events>
+        <event name="onload" application="false" active="false">
+          <Handlers>
+            <Handler functionName="EmailHub.Template.onLoad" libraryName="mb_template.js" enabled="true" parameters="" passExecutionContext="true" handlerUniqueId="{58175f96-0047-43a4-9864-e2b1a26defd0}" />
+          </Handlers>
+        </event>
+      </events>
     </form>
     <IsCustomizable>1</IsCustomizable>
     <CanBeDeleted>1</CanBeDeleted>

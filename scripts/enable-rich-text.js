@@ -9,7 +9,7 @@ const { dv } = require("./lib/dv");
 
 const TARGETS = {
   mb_emailmessage: ["mb_body"],
-  mb_emailtemplate: ["mb_body"],
+  mb_emailtemplate: ["mb_body", "mb_footer"],
   mb_emailsignature: ["mb_signaturehtml"],
   mb_emailsetting: ["mb_globalfooter"]
 };

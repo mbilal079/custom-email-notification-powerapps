@@ -316,7 +316,7 @@ namespace EmailHub.Plugins
             if (!MatchesCondition(svc, rule.GetAttributeValue<string>("mb_conditionfetchxml"), table, recordId, trace)) { return; }
 
             var template = svc.Retrieve(Tables.Template, rule.GetAttributeValue<EntityReference>("mb_templateid").Id,
-                new ColumnSet("mb_subject", "mb_body", "mb_includesignature", "mb_importance", "mb_recordbutton"));
+                new ColumnSet("mb_subject", "mb_body", "mb_includesignature", "mb_importance", "mb_recordbutton", "mb_fromaddress"));
             var message = new Entity(Tables.Message)
             {
                 ["mb_name"] = template.GetAttributeValue<string>("mb_subject"),
@@ -332,6 +332,7 @@ namespace EmailHub.Plugins
             };
             if (template.GetAttributeValue<OptionSetValue>("mb_importance") != null) { message["mb_importance"] = template["mb_importance"]; }
             if (template.GetAttributeValue<OptionSetValue>("mb_recordbutton") != null) { message["mb_recordbutton"] = template["mb_recordbutton"]; }
+            if (!string.IsNullOrWhiteSpace(template.GetAttributeValue<string>("mb_fromaddress"))) { message["mb_fromaddress"] = template["mb_fromaddress"]; }
             if (rule.GetAttributeValue<OptionSetValue>("mb_deliverymode") != null) { message["mb_deliverymode"] = rule["mb_deliverymode"]; }
             if (rule.GetAttributeValue<EntityReference>("mb_signatureid") != null) { message["mb_signatureid"] = rule["mb_signatureid"]; }
             svc.Create(message);

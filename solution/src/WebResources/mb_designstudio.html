@@ -13,9 +13,17 @@
   html, body { margin:0; background:var(--bg); color:var(--fg); font:13.5px/1.45 "Segoe UI",system-ui,sans-serif; }
   .studio { display:grid; grid-template-columns:minmax(300px,380px) 1fr; gap:18px; padding:4px 2px 12px; min-height:100vh; }
   @media (max-width:820px) { .studio { grid-template-columns:1fr; } }
-  .panel { display:flex; flex-direction:column; gap:16px; }
+  .panel { display:flex; flex-direction:column; gap:16px; min-width:0; }
+  fieldset { border:0; padding:0; margin:0; display:flex; flex-direction:column; gap:16px; min-width:0; }
+  fieldset:disabled { opacity:.45; pointer-events:none; }
   .group h3 { margin:0 0 8px; font-size:12px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; color:var(--muted); display:flex; align-items:center; gap:8px; }
   .group h3 .val { margin-left:auto; font:600 12px Consolas,monospace; color:var(--fg); text-transform:none; letter-spacing:0; }
+
+  .modebar { display:flex; align-items:center; gap:12px; padding:12px 14px; border-radius:10px; background:var(--accent-soft); }
+  .modebar b { font-weight:600; }
+  .modebar .hint { margin-top:2px; }
+  button.primary { border:0; border-radius:8px; background:var(--accent); color:#fff; padding:7px 14px; font:inherit; font-weight:600; cursor:pointer; white-space:nowrap; }
+  button.link { border:0; background:none; color:var(--accent); font:inherit; cursor:pointer; padding:0; text-decoration:underline; }
 
   .layouts { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
   .layout { border:1.5px solid var(--line); border-radius:10px; background:var(--bg); padding:8px; cursor:pointer; text-align:center; font:inherit; color:var(--fg); }
@@ -54,9 +62,11 @@
   .chip[aria-pressed="true"] { border-color:var(--accent); color:var(--accent); font-weight:600; box-shadow:0 0 0 2px var(--accent-soft); }
   .tcctl .sw { width:22px; height:22px; aspect-ratio:auto; }
   .tcctl input[type=color] { width:28px; height:24px; border:1px solid var(--line); border-radius:6px; padding:1px; background:var(--bg); cursor:pointer; }
+
   .preview { display:flex; flex-direction:column; min-width:0; border:1px solid var(--line); border-radius:12px; overflow:hidden; background:var(--soft); }
   .pbar { display:flex; align-items:center; gap:10px; padding:8px 12px; background:var(--bg); border-bottom:1px solid var(--line); }
-  .pbar b { font-weight:600; margin-right:auto; }
+  .pbar b { font-weight:600; margin-right:auto; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .pbar .hint { white-space:nowrap; }
   .seg { display:inline-flex; background:var(--soft); border-radius:8px; padding:2px; }
   .seg button { border:0; background:none; color:var(--muted); padding:4px 10px; border-radius:6px; cursor:pointer; font:inherit; }
   .seg button.on { background:var(--bg); color:var(--accent); font-weight:600; box-shadow:0 1px 2px rgba(0,0,0,.08); }
@@ -70,58 +80,66 @@
 <body>
 <div class="studio">
   <div class="panel" aria-label="Email design controls">
-    <div class="group">
-      <h3>Layout</h3>
-      <div class="layouts" id="layouts">
-        <button class="layout" data-layout="100000000" aria-pressed="false" title="Coloured header with logo, white card, footer">
-          <div class="thumb"><i style="top:6px;height:12px;background:var(--brand)"></i><i style="top:20px;height:20px;background:#fff;border:1px solid #e3e6eb"></i></div><span>Branded</span></button>
-        <button class="layout" data-layout="100000001" aria-pressed="false" title="Thin accent line, clean white page">
-          <div class="thumb" style="background:#fff"><i style="top:6px;height:3px;background:var(--brand)"></i><i style="top:13px;height:5px;background:#c8cbd2;right:45%"></i><i style="top:23px;height:3px;background:#e3e6eb"></i><i style="top:30px;height:3px;background:#e3e6eb"></i></div><span>Minimal</span></button>
-        <button class="layout" data-layout="100000002" aria-pressed="false" title="Just the message body">
-          <div class="thumb" style="background:#fff"><i style="top:10px;height:3px;background:#c8cbd2"></i><i style="top:17px;height:3px;background:#c8cbd2"></i><i style="top:24px;height:3px;background:#c8cbd2;right:40%"></i></div><span>Plain</span></button>
+    <div class="modebar" id="modebar" hidden>
+      <div style="flex:1;min-width:0"><b id="mode-title">This template uses the Settings design</b><div class="hint" id="mode-hint"></div></div>
+      <button class="primary" id="mode-btn">Customise design</button>
+    </div>
+
+    <fieldset id="controls">
+      <div class="group">
+        <h3>Layout</h3>
+        <div class="layouts" id="layouts">
+          <button class="layout" data-layout="100000000" aria-pressed="false" title="Coloured header with logo, white card, footer">
+            <div class="thumb"><i style="top:6px;height:12px;background:var(--brand)"></i><i style="top:20px;height:20px;background:#fff;border:1px solid #e3e6eb"></i></div><span>Branded</span></button>
+          <button class="layout" data-layout="100000001" aria-pressed="false" title="Thin accent line, clean white page">
+            <div class="thumb" style="background:#fff"><i style="top:6px;height:3px;background:var(--brand)"></i><i style="top:13px;height:5px;background:#c8cbd2;right:45%"></i><i style="top:23px;height:3px;background:#e3e6eb"></i><i style="top:30px;height:3px;background:#e3e6eb"></i></div><span>Minimal</span></button>
+          <button class="layout" data-layout="100000002" aria-pressed="false" title="Just the message body">
+            <div class="thumb" style="background:#fff"><i style="top:10px;height:3px;background:#c8cbd2"></i><i style="top:17px;height:3px;background:#c8cbd2"></i><i style="top:24px;height:3px;background:#c8cbd2;right:40%"></i></div><span>Plain</span></button>
+        </div>
       </div>
-    </div>
 
-    <div class="group" id="g-brand">
-      <h3>Brand color <span class="val" id="brand-val"></span></h3>
-      <div class="swatches" id="brand-sw"></div>
-      <div class="custom"><input type="color" id="brand-pick" aria-label="Pick a brand color"><input type="text" id="brand-hex" maxlength="7" aria-label="Brand color hex" placeholder="#0F6CBD"><span class="hint" id="brand-contrast"></span></div>
-    </div>
-
-    <div class="group" id="g-bg">
-      <h3>Background color <span class="val" id="bg-val"></span></h3>
-      <div class="swatches" id="bg-sw"></div>
-      <div class="custom"><input type="color" id="bg-pick" aria-label="Pick a background color"><input type="text" id="bg-hex" maxlength="7" aria-label="Background color hex" placeholder="#F3F5F8"><span class="hint">Behind the card (Branded layout)</span></div>
-    </div>
-
-    <div class="group">
-      <h3>Text colors</h3>
-      <div class="tc" id="tc"></div>
-    </div>
-
-    <div class="group">
-      <h3>Header</h3>
-      <div style="display:grid;gap:8px">
-        <input type="text" id="title" maxlength="200" placeholder="Header title (defaults to Organization Name)" aria-label="Header title">
-        <input type="url" id="logo" maxlength="1000" placeholder="Logo URL, https://… (about 36 px high)" aria-label="Logo URL">
+      <div class="group" id="g-brand">
+        <h3>Brand color <span class="val" id="brand-val"></span></h3>
+        <div class="swatches" id="brand-sw"></div>
+        <div class="custom"><input type="color" id="brand-pick" aria-label="Pick a brand color"><input type="text" id="brand-hex" maxlength="7" aria-label="Brand color hex" placeholder="#0F6CBD"><span class="hint" id="brand-contrast"></span></div>
       </div>
-    </div>
 
-    <div class="group">
-      <h3>Open record button</h3>
-      <div class="row">
-        <label class="switch"><input type="checkbox" id="btn-on" aria-label="Show the Open record button"><span></span></label>
-        <input type="text" id="btn-label" maxlength="100" placeholder="Open record" aria-label="Button label">
+      <div class="group" id="g-bg">
+        <h3>Background color <span class="val" id="bg-val"></span></h3>
+        <div class="swatches" id="bg-sw"></div>
+        <div class="custom"><input type="color" id="bg-pick" aria-label="Pick a background color"><input type="text" id="bg-hex" maxlength="7" aria-label="Background color hex" placeholder="#F3F5F8"><span class="hint">Behind the card (Branded layout)</span></div>
       </div>
-      <div class="hint" style="margin-top:6px">Shown on emails about a record, above the signature. Templates can override it.</div>
-    </div>
 
-    <div class="saved" id="status">Changes are written to the form. Save the record to apply them.</div>
+      <div class="group">
+        <h3>Text colors</h3>
+        <div class="tc" id="tc"></div>
+      </div>
+
+      <div class="group">
+        <h3>Header</h3>
+        <div style="display:grid;gap:8px">
+          <input type="text" id="title" maxlength="200" placeholder="Header title (defaults to Organization Name)" aria-label="Header title">
+          <input type="url" id="logo" maxlength="1000" placeholder="Logo URL, https://… (about 36 px high)" aria-label="Logo URL">
+        </div>
+      </div>
+
+      <div class="group">
+        <h3>Open record button</h3>
+        <div class="row">
+          <label class="switch" id="btn-switch"><input type="checkbox" id="btn-on" aria-label="Show the Open record button"><span></span></label>
+          <input type="text" id="btn-label" maxlength="100" placeholder="Open record" aria-label="Button label">
+        </div>
+        <div class="hint" style="margin-top:6px" id="btn-hint">Shown on emails about a record, above the signature. Templates can override it.</div>
+      </div>
+    </fieldset>
+
+    <div class="saved" id="status"></div>
   </div>
 
   <div class="preview">
     <div class="pbar">
-      <b>Live preview</b>
+      <b id="ptitle">Live preview</b>
+      <span class="hint" id="edit-hint">Click the header title or footer to edit</span>
       <div class="seg" id="device"><button data-d="desktop" class="on">Desktop</button><button data-d="mobile">Mobile</button></div>
     </div>
     <div class="stage"><iframe id="frame" title="Email preview" sandbox="allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe></div>
@@ -142,64 +160,121 @@
     ["White", "#FFFFFF"], ["Light gray", "#F3F5F8"], ["Silver", "#E8EAED"], ["Light blue", "#EAF3FC"], ["Ice", "#E6F6FA"], ["Mint", "#EEF7EE"],
     ["Light teal", "#E6F4F4"], ["Cream", "#FBF7EE"], ["Peach", "#FDF1E7"], ["Light pink", "#FCEEF3"], ["Lavender", "#F1EEF8"], ["Charcoal", "#2B2D31"]
   ];
-  var FIELDS = { layout: "mb_emaillayout", brand: "mb_brandcolor", bg: "mb_backgroundcolor", title: "mb_headertitle", logo: "mb_logourl",
-                 btnOn: "mb_showrecordbutton", btnLabel: "mb_recordbuttonlabel",
-                 text: "mb_textcolor", headerText: "mb_headertextcolor", buttonText: "mb_buttontextcolor" };
   var TEXT_ROWS = [["text", "Body text", "Default"], ["headerText", "Header text", "Auto"], ["buttonText", "Button text", "Auto"]];
   var TEXT_SWATCHES = [["Black", "#1B1B1F"], ["Dark gray", "#24262B"], ["Gray", "#605E5C"], ["White", "#FFFFFF"], ["Blue", "#0F6CBD"],
                        ["Navy", "#1F3864"], ["Green", "#107C10"], ["Red", "#C4314B"], ["Gold", "#986F0B"]];
-  var READ_ONLY = ["mb_organizationname", "mb_globalfooter"];
+  var SETTINGS_DESIGN = 100000000, CUSTOM = 100000001; // mb_designmode on templates
 
-  var fc = null;          // form context, when hosted on the Email Settings form
-  var state = { layout: L.BRANDED, brand: "#0F6CBD", bg: "#F3F5F8", title: "", logo: "", btnOn: true, btnLabel: "Open record", org: "Contoso", footer: "",
-                text: "", headerText: "", buttonText: "" };
+  // design key -> column; Settings and Templates use the same names except the footer and the button switch
+  var FIELDS = { layout: "mb_emaillayout", brand: "mb_brandcolor", bg: "mb_backgroundcolor", title: "mb_headertitle", logo: "mb_logourl",
+                 btnOn: "mb_showrecordbutton", btnLabel: "mb_recordbuttonlabel", text: "mb_textcolor", headerText: "mb_headertextcolor",
+                 buttonText: "mb_buttontextcolor", footer: "mb_globalfooter" };
+  var EMPTY = { layout: null, brand: "", bg: "", title: "", logo: "", btnOn: true, btnLabel: "", text: "", headerText: "", buttonText: "", footer: "" };
 
+  var fc = null, mode = "settings";               // "settings" | "template"
+  var base = clone(EMPTY);                        // template mode: the Settings design underneath
+  var own = clone(EMPTY);                         // the values on this record
+  var ctx = { org: "", subject: "", body: "", signature: "", includeSignature: true, recordButton: null, custom: true };
+
+  function clone(o) { return JSON.parse(JSON.stringify(o)); }
   function $(id) { return document.getElementById(id); }
+  function blank(v) { return v === "" || v === null || v === undefined; }
+  function xrm() { try { return window.parent.Xrm || window.Xrm; } catch (e) { return window.Xrm; } }
+  function api(path) {
+    var root; try { root = xrm().Utility.getGlobalContext().getClientUrl(); } catch (e) { root = location.origin; }
+    return fetch(root + "/api/data/v9.2/" + path, { credentials: "same-origin", headers: { Accept: "application/json", Prefer: 'odata.include-annotations="*"' } })
+      .then(function (r) { return r.ok ? r.json() : { value: [] }; }).then(function (j) { return j.value || j; }, function () { return []; });
+  }
+  // the design in effect: a template's own values sit on top of the Settings design
+  function eff(k) {
+    // header/button text sit on the brand colour, so a custom design never inherits them (empty = Auto)
+    var onBrand = k === "headerText" || k === "buttonText";
+    var v = mode === "template" ? (ctx.custom ? (!blank(own[k]) || onBrand ? own[k] : base[k]) : base[k]) : own[k];
+    if (k === "layout") { return blank(v) ? L.BRANDED : v; }
+    if (k === "brand") { return L.color(v, "#0F6CBD"); }
+    if (k === "bg") { return L.color(v, "#F3F5F8"); }
+    return blank(v) ? (k === "btnOn" ? true : "") : v;
+  }
 
   // ---------- form binding ----------
   function attr(n) { try { return fc ? fc.getAttribute(n) : null; } catch (e) { return null; } }
+  function val(n) { var a = attr(n); return a ? a.getValue() : null; }
+  function fromRow(get, target) {
+    Object.keys(FIELDS).forEach(function (k) {
+      var v = get(FIELDS[k]);
+      if (k === "brand" || k === "bg" || k === "text" || k === "headerText" || k === "buttonText") { v = L.color(v, ""); }
+      if (k === "btnOn") { v = v !== false; }
+      target[k] = v === undefined || v === null ? (k === "layout" ? null : k === "btnOn" ? true : "") : v;
+    });
+  }
   function readForm() {
     if (!fc) { return; }
-    var v = function (n) { var a = attr(n); return a ? a.getValue() : null; };
-    state.layout = v(FIELDS.layout) == null ? L.BRANDED : v(FIELDS.layout);
-    state.brand = L.color(v(FIELDS.brand), "#0F6CBD");
-    state.bg = L.color(v(FIELDS.bg), "#F3F5F8");
-    state.title = v(FIELDS.title) || "";
-    state.logo = v(FIELDS.logo) || "";
-    state.btnOn = v(FIELDS.btnOn) !== false;
-    state.btnLabel = v(FIELDS.btnLabel) || "";
-    state.text = L.color(v(FIELDS.text), "");
-    state.headerText = L.color(v(FIELDS.headerText), "");
-    state.buttonText = L.color(v(FIELDS.buttonText), "");
-    state.org = v("mb_organizationname") || "";
-    state.footer = v("mb_globalfooter") || "";
+    fromRow(val, own);
+    if (mode === "settings") { ctx.org = val("mb_organizationname") || ""; ctx.custom = true; return; }
+    ctx.custom = val("mb_designmode") === CUSTOM;
+    ctx.subject = val("mb_subject") || "";
+    ctx.body = val("mb_body") || "";
+    ctx.includeSignature = val("mb_includesignature") !== false;
+    var rb = attr("mb_recordbutton"); ctx.recordButton = rb ? rb.getText() : null;
   }
+  function canEdit() { return !!fc && (mode === "settings" || ctx.custom); }
   function write(key, value) {
-    state[key] = value;
+    if (!canEdit() || !FIELDS[key]) { return; }
+    own[key] = value;
     var a = attr(FIELDS[key]);
-    if (a) { a.setValue(value === "" ? null : value); a.fireOnChange && a.fireOnChange(); }
+    if (a) { a.setValue(blank(value) ? null : value); if (a.fireOnChange) { a.fireOnChange(); } }
     sync(); render();
   }
 
-  // public: called by the form script (mb_emailsetting.js)
+  // public: called by the form scripts (mb_emailsetting.js, mb_template.js)
   window.EmailHubStudio = {
     attach: function (formContext) {
       fc = formContext;
-      Object.keys(FIELDS).map(function (k) { return FIELDS[k]; }).concat(READ_ONLY).forEach(function (n) {
-        var a = attr(n); if (a) { a.addOnChange(function () { readForm(); sync(); render(); }); }
-      });
+      mode = fc.data.entity.getEntityName() === "mb_emailtemplate" ? "template" : "settings";
+      if (mode === "template") {
+        FIELDS.footer = "mb_footer";
+        delete FIELDS.btnOn; // templates use their Open Record Button choice instead
+        $("btn-switch").style.display = "none";
+        $("btn-hint").textContent = "Shown or hidden by the template's Open Record Button choice; the label here overrides Settings.";
+        $("mode-btn").onclick = customise;
+        loadTemplateContext();
+      }
+      Object.keys(FIELDS).map(function (k) { return FIELDS[k]; })
+        .concat(["mb_organizationname", "mb_designmode", "mb_subject", "mb_body", "mb_includesignature", "mb_recordbutton"])
+        .forEach(function (n) { var a = attr(n); if (a) { a.addOnChange(function () { readForm(); sync(); render(); }); } });
       try { fc.data.entity.addOnPostSave(function () { setTimeout(status, 0); }); } catch (e) { /* older clients */ }
-      setInterval(status, 1500); // the form can be saved or refreshed without any design column changing
+      setInterval(status, 1500); // a save or refresh may not change any design column
       readForm(); sync(); render();
     }
   };
 
-  function status() {
-    var dirty = false;
-    try { dirty = !!fc && fc.data.entity.getIsDirty(); } catch (e) { /* form closing */ }
-    $("status").innerHTML = fc ? (dirty ? '<span class="dirty">Unsaved changes</span> — save the record to apply them.' : "All changes saved.")
-      : "Preview only: open this from Email Settings to edit.";
+  function loadTemplateContext() {
+    api("mb_emailsettings?$filter=statecode eq 0 and mb_isactive eq true&$top=1").then(function (v) {
+      var row = v[0] || {};
+      var keep = FIELDS.footer; FIELDS.footer = "mb_globalfooter"; FIELDS.btnOn = "mb_showrecordbutton";
+      fromRow(function (n) { return row[n]; }, base);
+      FIELDS.footer = keep; delete FIELDS.btnOn;
+      ctx.org = row.mb_organizationname || "";
+      sync(); render();
+    });
+    var uid = ""; try { uid = xrm().Utility.getGlobalContext().userSettings.userId.replace(/[{}]/g, ""); } catch (e) { /* preview only */ }
+    if (uid) {
+      api("mb_emailsignatures?$select=mb_signaturehtml&$filter=mb_isdefault eq true and _ownerid_value eq " + uid + "&$top=1")
+        .then(function (v) { ctx.signature = (v[0] && v[0].mb_signaturehtml) || ""; render(); });
+    }
   }
+
+  // "Customise design": the template gets its own design, starting from the Settings design
+  function customise() {
+    var dm = attr("mb_designmode"); if (!dm) { return; }
+    dm.setValue(CUSTOM);
+    Object.keys(FIELDS).forEach(function (k) {
+      var a = attr(FIELDS[k]);
+      if (a && blank(a.getValue()) && !blank(base[k]) && k !== "headerText" && k !== "buttonText") { a.setValue(base[k]); }
+    });
+    readForm(); sync(); render();
+  }
+  function useSettings() { var dm = attr("mb_designmode"); if (dm) { dm.setValue(SETTINGS_DESIGN); } readForm(); sync(); render(); }
 
   // ---------- controls ----------
   function swatches(el, list, key) {
@@ -208,56 +283,61 @@
     }).join("");
     el.addEventListener("click", function (e) { var b = e.target.closest(".sw"); if (b) { write(key, b.getAttribute("data-c")); } });
   }
+  function status() {
+    var dirty = false;
+    try { dirty = !!fc && fc.data.entity.getIsDirty(); } catch (e) { /* form closing */ }
+    $("status").innerHTML = fc ? (dirty ? '<span class="dirty">Unsaved changes</span> — save the record to apply them.' : "All changes saved.")
+      : "Preview only: open this from Email Settings or a template to edit.";
+  }
   function sync() {
-    document.documentElement.style.setProperty("--brand", state.brand);
-    document.querySelectorAll("#layouts .layout").forEach(function (b) { b.setAttribute("aria-pressed", +b.getAttribute("data-layout") === state.layout ? "true" : "false"); });
-    [["brand", "brand-sw"], ["bg", "bg-sw"]].forEach(function (p) {
-      document.querySelectorAll("#" + p[1] + " .sw").forEach(function (b) { b.setAttribute("aria-pressed", b.getAttribute("data-c").toUpperCase() === state[p[0]].toUpperCase() ? "true" : "false"); });
-      $(p[0] + "-pick").value = state[p[0]].length === 7 ? state[p[0]].toLowerCase() : "#000000";
-      if (document.activeElement !== $(p[0] + "-hex")) { $(p[0] + "-hex").value = state[p[0]]; $(p[0] + "-hex").classList.remove("bad"); }
-      $(p[0] + "-val").textContent = state[p[0]];
+    var brand = eff("brand"), bg = eff("bg"), layout = eff("layout");
+    document.documentElement.style.setProperty("--brand", brand);
+    if (mode === "template") {
+      $("modebar").hidden = false;
+      $("controls").disabled = !ctx.custom;
+      $("mode-title").textContent = ctx.custom ? "This template has its own design" : "This template uses the Settings design";
+      $("mode-hint").innerHTML = ctx.custom ? 'Empty values fall back to Settings. <button class="link" id="mode-reset">Use the Settings design</button>'
+        : "Emails from it look like all other emails. Customise to give it its own look.";
+      $("mode-btn").hidden = ctx.custom;
+      if ($("mode-reset")) { $("mode-reset").onclick = useSettings; }
+    }
+    $("edit-hint").hidden = !canEdit();
+    document.querySelectorAll("#layouts .layout").forEach(function (b) { b.setAttribute("aria-pressed", +b.getAttribute("data-layout") === layout ? "true" : "false"); });
+    [["brand", "brand-sw", brand], ["bg", "bg-sw", bg]].forEach(function (p) {
+      document.querySelectorAll("#" + p[1] + " .sw").forEach(function (b) { b.setAttribute("aria-pressed", b.getAttribute("data-c").toUpperCase() === p[2].toUpperCase() ? "true" : "false"); });
+      $(p[0] + "-pick").value = p[2].length === 7 ? p[2].toLowerCase() : "#000000";
+      if (document.activeElement !== $(p[0] + "-hex")) { $(p[0] + "-hex").value = p[2]; $(p[0] + "-hex").classList.remove("bad"); }
+      $(p[0] + "-val").textContent = p[2];
     });
-    $("brand-contrast").textContent = "Text on it: " + (L.isDark(state.brand) ? "white" : "dark");
-    $("g-bg").style.opacity = state.layout === L.BRANDED ? 1 : 0.45;
-    $("g-brand").style.opacity = state.layout === L.PLAIN ? 0.45 : 1;
-    if (document.activeElement !== $("title")) { $("title").value = state.title; $("title").placeholder = "Header title (defaults to " + (state.org || "Organization Name") + ")"; }
-    if (document.activeElement !== $("logo")) { $("logo").value = state.logo; }
-    $("btn-on").checked = state.btnOn;
-    if (document.activeElement !== $("btn-label")) { $("btn-label").value = state.btnLabel; }
-    $("btn-label").disabled = !state.btnOn;
+    $("brand-contrast").textContent = "Text on it: " + (L.isDark(brand) ? "white" : "dark");
+    $("g-bg").style.opacity = layout === L.BRANDED ? 1 : 0.45;
+    $("g-brand").style.opacity = layout === L.PLAIN ? 0.45 : 1;
     TEXT_ROWS.forEach(function (r) {
-      var cur = (state[r[0]] || "").toUpperCase();
+      var cur = (eff(r[0]) || "").toUpperCase();
       document.querySelectorAll('[data-tc="' + r[0] + '"] [data-c]').forEach(function (b) { b.setAttribute("aria-pressed", b.getAttribute("data-c").toUpperCase() === cur ? "true" : "false"); });
       var pick = document.querySelector('[data-tc="' + r[0] + '"] input[type=color]');
       if (pick) { pick.value = cur.length === 7 ? cur.toLowerCase() : (r[0] === "text" ? "#24262b" : "#ffffff"); }
     });
+    if (document.activeElement !== $("title")) { $("title").value = eff("title"); $("title").placeholder = "Header title (defaults to " + (ctx.org || "Organization Name") + ")"; }
+    if (document.activeElement !== $("logo")) { $("logo").value = eff("logo"); }
+    $("btn-on").checked = eff("btnOn") !== false;
+    if (document.activeElement !== $("btn-label")) { $("btn-label").value = eff("btnLabel"); }
     status();
   }
 
-  // text colour rows: Auto/Default chip, swatches, picker
+  swatches($("brand-sw"), BRANDS, "brand");
+  swatches($("bg-sw"), BACKGROUNDS, "bg");
   $("tc").innerHTML = TEXT_ROWS.map(function (r) {
     return '<div class="tcrow" data-tc="' + r[0] + '"><span>' + r[1] + '</span><div class="tcctl"><button class="chip" data-c="">' + r[2] + "</button>" +
       TEXT_SWATCHES.map(function (c) { return '<button class="sw" style="background:' + c[1] + '" data-c="' + c[1] + '" title="' + c[0] + " " + c[1] + '" aria-label="' + c[0] + '"></button>'; }).join("") +
       '<input type="color" aria-label="' + r[1] + ' color"></div></div>';
   }).join("");
-  $("tc").addEventListener("click", function (e) {
-    var b = e.target.closest("[data-c]"); if (!b) { return; }
-    write(b.closest("[data-tc]").getAttribute("data-tc"), b.getAttribute("data-c"));
-  });
-  $("tc").addEventListener("input", function (e) {
-    if (e.target.type === "color") { write(e.target.closest("[data-tc]").getAttribute("data-tc"), e.target.value.toUpperCase()); }
-  });
-
-  swatches($("brand-sw"), BRANDS, "brand");
-  swatches($("bg-sw"), BACKGROUNDS, "bg");
+  $("tc").addEventListener("click", function (e) { var b = e.target.closest("[data-c]"); if (b) { write(b.closest("[data-tc]").getAttribute("data-tc"), b.getAttribute("data-c")); } });
+  $("tc").addEventListener("input", function (e) { if (e.target.type === "color") { write(e.target.closest("[data-tc]").getAttribute("data-tc"), e.target.value.toUpperCase()); } });
   $("layouts").addEventListener("click", function (e) { var b = e.target.closest(".layout"); if (b) { write("layout", +b.getAttribute("data-layout")); } });
   ["brand", "bg"].forEach(function (k) {
     $(k + "-pick").addEventListener("input", function () { write(k, this.value.toUpperCase()); });
-    $(k + "-hex").addEventListener("input", function () {
-      var v = L.color(this.value, null);
-      this.classList.toggle("bad", !v && this.value.length > 0);
-      if (v) { write(k, v); }
-    });
+    $(k + "-hex").addEventListener("input", function () { var v = L.color(this.value, null); this.classList.toggle("bad", !v && this.value.length > 0); if (v) { write(k, v); } });
   });
   var debounce = function (fn) { var t; return function () { var self = this, a = arguments; clearTimeout(t); t = setTimeout(function () { fn.apply(self, a); }, 250); }; };
   $("title").addEventListener("input", debounce(function () { write("title", this.value.trim()); }));
@@ -269,23 +349,60 @@
     document.querySelectorAll("#device button").forEach(function (x) { x.classList.toggle("on", x === b); });
     $("frame").classList.toggle("mobile", b.getAttribute("data-d") === "mobile");
   });
+
+  // ---------- preview, with click-to-edit header title and footer ----------
   $("frame").addEventListener("load", function () {
-    try { $("frame").style.height = Math.max(520, $("frame").contentDocument.documentElement.scrollHeight + 6) + "px"; } catch (e) { /* default height */ }
+    var doc; try { doc = $("frame").contentDocument; } catch (e) { return; }
+    try { $("frame").style.height = Math.max(520, doc.documentElement.scrollHeight + 6) + "px"; } catch (e) { /* default height */ }
+    var editable = canEdit();
+    var css = doc.createElement("style");
+    css.textContent = "[data-mb-edit]{border-radius:4px;outline:1px dashed transparent;outline-offset:3px;transition:outline-color .15s}" +
+      (editable ? "[data-mb-edit]{cursor:text}[data-mb-edit]:hover{outline-color:#0f6cbd}[data-mb-edit][contenteditable=true]{outline:2px solid #0f6cbd;background:rgba(255,255,255,.65);color:#1b1b1f}" : "");
+    doc.head.appendChild(css);
+    if (!editable) { return; }
+    doc.querySelectorAll("[data-mb-edit]").forEach(function (el) {
+      el.addEventListener("click", function () {
+        if (el.isContentEditable) { return; }
+        var key = el.getAttribute("data-mb-edit");
+        // edit the raw value (tokens intact), not the sample rendering
+        if (key === "footer") { el.innerHTML = eff("footer"); } else { el.textContent = eff("title") || ctx.org || ""; }
+        el.contentEditable = "true"; el.focus();
+        var cancelled = false;
+        el.addEventListener("keydown", function (ev) {
+          if (key === "title" && ev.key === "Enter") { ev.preventDefault(); el.blur(); }
+          if (ev.key === "Escape") { cancelled = true; el.blur(); }
+        });
+        var current = function () { return key === "footer" ? (el.textContent.trim() === "" ? "" : el.innerHTML.trim()) : el.textContent.trim(); };
+        // save as you type (no re-render, so the caret stays put); re-render when editing ends
+        el.addEventListener("input", function () {
+          own[key] = current();
+          var a = attr(FIELDS[key]); if (a) { a.setValue(blank(own[key]) ? null : own[key]); }
+          status();
+        });
+        el.addEventListener("blur", function () {
+          if (cancelled) { readForm(); render(); return; }
+          write(key, current());
+        }, { once: true });
+      });
+    });
   });
 
-  // ---------- preview ----------
   var SAMPLE = "<p>Hi {{FirstName}},</p><p>A new task has been assigned to you: <b>Prepare Q4 report</b>, due Friday.</p>" +
     "<p>Open the record to see the details and update its status.</p>";
-  var SIGNATURE = "<p>Kind regards,<br/><strong>{{SenderName}}</strong><br/>{{OrganizationName}}</p>";
+  var SAMPLE_SIGNATURE = "<p>Kind regards,<br/><strong>{{SenderName}}</strong><br/>{{OrganizationName}}</p>";
   function render() {
-    var org = state.org || "Contoso";
-    var body = L.tokens(L.markButton(SAMPLE) + SIGNATURE, { org: org });
-    $("frame").srcdoc = L.wrap(body, {
-      layout: state.layout, brandColor: state.brand, backgroundColor: state.bg, logoUrl: state.logo, headerTitle: state.title,
-      organizationName: state.org, footer: L.tokens(state.footer, { org: org }), recordUrl: "https://example.com/record", recordName: "Prepare Q4 report",
-      showRecordButton: state.btnOn, recordButtonLabel: state.btnLabel,
-      textColor: state.text, headerTextColor: state.headerText, buttonTextColor: state.buttonText
+    var org = ctx.org || "Contoso", tpl = mode === "template";
+    var body = L.markButton(tpl ? (ctx.body || "<p><i>The template body appears here.</i></p>") : SAMPLE);
+    var sig = tpl ? (ctx.includeSignature ? (ctx.signature || SAMPLE_SIGNATURE) : "") : SAMPLE_SIGNATURE;
+    if (sig) { body = body.indexOf("{{Signature}}") >= 0 ? body.replace("{{Signature}}", sig) : body + sig; }
+    var showBtn = tpl ? (ctx.recordButton === "Show" ? true : ctx.recordButton === "Hide" ? false : base.btnOn !== false) : eff("btnOn") !== false;
+    $("frame").srcdoc = L.wrap(L.tokens(body, { org: org }), {
+      layout: eff("layout"), brandColor: eff("brand"), backgroundColor: eff("bg"), logoUrl: eff("logo"), headerTitle: eff("title"),
+      organizationName: ctx.org, footer: L.tokens(eff("footer"), { org: org }), recordUrl: "https://example.com/record", recordName: "Prepare Q4 report",
+      showRecordButton: showBtn, recordButtonLabel: eff("btnLabel"),
+      textColor: eff("text"), headerTextColor: eff("headerText"), buttonTextColor: eff("buttonText"), editable: true
     });
+    $("ptitle").textContent = tpl && ctx.subject ? L.tokens(ctx.subject, { org: org }).replace(/<[^>]+>/g, "") : "Live preview";
   }
 
   sync(); render();

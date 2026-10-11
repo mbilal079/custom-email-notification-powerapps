@@ -24,6 +24,7 @@
   function place(body, html) { if (body.indexOf(MARK) < 0) { body += MARK; } return body.replace(MARK, html).split(MARK).join(""); }
 
   function wrap(body, o) {
+    var ed = function (k) { return o.editable ? ' data-mb-edit="' + k + '" title="Click to edit"' : ""; };
     var showButton = o.showRecordButton && isHttp(o.recordUrl), label = (o.recordButtonLabel || "").trim() || "Open record";
     if (o.layout === PLAIN) {
       return (o.testNotice ? '<p style="color:#8a5300"><b>' + enc(o.testNotice) + "</b></p>" : "") +
@@ -42,10 +43,10 @@
     var logo = function (px) { return isHttp(o.logoUrl) ? '<td style="padding-right:' + (px > 32 ? 14 : 12) + 'px;vertical-align:middle;"><img src="' + enc(o.logoUrl) + '" alt="' + enc(title) + '" height="' + px + '" style="display:block;height:' + px + "px;max-height:" + px + 'px;width:auto;border:0;"></td>' : ""; };
     if (branded) {
       h += '<tr><td style="background:' + brand + ';border-radius:12px 12px 0 0;padding:22px 32px;"><table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>' + logo(36) +
-           (title ? '<td style="vertical-align:middle;font:600 19px ' + FONT + ";color:" + headerText + ';">' + enc(title) + "</td>" : "") + "</tr></table></td></tr>";
+           (title || o.editable ? '<td' + ed("title") + ' style="vertical-align:middle;font:600 19px ' + FONT + ";color:" + headerText + ';">' + (title ? enc(title) : '<span style="opacity:.55;font-weight:400">Click to add a title</span>') + "</td>" : "") + "</tr></table></td></tr>";
     } else {
       h += '<tr><td style="border-top:4px solid ' + brand + ';padding:18px 4px 14px;"><table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>' + logo(30) +
-           (title ? '<td style="vertical-align:middle;font:600 17px ' + FONT + ";color:" + headerText + ';">' + enc(title) + "</td>" : "") + "</tr></table></td></tr>";
+           (title || o.editable ? '<td' + ed("title") + ' style="vertical-align:middle;font:600 17px ' + FONT + ";color:" + headerText + ';">' + (title ? enc(title) : '<span style="opacity:.55;font-weight:400">Click to add a title</span>') + "</td>" : "") + "</tr></table></td></tr>";
     }
     h += '<tr><td style="background:#FFFFFF;' + (branded ? "border-radius:0 0 12px 12px;border:1px solid #E3E6EB;border-top:0;padding:32px;" : "padding:8px 4px 24px;") +
          "font:15px/1.6 " + FONT + ";color:" + bodyText + ';">';
@@ -57,7 +58,7 @@
     }
     h += place(body, btn);
     h += '</td></tr><tr><td style="padding:20px 24px 4px;font:12px/1.6 ' + FONT + ';color:#6B6F78;text-align:' + (branded ? "center" : "left") + ";" + (branded ? "" : "border-top:1px solid #E3E6EB;") + '">';
-    if (o.footer) { h += '<div style="margin-bottom:8px;">' + o.footer + "</div>"; }
+    if (o.footer || o.editable) { h += '<div' + ed("footer") + ' style="margin-bottom:8px;">' + (o.footer || (o.editable ? '<span style="opacity:.6">Click to add a footer</span>' : "")) + "</div>"; }
     if (o.organizationName) { h += '<div style="color:#8A8E97;">&copy; ' + new Date().getFullYear() + " " + enc(o.organizationName) + "</div>"; }
     return h + "</td></tr></table></td></tr></table></body></html>";
   }

@@ -76,20 +76,6 @@
           },
           "runAfter": {}
         },
-        "Settings": {
-          "type": "Compose",
-          "runAfter": {
-            "List_Settings": [
-              "Succeeded"
-            ]
-          },
-          "inputs": {
-            "shared": "@equals(coalesce(first(outputs('List_Settings')?['body/value'])?['mb_sendmode'], 100000000), 100000001)",
-            "sharedMailbox": "@coalesce(first(outputs('List_Settings')?['body/value'])?['mb_sharedmailbox'], first(outputs('List_Settings')?['body/value'])?['mb_fromaddress'], '')",
-            "sendFrom": "@coalesce(first(outputs('List_Settings')?['body/value'])?['mb_fromaddress'], '')",
-            "replyTo": "@coalesce(first(outputs('List_Settings')?['body/value'])?['mb_replyto'], '')"
-          }
-        },
         "Get_Message": {
           "type": "OpenApiConnection",
           "inputs": {
@@ -101,14 +87,28 @@
             "parameters": {
               "entityName": "mb_emailmessages",
               "recordId": "@triggerOutputs()?['body/mb_emailmessageid']",
-              "$select": "mb_importance"
+              "$select": "mb_importance,mb_fromaddress"
             },
             "authentication": "@parameters('$authentication')"
           },
           "runAfter": {
-            "Settings": [
+            "List_Settings": [
               "Succeeded"
             ]
+          }
+        },
+        "Settings": {
+          "type": "Compose",
+          "runAfter": {
+            "Get_Message": [
+              "Succeeded"
+            ]
+          },
+          "inputs": {
+            "shared": "@equals(coalesce(first(outputs('List_Settings')?['body/value'])?['mb_sendmode'], 100000000), 100000001)",
+            "sharedMailbox": "@coalesce(outputs('Get_Message')?['body/mb_fromaddress'], first(outputs('List_Settings')?['body/value'])?['mb_sharedmailbox'], first(outputs('List_Settings')?['body/value'])?['mb_fromaddress'], '')",
+            "sendFrom": "@coalesce(outputs('Get_Message')?['body/mb_fromaddress'], first(outputs('List_Settings')?['body/value'])?['mb_fromaddress'], '')",
+            "replyTo": "@coalesce(first(outputs('List_Settings')?['body/value'])?['mb_replyto'], '')"
           }
         },
         "List_Pending_Deliveries": {
@@ -127,7 +127,7 @@
             "authentication": "@parameters('$authentication')"
           },
           "runAfter": {
-            "Get_Message": [
+            "Settings": [
               "Succeeded"
             ]
           },

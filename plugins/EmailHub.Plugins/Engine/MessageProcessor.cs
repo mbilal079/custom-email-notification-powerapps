@@ -66,6 +66,8 @@ namespace EmailHub.Plugins.Engine
         private void Prepare(Entity msg)
         {
             var settings = HubSettings.Load(_svc);
+            ApplyTemplateAndMessageOverrides(msg, settings);
+            var testSend = msg.GetAttributeValue<bool?>("mb_testsend") == true;
             var configError = settings.ConfigurationError();
             if (configError != null) { Fail(msg.Id, configError); return; }
 
@@ -93,7 +95,8 @@ namespace EmailHub.Plugins.Engine
                 renderer.RecordUrl = RecordUrl(regarding);
                 regarding.Name = renderer.RecordName;
             }
-            var activityRegarding = ActivityRegarding(regarding, renderer.Record);
+            // a test send is never logged on the customer's record
+            var activityRegarding = testSend ? null : ActivityRegarding(regarding, renderer.Record);
 
             // ----- signature -----
             var signatureHtml = "";
@@ -109,7 +112,7 @@ namespace EmailHub.Plugins.Engine
             var subjectTemplate = msg.GetAttributeValue<string>("mb_name") ?? "";
 
             // ----- recipients -----
-            var candidates = Candidates(msg, sendTo, renderer.Record).ToList();
+            var candidates = (testSend ? TestRecipients(msg, regarding ?? senderRef) : Candidates(msg, sendTo, renderer.Record)).ToList();
             var (recipients, skipped) = Validate(candidates, settings);
             if (recipients.Count > settings.MaxRecipients)
             {
@@ -133,6 +136,7 @@ namespace EmailHub.Plugins.Engine
             {
                 var one = personalized ? unit[0] : null;
                 var subject = renderer.Render(subjectTemplate, one, false);
+                if (testSend && !settings.TestMode) { subject = "[TEST] " + subject; }
                 var body = renderer.Render(bodyTemplate, one, true);
                 var realTo = string.Join(";", unit.Select(r => r.Email));
                 body = EmailLayout.Wrap(body, new EmailLayout.Options
@@ -151,7 +155,9 @@ namespace EmailHub.Plugins.Engine
                     RecordName = renderer.RecordName ?? "",
                     ShowRecordButton = ShowButton(msg, settings),
                     RecordButtonLabel = settings.RecordButtonLabel,
-                    TestNotice = settings.TestMode ? "Test Mode: this email was addressed to " + realTo : "",
+                    TestNotice = testSend ? "Test send" + (regarding != null && !string.IsNullOrWhiteSpace(regarding.Name) ? ", personalised as " + regarding.Name : "") +
+                                            (settings.TestMode ? " (Test Mode: addressed to " + realTo + ")" : "")
+                               : settings.TestMode ? "Test Mode: this email was addressed to " + realTo : "",
                     Preheader = EmailLayout.Preheader(body)
                 });
                 IEnumerable<Recipient> toParties = unit;
@@ -217,6 +223,69 @@ namespace EmailHub.Plugins.Engine
                 }
             });
             new MessageFinalizer(_svc).TryFinalize(msg.Id);
+        }
+
+        /// <summary>
+        /// Template with Design = Custom: its non-empty design values replace the Settings ones for this message.
+        /// Send From Address on the message (copied from the template) replaces the Settings one.
+        /// </summary>
+        private void ApplyTemplateAndMessageOverrides(Entity msg, HubSettings s)
+        {
+            var tplRef = msg.GetAttributeValue<EntityReference>("mb_templateid");
+            if (tplRef != null)
+            {
+                Entity t = null;
+                try
+                {
+                    t = _svc.Retrieve(Tables.Template, tplRef.Id, new ColumnSet("mb_designmode", "mb_emaillayout", "mb_brandcolor", "mb_backgroundcolor", "mb_textcolor",
+                        "mb_headertextcolor", "mb_buttontextcolor", "mb_headertitle", "mb_logourl", "mb_recordbuttonlabel", "mb_footer"));
+                }
+                catch (Exception ex) { _trace.Trace("Template unavailable: " + ex.Message); }
+                if (t != null && t.GetAttributeValue<OptionSetValue>("mb_designmode")?.Value == DesignMode.Custom)
+                {
+                    string Str(string c) => (t.GetAttributeValue<string>(c) ?? "").Trim();
+                    s.Layout = t.GetAttributeValue<OptionSetValue>("mb_emaillayout")?.Value ?? s.Layout;
+                    s.BrandColor = EmailLayout.Color(Str("mb_brandcolor"), s.BrandColor);
+                    s.BackgroundColor = EmailLayout.Color(Str("mb_backgroundcolor"), s.BackgroundColor);
+                    s.TextColor = EmailLayout.Color(Str("mb_textcolor"), s.TextColor);
+                    // header and button text sit on the brand colour: they follow the template (empty = automatic contrast)
+                    s.HeaderTextColor = EmailLayout.Color(Str("mb_headertextcolor"), "");
+                    s.ButtonTextColor = EmailLayout.Color(Str("mb_buttontextcolor"), "");
+                    if (Str("mb_headertitle").Length > 0) { s.HeaderTitle = Str("mb_headertitle"); }
+                    if (Str("mb_logourl").Length > 0) { s.LogoUrl = Str("mb_logourl"); }
+                    if (Str("mb_recordbuttonlabel").Length > 0) { s.RecordButtonLabel = Str("mb_recordbuttonlabel"); }
+                    if (Str("mb_footer").Length > 0) { s.Footer = Str("mb_footer"); }
+                }
+            }
+            var from = (msg.GetAttributeValue<string>("mb_fromaddress") ?? "").Trim();
+            if (from.Length > 0)
+            {
+                s.FromAddress = from;
+                if (s.SendFrom == SendFrom.SharedMailbox) { s.SharedMailbox = from; }
+            }
+        }
+
+        /// <summary>
+        /// Test send: delivered only to the To addresses, but personalised as the related record (a contact, account,
+        /// lead, user or any custom row), so {{FirstName}}, {{Company}} and {{Record.*}} show real values.
+        /// </summary>
+        private IEnumerable<Recipient> TestRecipients(Entity msg, EntityReference persona)
+        {
+            Recipient p = null;
+            if (persona != null)
+            {
+                try { p = _resolver.Reference(persona).FirstOrDefault(); } catch (Exception ex) { _trace.Trace("Persona unavailable: " + ex.Message); }
+            }
+            foreach (var a in Text.SplitAddresses(msg.GetAttributeValue<string>("mb_toaddresses")))
+            {
+                var r = RecipientResolver.Address(a);
+                if (p != null)
+                {
+                    r.FirstName = p.FirstName; r.LastName = p.LastName; r.FullName = p.FullName;
+                    r.JobTitle = p.JobTitle; r.Company = p.Company;
+                }
+                yield return r;
+            }
         }
 
         private IEnumerable<Recipient> Candidates(Entity msg, int sendTo, Entity record)

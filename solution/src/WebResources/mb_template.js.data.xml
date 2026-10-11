@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<WebResource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <WebResourceId>{a3beb742-82c5-f111-a05a-00224806b8ff}</WebResourceId>
+  <Name>mb_template.js</Name>
+  <DisplayName>Email Hub - Email Template form</DisplayName>
+  <Description>Template form: Design studio connection and the Send Test command.</Description>
+  <WebResourceType>3</WebResourceType>
+  <IntroducedVersion>1.0</IntroducedVersion>
+  <IsEnabledForMobileClient>0</IsEnabledForMobileClient>
+  <IsAvailableForMobileOffline>0</IsAvailableForMobileOffline>
+  <IsCustomizable>1</IsCustomizable>
+  <CanBeDeleted>1</CanBeDeleted>
+  <IsHidden>0</IsHidden>
+  <FileName>/WebResources/mb_templatejsA3BEB742-82C5-F111-A05A-00224806B8FF</FileName>
+</WebResource>
