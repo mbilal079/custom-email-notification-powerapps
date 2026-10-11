@@ -146,7 +146,7 @@ namespace EmailHub.Plugins.Engine
                     FooterHtml = renderer.Render(settings.Footer ?? "", one, true),
                     RecordUrl = renderer.RecordUrl ?? "",
                     RecordName = renderer.RecordName ?? "",
-                    ShowRecordButton = settings.ShowRecordButton,
+                    ShowRecordButton = ShowButton(msg, settings),
                     RecordButtonLabel = settings.RecordButtonLabel,
                     TestNotice = settings.TestMode ? "Test Mode: this email was addressed to " + realTo : "",
                     Preheader = EmailLayout.Preheader(body)
@@ -259,7 +259,7 @@ namespace EmailHub.Plugins.Engine
                 }
                 foreach (var col in Text.SplitNames(rule.GetAttributeValue<string>("mb_emailcolumns")))
                 {
-                    foreach (var a in Text.SplitAddresses(record.GetAttributeValue<string>(col) ?? "")) { yield return RecipientResolver.Address(a); }
+                    foreach (var a in Text.SplitAddresses(ColumnText(record, col))) { yield return RecipientResolver.Address(a); }
                 }
                 foreach (var col in Text.SplitNames(rule.GetAttributeValue<string>("mb_lookupcolumns")))
                 {
@@ -272,6 +272,28 @@ namespace EmailHub.Plugins.Engine
             var list = rule.GetAttributeValue<EntityReference>("mb_recipientlistid");
             if (list != null) { foreach (var m in _resolver.ListMembers(list.Id)) { yield return m; } }
             foreach (var a in Text.SplitAddresses(rule.GetAttributeValue<string>("mb_additionaladdresses"))) { yield return RecipientResolver.Address(a); }
+        }
+
+        /// <summary>Open record button: the message (copied from its template) can force Show or Hide; otherwise Email Settings decides.</summary>
+        private static bool ShowButton(Entity msg, HubSettings settings)
+        {
+            var v = msg.GetAttributeValue<OptionSetValue>("mb_recordbutton")?.Value;
+            return v == RecordButton.Show ? true : v == RecordButton.Hide ? false : settings.ShowRecordButton;
+        }
+
+        /// <summary>
+        /// Text of a column on the record, or of a column on a related row: "emailaddress1" or "lookup.column",
+        /// e.g. "parentcustomerid.emailaddress2" on contact reads the account's (or parent contact's) column.
+        /// </summary>
+        private string ColumnText(Entity record, string path)
+        {
+            var dot = path.IndexOf('.');
+            if (dot < 0) { return record.GetAttributeValue<string>(path) ?? ""; }
+            var lookup = path.Substring(0, dot);
+            var column = path.Substring(dot + 1);
+            if (!(record.Attributes.Contains(lookup) && record[lookup] is EntityReference target)) { return ""; }
+            if (!_resolver.Metadata(target.LogicalName).Attributes.Any(x => x.LogicalName == column)) { return ""; } // e.g. a customer lookup pointing at the other table
+            return _svc.Retrieve(target.LogicalName, target.Id, new ColumnSet(column)).GetAttributeValue<string>(column) ?? "";
         }
 
         private static (List<Recipient> ok, List<Recipient> skipped) Validate(IEnumerable<Recipient> candidates, HubSettings s)

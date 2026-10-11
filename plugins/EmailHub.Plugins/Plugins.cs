@@ -191,10 +191,19 @@ namespace EmailHub.Plugins
             var names = md.Attributes.Select(a => a.LogicalName).ToList();
             foreach (var field in new[] { "mb_watchedcolumns", "mb_emailcolumns", "mb_lookupcolumns" })
             {
-                var missing = Text.SplitNames(rule.GetAttributeValue<string>(field)).Where(c => !names.Contains(c)).ToList();
+                var missing = Text.SplitNames(rule.GetAttributeValue<string>(field))
+                    .Where(c => !(field == "mb_emailcolumns" && c.Contains('.') ? RelatedColumnExists(svc, md, c) : names.Contains(c))).ToList();
                 if (missing.Count > 0)
                 {
-                    throw new InvalidPluginExecutionException($"Column(s) {string.Join(", ", missing)} do not exist on table '{table}'.");
+                    throw new InvalidPluginExecutionException($"Column(s) {string.Join(", ", missing)} do not exist on table '{table}'." +
+                        (field == "mb_emailcolumns" ? " For a column on a related row use lookup.column, e.g. parentcustomerid.emailaddress1." : ""));
+                }
+            }
+            foreach (var c in Text.SplitNames(rule.GetAttributeValue<string>("mb_lookupcolumns")))
+            {
+                if (!(md.Attributes.First(a => a.LogicalName == c) is Microsoft.Xrm.Sdk.Metadata.LookupAttributeMetadata))
+                {
+                    throw new InvalidPluginExecutionException($"'{c}' is not a lookup column on '{table}'. Put email text columns in Email Columns instead.");
                 }
             }
             if (rule.GetAttributeValue<EntityReference>("mb_templateid") == null)
@@ -207,6 +216,20 @@ namespace EmailHub.Plugins
                 || rule.GetAttributeValue<EntityReference>("mb_recipientlistid") != null
                 || Text.SplitAddresses(rule.GetAttributeValue<string>("mb_additionaladdresses")).Any();
             if (!hasRecipients) { throw new InvalidPluginExecutionException("Choose at least one recipient source for the rule."); }
+        }
+
+        /// <summary>"lookup.column": the lookup exists on the table and the column exists on at least one table it can point to.</summary>
+        private static bool RelatedColumnExists(IOrganizationService svc, Microsoft.Xrm.Sdk.Metadata.EntityMetadata md, string path)
+        {
+            var parts = path.Split('.');
+            if (parts.Length != 2) { return false; }
+            if (!(md.Attributes.FirstOrDefault(a => a.LogicalName == parts[0]) is Microsoft.Xrm.Sdk.Metadata.LookupAttributeMetadata lookup)) { return false; }
+            foreach (var target in lookup.Targets ?? new string[0])
+            {
+                var tmd = ((RetrieveEntityResponse)svc.Execute(new RetrieveEntityRequest { LogicalName = target, EntityFilters = Microsoft.Xrm.Sdk.Metadata.EntityFilters.Attributes })).EntityMetadata;
+                if (tmd.Attributes.Any(a => a.LogicalName == parts[1])) { return true; }
+            }
+            return false;
         }
 
         private static Guid Register(IOrganizationService svc, Entity rule, string table, string message, string filteringAttributes)
@@ -293,7 +316,7 @@ namespace EmailHub.Plugins
             if (!MatchesCondition(svc, rule.GetAttributeValue<string>("mb_conditionfetchxml"), table, recordId, trace)) { return; }
 
             var template = svc.Retrieve(Tables.Template, rule.GetAttributeValue<EntityReference>("mb_templateid").Id,
-                new ColumnSet("mb_subject", "mb_body", "mb_includesignature", "mb_importance"));
+                new ColumnSet("mb_subject", "mb_body", "mb_includesignature", "mb_importance", "mb_recordbutton"));
             var message = new Entity(Tables.Message)
             {
                 ["mb_name"] = template.GetAttributeValue<string>("mb_subject"),
@@ -308,6 +331,7 @@ namespace EmailHub.Plugins
                 ["ownerid"] = rule.GetAttributeValue<EntityReference>("ownerid")
             };
             if (template.GetAttributeValue<OptionSetValue>("mb_importance") != null) { message["mb_importance"] = template["mb_importance"]; }
+            if (template.GetAttributeValue<OptionSetValue>("mb_recordbutton") != null) { message["mb_recordbutton"] = template["mb_recordbutton"]; }
             if (rule.GetAttributeValue<OptionSetValue>("mb_deliverymode") != null) { message["mb_deliverymode"] = rule["mb_deliverymode"]; }
             if (rule.GetAttributeValue<EntityReference>("mb_signatureid") != null) { message["mb_signatureid"] = rule["mb_signatureid"]; }
             svc.Create(message);

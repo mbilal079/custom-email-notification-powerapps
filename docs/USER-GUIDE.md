@@ -240,14 +240,30 @@ outside the allow-list. Duplicate addresses are sent once.
 | **Email Template / Signature / Delivery Mode** | *Task Assigned* | What is sent |
 | **Send to Record Owner** | Yes | Owner user, or every member of an owner team |
 | **Send to Created By** | No | |
-| **Email Columns** | `emailaddress1,emailaddress2` | Text/email columns on the row |
-| **Lookup Columns** | `regardingobjectid,parentcustomerid` | The referenced user, contact, account, lead, queue, team or custom row's email |
+| **Email Columns** | `emailaddress1,emailaddress2` or `parentcustomerid.emailaddress1` | Text/email columns on the row, or a column on a **related row** as `lookup.column` |
+| **Lookup Columns** | `regardingobjectid,parentcustomerid` | The referenced user, contact, account, lead, queue, team or custom row's email (its first filled email column, usually `emailaddress1`) |
 | **Recipient List / Additional Addresses** | | Fixed recipients |
 
 Saving an active rule validates the table and columns and **registers a plug-in step** on that table automatically.
 Deactivating or deleting the rule removes the step. When the rule fires it creates an Email Message (Send To =
 *Notification Rule*) **regarding the row**, owned by the rule owner, and the normal engine sends it. Use
 `{{Record.<column>}}`, `{{RecordName}}` and `{{RecordUrl}}` in the template.
+
+**Emailing a related row (e.g. the contact's account).** Two ways, both on a rule for table `contact`:
+
+- **Lookup Columns** `parentcustomerid`: the engine follows *Company Name* to the account and uses its first filled
+  email column (normally `emailaddress1`).
+- **Email Columns** `parentcustomerid.emailaddress1`: you choose the exact column on the related row, e.g.
+  `parentcustomerid.emailaddress2`. Any lookup works (`ownerid.internalemailaddress`, `new_sponsorid.emailaddress1`…).
+  The rule is checked when you save it: the lookup must exist and the column must exist on a table it can point to.
+
+On contact, use **`parentcustomerid`** (*Company Name*), not `accountid`: `accountid` is maintained by the system,
+cannot be set on the form and is normally empty, so `accountid.emailaddress1` would find no address. The rule form
+warns you when you use it. When a recipient is an account (or any row without a first name), `{{FirstName}}` uses its
+name, e.g. *Hi Fourth Coffee*.
+
+**Open record button per template.** A template's **Open Record Button** (*Use Settings default* / *Show* / *Hide*)
+is copied to the messages created from it, including rule emails; a message can also change it before sending.
 
 **Examples**
 

@@ -130,6 +130,14 @@
                         <control id="50979b6b-fe98-40f2-b1c3-86239bae84ef" classid="{67FAC785-CD58-4F9F-ABB3-4B7DDC6ED5ED}" datafieldname="mb_includesignature" disabled="false" isrequired="false" />
                       </cell>
                     </row>
+                    <row>
+                      <cell id="f93aee0e-00cb-4507-add8-ef0b7eae5ae7" showlabel="true" visible="true" colspan="1" rowspan="1">
+                        <labels>
+                          <label description="mb_recordbutton" languagecode="1033" />
+                        </labels>
+                        <control id="724020ef-6d36-4a86-bb91-85a7eb1873dd" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="mb_recordbutton" disabled="false" isrequired="false" />
+                      </cell>
+                    </row>
                   </rows>
                 </section>
                 <section id="bb03cba8-2b20-4889-8662-e82b797edd2b" name="section_notes" showlabel="true" visible="true" columns="1">

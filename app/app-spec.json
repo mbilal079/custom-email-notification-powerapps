@@ -289,6 +289,17 @@
           "type": "Memo",
           "maxLength": 4000,
           "description": "When and how to use the template."
+        },
+        {
+          "schemaName": "mb_recordbutton",
+          "displayName": "Open Record Button",
+          "type": "Choice",
+          "options": [
+            "Use Settings default",
+            "Show",
+            "Hide"
+          ],
+          "description": "Show or hide the Open record button (emails about a record). Use Settings default follows Email Settings."
         }
       ]
     },
@@ -551,6 +562,17 @@
           "type": "Text",
           "maxLength": 400,
           "description": "Display name of the related record (filled by the engine)."
+        },
+        {
+          "schemaName": "mb_recordbutton",
+          "displayName": "Open Record Button",
+          "type": "Choice",
+          "options": [
+            "Use Settings default",
+            "Show",
+            "Hide"
+          ],
+          "description": "Show or hide the Open record button (emails about a record). Use Settings default follows Email Settings."
         }
       ]
     },
@@ -728,7 +750,7 @@
           "displayName": "Email Columns",
           "type": "Text",
           "maxLength": 1000,
-          "description": "Comma-separated email/text columns on the row, e.g. emailaddress1,emailaddress2."
+          "description": "Comma-separated email/text columns on the row, e.g. emailaddress1, or on a related row as lookup.column, e.g. parentcustomerid.emailaddress1."
         },
         {
           "schemaName": "mb_lookupcolumns",
@@ -1518,7 +1540,8 @@
                       "colspan": 2
                     },
                     "mb_signatureid",
-                    "mb_includesignature"
+                    "mb_includesignature",
+                    "mb_recordbutton"
                   ]
                 }
               ]
@@ -1642,6 +1665,7 @@
                 },
                 "mb_importance",
                 "mb_includesignature",
+                "mb_recordbutton",
                 {
                   "name": "mb_description",
                   "colspan": 2

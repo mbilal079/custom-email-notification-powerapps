@@ -26,7 +26,7 @@ namespace EmailHub.Plugins.Engine
             if (string.IsNullOrEmpty(template)) { return ""; }
             string Enc(string v) => html ? WebUtility.HtmlEncode(v ?? "") : (v ?? "");
             var s = template
-                .Replace("{{FirstName}}", Enc(r?.FirstName))
+                .Replace("{{FirstName}}", Enc(string.IsNullOrWhiteSpace(r?.FirstName) ? r?.FullName : r.FirstName)) // accounts and other non-person rows: their name
                 .Replace("{{LastName}}", Enc(r?.LastName))
                 .Replace("{{FullName}}", Enc(r?.FullName))
                 .Replace("{{Email}}", Enc(r?.Email))

@@ -15,6 +15,7 @@
           <cell name="mb_category" width="150" />
           <cell name="mb_importance" width="150" />
           <cell name="mb_includesignature" width="150" />
+          <cell name="mb_recordbutton" width="150" />
         </row>
       </grid>
     </layoutxml>
@@ -28,6 +29,7 @@
           <attribute name="mb_category" />
           <attribute name="mb_importance" />
           <attribute name="mb_includesignature" />
+          <attribute name="mb_recordbutton" />
           <order attribute="mb_name" descending="false" />
           <filter type="and">
             <condition attribute="statecode" operator="eq" value="1" />

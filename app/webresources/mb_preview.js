@@ -16,6 +16,11 @@ EmailHub.Preview = (function () {
     return a ? a.getValue() : undefined;
   }
 
+  function text(fc, name) {
+    var a = fc.getAttribute(name);
+    return a ? a.getText() : null;
+  }
+
   function open(primaryControl) {
     var fc = primaryControl;
     var table = fc.data.entity.getEntityName();
@@ -30,6 +35,7 @@ EmailHub.Preview = (function () {
       payload.subject = val(fc, "mb_subject") || "";
       payload.body = val(fc, "mb_body") || "";
       payload.includeSignature = val(fc, "mb_includesignature") !== false;
+      payload.recordButton = text(fc, "mb_recordbutton");
     } else {
       payload.subject = val(fc, "mb_name") || "";
       payload.body = val(fc, "mb_body") || "";
@@ -38,6 +44,7 @@ EmailHub.Preview = (function () {
       var sv = sig && sig.getValue();
       payload.signatureId = sv && sv.length ? sv[0].id.replace(/[{}]/g, "") : null;
       payload.regarding = val(fc, "mb_regardingname") || null;
+      payload.recordButton = text(fc, "mb_recordbutton");
     }
 
     // The dialog page runs on the same origin; hand the payload over through the top window.
