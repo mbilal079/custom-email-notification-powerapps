@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<SdkMessageProcessingStep Name="Email Hub: register rule (update)" SdkMessageProcessingStepId="{d2e47971-70c5-f111-a05a-00224806b8ff}" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<SdkMessageProcessingStep Name="Email Hub: register rule (update)" SdkMessageProcessingStepId="{5071b449-72c5-f111-a05a-00224806b8ff}" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <SdkMessageId>20bebb1b-ea3e-db11-86a7-000a3a5473e8</SdkMessageId>
-  <PluginTypeName>EmailHub.Plugins.NotificationRuleManager, EmailHub.Plugins, Version=1.0.0.8, Culture=neutral, PublicKeyToken=167b1d5ffc6d5ccb</PluginTypeName>
-  <PluginTypeId>11501d6b-70c5-f111-a05a-00224806b8ff</PluginTypeId>
+  <PluginTypeName>EmailHub.Plugins.NotificationRuleManager, EmailHub.Plugins, Version=1.0.0.9, Culture=neutral, PublicKeyToken=167b1d5ffc6d5ccb</PluginTypeName>
+  <PluginTypeId>a7ff7d43-72c5-f111-a05a-00224806b8ff</PluginTypeId>
   <PrimaryEntity>mb_notificationrule</PrimaryEntity>
   <AsyncAutoDelete>0</AsyncAutoDelete>
   <Description>Email Hub: register rule (update)</Description>

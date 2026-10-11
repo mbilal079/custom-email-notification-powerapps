@@ -66,7 +66,7 @@
                     <row>
                       <cell id="19690307-96e3-4c5b-b470-b8d6a4a7338f" showlabel="true" visible="true" colspan="1" rowspan="1">
                         <labels>
-                          <label description="mb_recordbutton" languagecode="1033" />
+                          <label description="Open Record Button" languagecode="1033" />
                         </labels>
                         <control id="18685e7b-9cd6-4e25-bda6-9dea0e3989cf" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="mb_recordbutton" disabled="false" isrequired="false" />
                       </cell>

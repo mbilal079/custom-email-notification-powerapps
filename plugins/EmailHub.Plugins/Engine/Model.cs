@@ -13,6 +13,7 @@ namespace EmailHub.Plugins.Engine
         public int Channel = Common.Channel.Outlook;
         public int SendFrom = Common.SendFrom.FlowOwnerMailbox;
         public string SharedMailbox = "";
+        public string FromAddress = "";
         public string ReplyTo = "";
         public string OrganizationName = "";
         public string Footer = "";
@@ -45,7 +46,9 @@ namespace EmailHub.Plugins.Engine
             if (row == null) { return s; }
             s.Channel = row.GetAttributeValue<OptionSetValue>("mb_deliverychannel")?.Value ?? s.Channel;
             s.SendFrom = row.GetAttributeValue<OptionSetValue>("mb_sendmode")?.Value ?? s.SendFrom;
+            s.FromAddress = (row.GetAttributeValue<string>("mb_fromaddress") ?? "").Trim();
             s.SharedMailbox = row.GetAttributeValue<string>("mb_sharedmailbox") ?? "";
+            if (string.IsNullOrWhiteSpace(s.SharedMailbox)) { s.SharedMailbox = s.FromAddress; }
             s.ReplyTo = row.GetAttributeValue<string>("mb_replyto") ?? "";
             s.OrganizationName = row.GetAttributeValue<string>("mb_organizationname") ?? "";
             s.Footer = row.GetAttributeValue<string>("mb_globalfooter") ?? "";
@@ -71,10 +74,11 @@ namespace EmailHub.Plugins.Engine
 
         public string ConfigurationError()
         {
+            if (FromAddress.Length > 0 && !Text.IsValidEmail(FromAddress)) { return $"Send From Address '{FromAddress}' is not a valid email address."; }
             if (TestMode && string.IsNullOrWhiteSpace(TestRecipient)) { return "Test Mode is on but no Test Mode Recipient is set in Email Settings."; }
             if (Channel == Common.Channel.Outlook && SendFrom == Common.SendFrom.SharedMailbox && string.IsNullOrWhiteSpace(SharedMailbox))
             {
-                return "Send From is Shared Mailbox but no Shared Mailbox Address is set in Email Settings.";
+                return "Send Mode is Shared Mailbox but neither Shared Mailbox Address nor Send From Address is set in Email Settings.";
             }
             return null;
         }

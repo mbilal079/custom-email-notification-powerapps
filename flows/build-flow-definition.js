@@ -93,7 +93,8 @@ const sendViaOutlook = wrap([DV, O365], {
   List_Settings: op(DV, "ListRecords", { entityName: SETS.mb_emailsetting, $filter: "mb_isactive eq true and statecode eq 0", $orderby: "createdon asc", $top: 1 }),
   Settings: { type: "Compose", runAfter: after("List_Settings"), inputs: {
     shared: `@equals(coalesce(${first}?['mb_sendmode'], ${SEND_FROM["Flow Owner Mailbox"]}), ${SEND_FROM["Shared Mailbox"]})`,
-    sharedMailbox: `@coalesce(${first}?['mb_sharedmailbox'], '')`,
+    sharedMailbox: `@coalesce(${first}?['mb_sharedmailbox'], ${first}?['mb_fromaddress'], '')`,
+    sendFrom: `@coalesce(${first}?['mb_fromaddress'], '')`,
     replyTo: `@coalesce(${first}?['mb_replyto'], '')`
   } },
   Get_Message: op(DV, "GetItem", { entityName: SETS.mb_emailmessage, recordId: "@triggerOutputs()?['body/mb_emailmessageid']", $select: "mb_importance" }, after("Settings")),
@@ -110,7 +111,7 @@ const sendViaOutlook = wrap([DV, O365], {
       Use_Shared_Mailbox: {
         type: "If", runAfter: {}, expression: `@equals(${S("shared")}, true)`,
         actions: branch("Shared", "SharedMailboxSendEmailV2", { "emailMessage/MailboxAddress": `@{${S("sharedMailbox")}}` }),
-        else: { actions: branch("Owner", "SendEmailV2", {}) }
+        else: { actions: branch("Owner", "SendEmailV2", { "emailMessage/From": nullIfEmpty(S("sendFrom")) }) }
       }
     }
   }

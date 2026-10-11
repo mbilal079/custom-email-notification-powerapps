@@ -123,7 +123,7 @@ namespace EmailHub.Plugins.Engine
             var cc = settings.TestMode ? new string[0] : Text.SplitAddresses(msg.GetAttributeValue<string>("mb_ccaddresses")).ToArray();
             var bcc = settings.TestMode ? new string[0]
                 : Text.SplitAddresses(msg.GetAttributeValue<string>("mb_bccaddresses")).Concat(Text.SplitAddresses(settings.ArchiveBcc)).Distinct(StringComparer.OrdinalIgnoreCase).ToArray();
-            var from = settings.FromQueue ?? senderRef;
+            var from = settings.FromQueue ?? FromAddressParty(settings) ?? senderRef;
 
             var units = personalized
                 ? recipients.Select(r => new[] { r }).ToList()
@@ -272,6 +272,30 @@ namespace EmailHub.Plugins.Engine
             var list = rule.GetAttributeValue<EntityReference>("mb_recipientlistid");
             if (list != null) { foreach (var m in _resolver.ListMembers(list.Id)) { yield return m; } }
             foreach (var a in Text.SplitAddresses(rule.GetAttributeValue<string>("mb_additionaladdresses"))) { yield return RecipientResolver.Address(a); }
+        }
+
+        /// <summary>
+        /// Send From Address as an activity party: a queue or user whose mailbox has that address. Required on the Dataverse
+        /// channel (the email is sent from that mailbox); on the Outlook channel the flow sends as the address and the
+        /// activity's From is only for the record, so an unknown address falls back to the message owner.
+        /// </summary>
+        private EntityReference FromAddressParty(HubSettings settings)
+        {
+            if (settings.FromAddress.Length == 0) { return null; }
+            foreach (var (table, column, active) in new[] { ("queue", "emailaddress", "statecode"), ("systemuser", "internalemailaddress", "isdisabled") })
+            {
+                var q = new QueryExpression(table) { ColumnSet = new ColumnSet(false), TopCount = 1 };
+                q.Criteria.AddCondition(column, ConditionOperator.Equal, settings.FromAddress);
+                q.Criteria.AddCondition(active, ConditionOperator.Equal, table == "queue" ? (object)0 : false);
+                var hit = _svc.RetrieveMultiple(q).Entities.FirstOrDefault();
+                if (hit != null) { return hit.ToEntityReference(); }
+            }
+            if (settings.Channel == Channel.Dataverse)
+            {
+                throw new InvalidPluginExecutionException($"Send From Address {settings.FromAddress} does not belong to a queue or user in Dataverse. " +
+                    "On the Dataverse Email channel, create a queue with that mailbox (or use a user's address), or clear the field.");
+            }
+            return null;
         }
 
         /// <summary>Open record button: the message (copied from its template) can force Show or Hide; otherwise Email Settings decides.</summary>

@@ -86,8 +86,9 @@ App → **Administration → Settings** → open *Default* (or **New**).
 | **Setting Name** / **Active Configuration** | The engine uses the **first active** row. Keep only one active. |
 | **Delivery Channel** | Office 365 Outlook (cloud flow) or Dataverse Email (server-side sync), see §4 |
 | **Create Email Activities** | Creates an Email activity for every email (timeline history). Always on for the Dataverse channel. |
+| **Send From Address** | The address emails come from. *Outlook channel:* sent **as** this address from the connection account (it needs *Send As* or *Send on Behalf* on that mailbox), or, with Send From = *Shared Mailbox*, the shared mailbox to send from. *Dataverse channel:* a **queue or user** mailbox in Dataverse with this address. Empty: the connection account / message owner. |
 | **Send From** | *Outlook channel:* *Flow Owner Mailbox* or *Shared Mailbox* |
-| **Shared Mailbox Address** | *Outlook channel*, shared mode: the address (connection account needs *Send As*) |
+| **Shared Mailbox Address** | *Outlook channel*, shared mode: the address (connection account needs *Send As*). Falls back to Send From Address. |
 | **Send From Queue** | *Dataverse channel:* send from a queue's mailbox instead of the message owner's |
 | **Reply-To Address** | *Outlook channel:* reply address for every email |
 | **Organization Name** | `{{OrganizationName}}` |
@@ -107,8 +108,17 @@ get one email per recipient. Then set *Test Mode = No*.
 
 ### 5.1 Email design
 
-The **Email Design** tab of Settings controls how every email looks. Click **Preview Email Design** on the command bar
-to see the result (desktop and mobile, with and without a related record and the Test Mode notice) before you save.
+The **Email Design** tab of Settings controls how every email looks. It opens on the **Design studio**:
+
+- **Layout** cards (Branded, Minimal, Plain) with thumbnails.
+- **Brand color** and **Background color**: preset swatches (blue, light blue, sky, navy, teal, green, red, orange,
+  purple, pink, graphite… and light tints for the background), a **colour picker**, or a hex code. The studio tells you
+  whether text on the brand colour will be white or dark.
+- **Header** title and logo URL, and the **Open record button** switch and label.
+- A **live preview** (desktop or mobile) that updates as you change anything.
+
+The studio writes into the record's fields; press **Save** to apply. **Preview Email Design** on the command bar also
+shows the Test Mode notice and lets you switch the related record on and off.
 
 | Setting | Effect |
 |---|---|

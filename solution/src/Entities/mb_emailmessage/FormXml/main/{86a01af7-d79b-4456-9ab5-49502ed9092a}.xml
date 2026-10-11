@@ -133,7 +133,7 @@
                     <row>
                       <cell id="f93aee0e-00cb-4507-add8-ef0b7eae5ae7" showlabel="true" visible="true" colspan="1" rowspan="1">
                         <labels>
-                          <label description="mb_recordbutton" languagecode="1033" />
+                          <label description="Open Record Button" languagecode="1033" />
                         </labels>
                         <control id="724020ef-6d36-4a86-bb91-85a7eb1873dd" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="mb_recordbutton" disabled="false" isrequired="false" />
                       </cell>
@@ -254,7 +254,7 @@
                     <row>
                       <cell id="727c349a-a589-4c12-8ea2-675c606168ed" showlabel="true" visible="true" colspan="1" rowspan="1">
                         <labels>
-                          <label description="mb_regardingname" languagecode="1033" />
+                          <label description="Regarding" languagecode="1033" />
                         </labels>
                         <control id="87a30d1e-b918-4632-82b7-24da13badf47" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="mb_regardingname" disabled="true" isrequired="false" />
                       </cell>
@@ -262,7 +262,7 @@
                     <row>
                       <cell id="0b7ea70f-58fd-4bd1-8f46-6036c9e7f020" showlabel="true" visible="true" colspan="1" rowspan="1">
                         <labels>
-                          <label description="mb_regardingtable" languagecode="1033" />
+                          <label description="Regarding Table" languagecode="1033" />
                         </labels>
                         <control id="ecdadbbc-0412-41cc-861f-1db34a26d3d9" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="mb_regardingtable" disabled="true" isrequired="false" />
                       </cell>
@@ -270,7 +270,7 @@
                     <row>
                       <cell id="e5507a73-5559-4ded-bae6-f7047f0a7369" showlabel="true" visible="true" colspan="1" rowspan="1">
                         <labels>
-                          <label description="mb_regardingid" languagecode="1033" />
+                          <label description="Regarding Record Id" languagecode="1033" />
                         </labels>
                         <control id="d42098df-212b-44e5-9fc8-c7356e8f57f7" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="mb_regardingid" disabled="true" isrequired="false" />
                       </cell>
@@ -278,7 +278,7 @@
                     <row>
                       <cell id="b176e354-8646-4f11-b788-e22713c70c12" showlabel="true" visible="true" colspan="1" rowspan="1">
                         <labels>
-                          <label description="mb_notificationruleid" languagecode="1033" />
+                          <label description="Notification Rule" languagecode="1033" />
                         </labels>
                         <control id="92e44c44-a653-4269-a78a-02cbb3efb915" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="mb_notificationruleid" disabled="true" isrequired="false" />
                       </cell>

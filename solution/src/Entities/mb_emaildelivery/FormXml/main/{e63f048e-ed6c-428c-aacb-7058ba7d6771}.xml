@@ -70,7 +70,7 @@
                       </cell>
                       <cell id="d6b519ab-3c27-42ba-9178-1fd6ab31f721" showlabel="true" visible="true" colspan="1" rowspan="1">
                         <labels>
-                          <label description="mb_channel" languagecode="1033" />
+                          <label description="Channel" languagecode="1033" />
                         </labels>
                         <control id="9b908f40-31b0-4cbc-a418-6896f79df505" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="mb_channel" disabled="false" isrequired="false" />
                       </cell>
@@ -78,13 +78,13 @@
                     <row>
                       <cell id="ba02a393-140b-4415-9e82-6a6c5160bdcc" showlabel="true" visible="true" colspan="1" rowspan="1">
                         <labels>
-                          <label description="mb_toaddresses" languagecode="1033" />
+                          <label description="To" languagecode="1033" />
                         </labels>
                         <control id="e06b93c1-8eb0-43f3-921e-b59b09f6d7b0" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="mb_toaddresses" disabled="false" isrequired="false" />
                       </cell>
                       <cell id="45b26b67-2418-48f8-8f96-d3725f1cf7ec" showlabel="true" visible="true" colspan="1" rowspan="1">
                         <labels>
-                          <label description="mb_ccaddresses" languagecode="1033" />
+                          <label description="CC" languagecode="1033" />
                         </labels>
                         <control id="33554496-7d48-4a85-b5b7-913d03e288be" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="mb_ccaddresses" disabled="false" isrequired="false" />
                       </cell>
@@ -92,13 +92,13 @@
                     <row>
                       <cell id="46334f50-58b6-4a3b-9ef6-f9a28979131e" showlabel="true" visible="true" colspan="1" rowspan="1">
                         <labels>
-                          <label description="mb_bccaddresses" languagecode="1033" />
+                          <label description="BCC" languagecode="1033" />
                         </labels>
                         <control id="cdbb2c71-4134-4b42-820f-261b957aeea9" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="mb_bccaddresses" disabled="false" isrequired="false" />
                       </cell>
                       <cell id="761fc148-c4ff-4a41-bdab-55ab7f49152c" showlabel="true" visible="true" colspan="1" rowspan="1">
                         <labels>
-                          <label description="mb_bodysent" languagecode="1033" />
+                          <label description="Body Sent" languagecode="1033" />
                         </labels>
                         <control id="85cb6f3f-1142-4f02-8a8b-fcd6056e44f7" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="mb_bodysent" disabled="false" isrequired="false" />
                       </cell>
@@ -106,7 +106,7 @@
                     <row>
                       <cell id="a4afc2d8-c5db-4e04-8d06-1436933315c7" showlabel="true" visible="true" colspan="1" rowspan="1">
                         <labels>
-                          <label description="mb_emailactivityid" languagecode="1033" />
+                          <label description="Email Activity" languagecode="1033" />
                         </labels>
                         <control id="0be0d048-d40a-4174-9c22-53223a563af8" classid="{4273EDBD-AC1D-40D3-9FB2-095C621B552D}" datafieldname="mb_emailactivityid" disabled="false" isrequired="false" />
                       </cell>

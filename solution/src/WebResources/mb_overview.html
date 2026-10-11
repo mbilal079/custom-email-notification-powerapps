@@ -579,7 +579,7 @@
       var yes = function (v) { return v ? "Yes" : "No"; };
       var items = [
         ["send", "Delivery channel", CHANNEL[setting.mb_deliverychannel] || "Office 365 Outlook (default)"],
-        ["inbox", "Send from", setting["_mb_fromqueueid_value"] ? "Queue: " + (fv(setting, "_mb_fromqueueid_value") || "") : (setting.mb_sendmode === 100000001 ? "Shared mailbox: " + (setting.mb_sharedmailbox || "—") : "Flow owner / message owner mailbox")],
+        ["inbox", "Send from", setting.mb_fromaddress ? setting.mb_fromaddress + (setting.mb_sendmode === 100000001 ? " (shared mailbox)" : "") : setting["_mb_fromqueueid_value"] ? "Queue: " + (fv(setting, "_mb_fromqueueid_value") || "") : (setting.mb_sendmode === 100000001 ? "Shared mailbox: " + (setting.mb_sharedmailbox || "—") : "Flow owner / message owner mailbox")],
         ["flask", "Test Mode", setting.mb_testmode ? "On → " + (setting.mb_testrecipient || "no recipient") : "Off (live)"],
         ["table", "Create Email activities", setting.mb_createactivities === false ? "No" : "Yes"],
         ["users", "Max recipients per send", num(setting.mb_maxrecipients)],

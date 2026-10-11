@@ -9,7 +9,7 @@ EmailHub.Preview = (function () {
   "use strict";
 
   var DESIGN = ["mb_emaillayout", "mb_brandcolor", "mb_backgroundcolor", "mb_logourl", "mb_headertitle",
-    "mb_showrecordbutton", "mb_recordbuttonlabel", "mb_organizationname", "mb_globalfooter", "mb_testmode", "mb_testrecipient"];
+    "mb_showrecordbutton", "mb_recordbuttonlabel", "mb_organizationname", "mb_globalfooter", "mb_testmode", "mb_testrecipient", "mb_fromaddress"];
 
   function val(fc, name) {
     var a = fc.getAttribute(name);

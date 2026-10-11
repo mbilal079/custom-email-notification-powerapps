@@ -85,7 +85,8 @@
           },
           "inputs": {
             "shared": "@equals(coalesce(first(outputs('List_Settings')?['body/value'])?['mb_sendmode'], 100000000), 100000001)",
-            "sharedMailbox": "@coalesce(first(outputs('List_Settings')?['body/value'])?['mb_sharedmailbox'], '')",
+            "sharedMailbox": "@coalesce(first(outputs('List_Settings')?['body/value'])?['mb_sharedmailbox'], first(outputs('List_Settings')?['body/value'])?['mb_fromaddress'], '')",
+            "sendFrom": "@coalesce(first(outputs('List_Settings')?['body/value'])?['mb_fromaddress'], '')",
             "replyTo": "@coalesce(first(outputs('List_Settings')?['body/value'])?['mb_replyto'], '')"
           }
         },
@@ -245,6 +246,7 @@
                             "apiId": "/providers/Microsoft.PowerApps/apis/shared_office365"
                           },
                           "parameters": {
+                            "emailMessage/From": "@if(empty(coalesce(outputs('Settings')?['sendFrom'],'')), null, outputs('Settings')?['sendFrom'])",
                             "emailMessage/To": "@{items('For_Each_Delivery')?['mb_toaddresses']}",
                             "emailMessage/Subject": "@{items('For_Each_Delivery')?['mb_subjectsent']}",
                             "emailMessage/Body": "@{items('For_Each_Delivery')?['mb_bodysent']}",

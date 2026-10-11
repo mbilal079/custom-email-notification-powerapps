@@ -99,11 +99,14 @@
       <RootComponent type="29" id="{3b7e5f2a-9c4d-4e61-8a5f-6d2b1c0e9f47}" behavior="0" />
       <RootComponent type="29" id="{8c2d4e6f-1a3b-4c5d-9e7f-0b1a2c3d4e5f}" behavior="0" />
       <RootComponent type="60" id="{f94c79dd-551a-46ce-b36d-b825fe21efc0}" behavior="0" />
+      <RootComponent type="61" schemaName="mb_designstudio.html" behavior="0" />
       <RootComponent type="61" schemaName="mb_emaildelivery_icon" behavior="0" />
+      <RootComponent type="61" schemaName="mb_emaillayout.js" behavior="0" />
       <RootComponent type="61" schemaName="mb_emailmessage.js" behavior="0" />
       <RootComponent type="61" schemaName="mb_emailmessage_icon" behavior="0" />
       <RootComponent type="61" schemaName="mb_emailnotificationhub_icon" behavior="0" />
       <RootComponent type="61" schemaName="mb_emailpreview.html" behavior="0" />
+      <RootComponent type="61" schemaName="mb_emailsetting.js" behavior="0" />
       <RootComponent type="61" schemaName="mb_emailsetting_icon" behavior="0" />
       <RootComponent type="61" schemaName="mb_emailsignature_icon" behavior="0" />
       <RootComponent type="61" schemaName="mb_emailtemplate_icon" behavior="0" />
@@ -119,14 +122,14 @@
       <RootComponent type="61" schemaName="mb_recipientlistmember_icon" behavior="0" />
       <RootComponent type="62" schemaName="mb_emailnotificationhub" behavior="0" />
       <RootComponent type="80" schemaName="mb_emailnotificationhub" behavior="0" />
-      <RootComponent type="91" id="{0b501d6b-70c5-f111-a05a-00224806b8ff}" schemaName="EmailHub.Plugins, Version=1.0.0.8, Culture=neutral, PublicKeyToken=167b1d5ffc6d5ccb" behavior="0" />
-      <RootComponent type="92" id="{13501d6b-70c5-f111-a05a-00224806b8ff}" behavior="0" />
-      <RootComponent type="92" id="{16501d6b-70c5-f111-a05a-00224806b8ff}" behavior="0" />
-      <RootComponent type="92" id="{19501d6b-70c5-f111-a05a-00224806b8ff}" behavior="0" />
-      <RootComponent type="92" id="{1c501d6b-70c5-f111-a05a-00224806b8ff}" behavior="0" />
-      <RootComponent type="92" id="{1f501d6b-70c5-f111-a05a-00224806b8ff}" behavior="0" />
-      <RootComponent type="92" id="{d2e47971-70c5-f111-a05a-00224806b8ff}" behavior="0" />
-      <RootComponent type="92" id="{d5e47971-70c5-f111-a05a-00224806b8ff}" behavior="0" />
+      <RootComponent type="91" id="{8cff7d43-72c5-f111-a05a-00224806b8ff}" schemaName="EmailHub.Plugins, Version=1.0.0.9, Culture=neutral, PublicKeyToken=167b1d5ffc6d5ccb" behavior="0" />
+      <RootComponent type="92" id="{5071b449-72c5-f111-a05a-00224806b8ff}" behavior="0" />
+      <RootComponent type="92" id="{5371b449-72c5-f111-a05a-00224806b8ff}" behavior="0" />
+      <RootComponent type="92" id="{a9ff7d43-72c5-f111-a05a-00224806b8ff}" behavior="0" />
+      <RootComponent type="92" id="{acff7d43-72c5-f111-a05a-00224806b8ff}" behavior="0" />
+      <RootComponent type="92" id="{afff7d43-72c5-f111-a05a-00224806b8ff}" behavior="0" />
+      <RootComponent type="92" id="{b2ff7d43-72c5-f111-a05a-00224806b8ff}" behavior="0" />
+      <RootComponent type="92" id="{b5ff7d43-72c5-f111-a05a-00224806b8ff}" behavior="0" />
     </RootComponents>
     <MissingDependencies>
       <MissingDependency>

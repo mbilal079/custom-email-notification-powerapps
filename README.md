@@ -73,6 +73,7 @@ node $PLUGIN/scripts/lint-app-spec.js --spec @app/app-spec.json
 node $PLUGIN/scripts/build-model-app.js --env $ENV --spec @app/app-spec.json --apply --verify --publish --sample-data
 node scripts/sync-webresources.js $ENV          # push form-script / page updates
 node scripts/enable-rich-text.js $ENV           # rich text editor on HTML columns
+node scripts/finalize-forms.js $ENV             # form labels + Design studio on Email Settings (after every build)
 node scripts/fix-dashboard.js $ENV              # optional: classic dashboard tile heights + view bindings
 
 pwsh scripts/new-plugin-key.ps1                 # once: strong-name key (git-ignored; keep a backup)

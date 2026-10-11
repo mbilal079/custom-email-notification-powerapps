@@ -193,6 +193,14 @@
           "type": "Text",
           "maxLength": 100,
           "description": "Button text, e.g. View task. Defaults to Open record."
+        },
+        {
+          "schemaName": "mb_fromaddress",
+          "displayName": "Send From Address",
+          "type": "Text",
+          "format": "Email",
+          "maxLength": 320,
+          "description": "The address emails are sent from. Outlook channel: sent as this address from the connection account (needs Send As or Send on Behalf), or the shared mailbox when Send Mode is Shared Mailbox. Dataverse channel: a queue or user mailbox with this address. Empty: the connection owner / message owner mailbox."
         }
       ]
     },
@@ -988,6 +996,27 @@
       "type": "html",
       "contentPath": "webresources/mb_emailpreview.html",
       "description": "Renders the email design (layout, colours, logo, button, footer) with sample data, desktop and mobile."
+    },
+    {
+      "name": "mb_emailsetting.js",
+      "displayName": "Email Hub - Email Settings form",
+      "type": "js",
+      "contentPath": "webresources/mb_emailsetting.js",
+      "description": "Connects the Design studio to the Email Settings record."
+    },
+    {
+      "name": "mb_designstudio.html",
+      "displayName": "Email Hub - Design studio",
+      "type": "html",
+      "contentPath": "webresources/mb_designstudio.html",
+      "description": "Email Settings > Email Design: colour pickers, preset colours, layout, header and button controls with a live preview."
+    },
+    {
+      "name": "mb_emaillayout.js",
+      "displayName": "Email Hub - Email layout (browser)",
+      "type": "js",
+      "contentPath": "webresources/mb_emaillayout.js",
+      "description": "Shared email layout used by the Preview dialog and the Design studio; mirrors EmailLayout.cs."
     },
     {
       "name": "mb_gettingstarted.html",
@@ -1903,6 +1932,7 @@
                 "mb_isactive",
                 "mb_deliverychannel",
                 "mb_createactivities",
+                "mb_fromaddress",
                 "mb_sendmode",
                 "mb_sharedmailbox",
                 "mb_replyto",
@@ -1967,6 +1997,13 @@
               ]
             }
           ]
+        }
+      ],
+      "events": [
+        {
+          "event": "onload",
+          "library": "mb_emailsetting.js",
+          "function": "EmailHub.Setting.onLoad"
         }
       ]
     },
